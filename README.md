@@ -29,6 +29,7 @@
     <li><u>안된다, 어렵다라는 말은 이제 "할 수 있다" 로 통일 하겠습니다.</u>
 </ul>
 </b>
+![image](https://user-images.githubusercontent.com/115041502/224247818-b9058333-da93-46cb-87e8-d1ae14d67557.png)
 
 
 
