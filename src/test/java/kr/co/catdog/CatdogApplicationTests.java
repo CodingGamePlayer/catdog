@@ -8,6 +8,7 @@ class CatdogApplicationTests {
 
     @Test
     void contextLoads() {
+//        김종식바보
     }
 
 }
