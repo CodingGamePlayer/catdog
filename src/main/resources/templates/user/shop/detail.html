@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko" itemscope itemtype="http://schema.org/WebPage"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout.html}">
+
+
+
+      <!-- Content -->
+      <div layout:fragment="content">
+        <div class="card shadow-none">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h5 class="mb-4 px-1">Product Details</h5>
+              <div>
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                 class="bi bi-pencil me-3" viewBox="0 0 16 16">
+                  <path
+                          d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                </svg></a>
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                 class="bi bi-trash3 me-2" viewBox="0 0 16 16">
+                  <path
+                          d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                </svg></a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 text-center">
+                <img class="w-100 border-radius-lg shadow-lg mx-auto"
+                     src="https://images.unsplash.com/photo-1616627781431-23b776aad6b2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1884&amp;q=80"
+                     alt="chair">
+                <div class="my-gallery d-flex mt-4 pt-2" itemscope="" itemtype="http://schema.org/ImageGallery"
+                     data-pswp-uid="1">
+                  <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+                    <a href="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-pink.jpg"
+                       itemprop="contentUrl" data-size="500x600">
+                      <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
+                           src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-pink.jpg"
+                           alt="Image description">
+                    </a>
+                  </figure>
+                  <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+                    <a href="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/black-chair.jpg"
+                       itemprop="contentUrl" data-size="500x600">
+                      <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
+                           src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/black-chair.jpg"
+                           itemprop="thumbnail" alt="Image description">
+                    </a>
+                  </figure>
+                  <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+                    <a href="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-steel.jpg"
+                       itemprop="contentUrl" data-size="500x600">
+                      <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
+                           src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-steel.jpg"
+                           itemprop="thumbnail" alt="Image description">
+                    </a>
+                  </figure>
+                  <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+                    <a href="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-wood.jpg"
+                       itemprop="contentUrl" data-size="500x600">
+                      <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
+                           src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-wood.jpg"
+                           itemprop="thumbnail" alt="Image description">
+                    </a>
+                  </figure>
+                </div>
+              </div>
+              <div class="col-12 mx-auto px-4">
+                <h3 class="mt-lg-0 mt-4">Minimal Bar Stool</h3>
+                <h5>$1,419</h5>
+                <label class="mt-4">Description</label>
+                <ul class="text-sm">
+                  <li>The most beautiful curves of this swivel stool adds an elegant touch to any environment</li>
+                  <li>Memory swivel seat returns to original seat position</li>
+                  <li>Comfortable integrated layered chair seat cushion design</li>
+                  <li>Fully assembled! No assembly required</li>
+                </ul>
+                <label>Quantity</label>
+                <li class="nav-link dropdown pb-2 px-3">
+                  <select class="nav-item form-control form-control-sm" aria-label="Default select example">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </li>
+                <div class="row mt-2">
+                  <div class="text-center">
+                    <button type="button" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0">ADD TO
+                      CART</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h5 class="my-4 px-1 mt-6">Review</h5>
+            <div class="row mt-3 px-3">
+              <div class="d-flex mt-3">
+                <div class="flex-shrink-0">
+                  <img alt="Image placeholder" class="avatar rounded-circle" src="../../../assets/img/bruce-mars.jpg">
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="h6 my-0">Jessica Stones</h6>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
+                                     class="bi bi-trash3 me-2" viewBox="0 0 16 16">
+                      <path
+                              d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                    </svg></a>
+                  </div>
+                  <p class="text-sm">Society has put up so many boundaries, so many limitations on what’s right and wrong that
+                    it’s almost impossible to get a pure thought out. It’s like a little kid, a little boy.</p>
+                </div>
+              </div>
+              <div class="d-flex mt-3">
+                <div class="flex-shrink-0">
+                  <img alt="Image placeholder" class="avatar rounded-circle" src="../../../assets/img/bruce-mars.jpg">
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="h6 my-0">Jessica Stones</h6>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
+                                     class="bi bi-trash3 me-2" viewBox="0 0 16 16">
+                      <path
+                              d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                    </svg></a>
+                  </div>
+                  <p class="text-sm">Society has put up so many boundaries, so many limitations on what’s right and wrong that
+                    it’s almost impossible to get a pure thought out. It’s like a little kid, a little boy.</p>
+                </div>
+              </div>
+              <div class="d-flex mt-4">
+                <div class="flex-shrink-0">
+                  <img alt="Image placeholder" class="avatar rounded-circle me-3" src="../../../assets/img/team-4.jpg">
+                </div>
+                <div class="flex-grow-1 my-auto">
+                  <form>
+                    <textarea class="form-control" placeholder="Write your comment" rows="1"></textarea>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- End Content -->
+
+
+</html>
