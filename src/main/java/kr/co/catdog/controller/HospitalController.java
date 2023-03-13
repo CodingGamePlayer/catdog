@@ -10,6 +10,4 @@ public class HospitalController {
     public String hospital() {
         return "hospital";
     }
-
-
 }
