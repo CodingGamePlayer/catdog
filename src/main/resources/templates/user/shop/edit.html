@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko" itemscope itemtype="http://schema.org/WebPage"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout.html}">
+
+
+
+      <!-- Content -->
+      <div layout:fragment="content">
+        <div class="row mx-2">
+          <div class="col-12">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="font-weight-bolder">Product Image</h5>
+                <div class="row">
+                  <div class="col-12">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item">
+                          <div class="page-header min-vh-25 m-3 border-radius-xl"
+                               style="background-image: url('/assets/img/image1.png');">
+                            <span class="mask"></span>
+                          </div>
+                        </div>
+                        <div class="carousel-item">
+                          <div class="page-header min-vh-25 m-3 border-radius-xl"
+                               style="background-image: url('/assets/img/charles.jpg');">
+                            <span class="mask"></span>
+                          </div>
+                        </div>
+                        <div class="carousel-item active">
+                          <div class="page-header min-vh-25 m-3 border-radius-xl"
+                               style="background-image: url('/assets/img/meeting.jpg');">
+                            <span class="mask"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="position-absolute w-100 top-0" style="min-height: 32vh;">
+                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon position-absolute bottom-50" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                          <span class="carousel-control-next-icon position-absolute bottom-50" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 mt-4">
+                    <div class="d-flex">
+                      <button class="btn btn-pink btn-sm mb-0 me-2" type="button" name="button">Edit</button>
+                      <button class="btn btn-outline-pink btn-sm mb-0" type="button" name="button">Remove</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mt-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="font-weight-bolder">Product Information</h5>
+                <div class="row">
+                  <div class="col-12">
+                    <label>Name</label>
+                    <input class="form-control" type="text" value="Minimal Bar Stool" onfocus="focused(this)"
+                           onfocusout="defocused(this)">
+                  </div>
+                  <div class="col-12">
+                    <label class="mt-4">Price</label>
+                    <input class="form-control" type="text" value="$90" onfocus="focused(this)" onfocusout="defocused(this)">
+                  </div>
+                  <div class="col-12">
+                    <label>Stock</label>
+                    <input class="form-control" type="number" value="2" onfocus="focused(this)" onfocusout="defocused(this)">
+                  </div>
+                  <div class="col-12">
+                    <label>Type1</label>
+                    <div class="input-group">
+                      <select class="form-control" id="type1">
+                        <option>강아지</option>
+                        <option selected>고양이</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label>Type2</label>
+                    <div class="input-group">
+                      <select class="form-control" id="type2">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label>Content</label>
+                    <textarea class="form-control" placeholder="Write your comment" rows="2" style="resize: none;"></textarea>
+                  </div>
+                </div>
+                <div class="col-12 mt-4">
+                  <div class="d-flex">
+                    <button class="btn btn-pink btn-sm mb-0 me-2" type="button" name="button">Edit</button>
+                    <button class="btn btn-outline-pink btn-sm mb-0" type="button" name="button">Remove</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- End Content -->
+
+
+</html>
