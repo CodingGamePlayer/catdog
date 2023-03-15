@@ -255,7 +255,13 @@
             <th:block layout:fragment="content"></th:block>
 
             <!-- End Content -->
+            
+            
         </div>
+        <th:block th:if="${msg == 'cnBtn'}">
+        <a class="btn rounded-circle btn-outline-primary" 
+        	style=" position:sticky; z-index:10; bottom:100px; left:310px;" th:onclick="regCommunity()">글쓰기</a>
+        </th:block>
         <!-- Bottom bar -->
         <div class="container position-sticky z-index-sticky bottom-0">
             <div class="row">
@@ -320,7 +326,7 @@
                         </a>
                     </div>
                     <div class="col-2 d-flex justify-content-center pt-1">
-                        <a class="text-xxs jh-bar" href="#">
+                        <a class="text-xxs jh-bar" href="/user/community/list">
                             <div class="col-12 d-flex justify-content-center pb-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                                      class="bi bi-chat-text" viewBox="0 0 16 16">
@@ -405,6 +411,10 @@
         } else {
             console.error(countUp2.error);
         };
+    }
+    
+    function regCommunity(){
+    	window.location.href="/user/community/register";
     }
 </script>
 
