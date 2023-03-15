@@ -14,4 +14,6 @@ public interface CommunityMapper {
 	CommunityDTO findByCommunity(CommunityDTO communityDTO);
 	
 	int register(CommunityDTO communityDTO);
+	
+	int registerMedia(CommunityDTO communityDTO);
 }

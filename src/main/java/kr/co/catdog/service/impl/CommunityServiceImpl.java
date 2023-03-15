@@ -22,8 +22,8 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public List<CommunityDTO> selectAll(CommunityDTO communityDTO) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return communityMapper.selectAll();
 	}
 
 	@Override
@@ -36,7 +36,16 @@ public class CommunityServiceImpl implements CommunityService {
 	public int register(CommunityDTO communityDTO) {
 		int result = communityMapper.register(communityDTO);
 		log.info("db다녀온 communityDTO : "+communityDTO);
-		return result;
+		int comNo = communityDTO.getCommunity_no();
+		if(!(result>0)) {
+			return 0;
+		}else {
+			if( comNo == 0) {
+				return 0;
+			}else {
+				return communityMapper.registerMedia(communityDTO);
+			}
+		}
 	}
 	
 	
