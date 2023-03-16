@@ -18,7 +18,7 @@
     </select>
 
     <insert id="insert">
-        INSERT INTO (user_id, user_pw, user_name, user_phoneNumber, user_image, user_matchinguse)
+        INSERT INTO user (user_id, user_pw, user_name, user_phoneNumber, user_image, user_matchinguse)
         VALUES (#{user_id}, #{user_pw}, #{user_name}, #{user_phoneNumber}, #{user_image}, #{user_matchinguse})
     </insert>
 

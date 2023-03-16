@@ -18,6 +18,6 @@ public class UserDTO {
     String user_phoneNumber;
     LocalDate user_regdate;
     String user_image;
-    int user_matchinguse;
+    Boolean user_matchinguse;
 
 }
