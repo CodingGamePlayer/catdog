@@ -11,11 +11,12 @@ import java.time.LocalDate;
 @Builder
 
 public class UserVO {
-    String user_id;
-    String user_pw;
-    String user_name;
-    String user_phoneNumber;
-    LocalDate user_regdate;
-    String user_image;
-    Boolean user_matchinguse;
+    private String user_id;
+    private String user_pw;
+    private String user_name;
+    private String user_phoneNumber;
+    private LocalDate user_regdate;
+    private  String user_image;
+    private  Boolean user_matchinguse;
+
 }

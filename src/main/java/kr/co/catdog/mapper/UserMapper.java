@@ -8,9 +8,7 @@ import org.apache.ibatis.annotations.ResultMap;
 @Mapper
 public interface UserMapper {
 
-
-    UserVO selectOne(UserVO userVO);
-
+    UserVO findById(String user_id);
 
     int insert(UserVO userVO);
 
