@@ -1,6 +1,6 @@
 package kr.co.catdog.mapper;
 
-import groovy.util.logging.Slf4j;
+
 import kr.co.catdog.domain.UserVO;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
-@Slf4j
+
 @SpringBootTest
 
 class UserMapperTest {
@@ -18,7 +18,7 @@ UserMapper userMapper;
     @Test
     void selectOne() {
         UserVO userVO = UserVO.builder()
-                .user_id("asdf")
+                .user_id("1")
                 .user_name("킬러").build();
 
         System.out.println(userMapper.selectOne(userVO));

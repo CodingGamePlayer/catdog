@@ -13,7 +13,7 @@
         <result property="user_matchinguse" column="user_matchinguse"/>
     </resultMap>
 
-    <select id="selectOne" resultMap="userMap">
+    <select id="findById" resultMap="userMap">
     SELECT * FROM user WHERE user_id = #{user_id}
     </select>
 
