@@ -15,37 +15,37 @@
               <p class="mb-0 text-sm">Personal info and options to manage it.</p>
             </div>
             <div class="card-body">
-              <form role="form text-left">
+              <form role="form text-left" th:action="@{/user/profile/edit-person}" method="post">
                 <label>Name</label>
                 <div class="input-group mb-2">
-                  <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name-addon">
+                  <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name-addon" th:value="${user.user_name}" name="user_name">
                 </div>
-                <label>Email</label>
+                <label>Id</label>
                 <div class="input-group mb-2">
-                  <input type="email" class="form-control" placeholder="Email" aria-label="Email"
-                         aria-describedby="email-addon">
+                  <input type="email" class="form-control" placeholder="Email" aria-label="Id"
+                         aria-describedby="Id-addon" th:value="${user.user_id}" name="user_id">
                 </div>
                 <label>Password</label>
                 <div class="input-group mb-2">
                   <input type="password" class="form-control" placeholder="Password" aria-label="Password"
-                         aria-describedby="password-addon">
+                         aria-describedby="password-addon" th:value="${user.user_pw}" name="user_pw">
                 </div>
                 <label>Phone</label>
                 <div class="input-group mb-2">
-                  <input type="tel" class="form-control" placeholder="Phone" aria-label="Phone" aria-describedby="phone-addon">
+                  <input type="tel" class="form-control" placeholder="Phone" aria-label="Phone" aria-describedby="phone-addon" th:value="${user.user_phoneNumber}" name="user_phoneNumber">
                 </div>
                 <label>Photo</label>
                 <div class="input-group mb-3">
                   <input type="text" class="form-control" placeholder="Add a photo" aria-label="Photo"
-                         aria-describedby="photo-addon">
+                         aria-describedby="photo-addon" th:value="${user.user_image}" name="user_image">
                   <button class="btn btn-outline-secondary mb-0" type="button" id="button-file">File</button>
                 </div>
                 <div class="form-check form-switch text-left">
-                  <input class="form-check-input" type="checkbox" value="" id="matching" checked="">
-                  <label class="form-check-label" for="matching">매칭등록여부</label>
+                  <input class="form-check-input" type="checkbox" value="" id="matching" checked="" th:value="${user.user_matchinguse}">
+                  <label class="form-check-label" for="matching" name="user_matchinguse">매칭등록여부</label>
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0">수정하기</button>
+                  <button type="submit" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0">수정하기</button>
                 </div>
               </form>
               <div class="d-flex justify-content-end align-items-center text-xs pt-4">
@@ -61,7 +61,6 @@
             </div>
           </div>
         </div>
-
       </div>
       <!-- End Content -->
 
