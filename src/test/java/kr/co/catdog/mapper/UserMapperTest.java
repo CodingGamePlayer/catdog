@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 
@@ -20,8 +19,6 @@ UserMapper userMapper;
         UserVO userVO = UserVO.builder()
                 .user_id("1")
                 .user_name("킬러").build();
-
-        System.out.println(userMapper.selectOne(userVO));
     }
 
     @Test

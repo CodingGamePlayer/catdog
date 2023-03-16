@@ -1,9 +1,12 @@
 package kr.co.catdog.controller;
 
+import kr.co.catdog.dto.PetDTO;
 import kr.co.catdog.dto.UserDTO;
 import kr.co.catdog.mapper.UserMapper;
+import kr.co.catdog.service.PetService;
 import kr.co.catdog.service.UserService;
 import kr.co.catdog.service.impl.UserServiceImp;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +21,14 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 @RequestMapping("/user/profile")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final PetService petService;
+
 
     @GetMapping("/edit-person")
     String editPersonForm(HttpServletRequest request, Model model) {
@@ -49,10 +52,24 @@ public class UserController {
     }
 
     @GetMapping("/edit-pet")
-    String editPetForm() {
+    String editPetForm(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String user_id = (String) session.getAttribute("loginInfo");
+
+        PetDTO pet = petService.findById(user_id);
+        model.addAttribute("pet", pet);
+
+        log.info(String.valueOf(pet));
+
         return "user/profile/edit-pet";
     }
 
+    @PostMapping("/edit-pet")
+    String editPet(PetDTO petDTO){
+        int result = petService.update(petDTO);
+        log.info(String.valueOf(result));
+        return "redirect:/user/profile/edit-pet";
+    }
 
     @GetMapping("/delete")
     String delete(HttpServletRequest request) {

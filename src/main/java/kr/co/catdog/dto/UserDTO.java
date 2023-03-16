@@ -17,7 +17,7 @@ public class UserDTO {
     private String user_name;
     private String user_phoneNumber;
     private LocalDate user_regdate;
-    private  String user_image;
-    private  Boolean user_matchinguse;
+    private String user_image;
+    private Boolean user_matchinguse;
 
 }
