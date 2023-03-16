@@ -6,16 +6,18 @@
 
 <!-- Content -->
 <div layout:fragment="content">
+  <th:block th:each="communityDTO : ${communityDTOs}">
   <div class="col-12">
     <div class="card shadow-none">
       <div class="card-header d-flex align-items-center border-bottom py-3">
         <div class="d-flex align-items-center">
           <a href="javascript:;">
-            <img src="/assets/img/team-4.jpg" class="avatar" alt="profile-image">
+            <svg data-jdenticon-value="nickname" th:data-jdenticon-value="${communityDTO.user_id}"
+                   width="40" height="40" class="avatar avatar-sm"></svg>
           </a>
           <div class="mx-3">
-            <a href="javascript:;" class="text-dark font-weight-600 text-sm">John Snow</a>
-            <small class="d-block text-muted">2023.03.13</small>
+            <a href="javascript:;" class="text-dark font-weight-600 text-sm" th:text="${communityDTO.user_id}"></a>
+            <small class="d-block text-muted" th:text="${communityDTO.community_regdate}"></small>
           </div>
         </div>
         <div class="text-end ms-auto">
@@ -26,7 +28,7 @@
       </div>
       <div class="card-body">
         <img alt="Image placeholder"
-          src="https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2100&amp;q=80"
+          th:src="|/testimg/${communityDTO.media_path}|"
           class="img-fluid border-radius-lg shadow-lg">
         <div class="row align-items-center px-2 mt-4 mb-2">
           <div class="col-6">
@@ -48,11 +50,8 @@
               <a href="#"><small class="ps-2">삭제</small></a>
             </div>
           </div>
-          <a href="javascript:;" class="text-dark font-weight-600 text-sm">John Snow</a>
-          <p class="mb-4">
-            Personal profiles are the perfect way for you to grab their attention and persuade recruiters to continue
-            reading your CV because you’re telling them from the off exactly why they should hire you.
-          </p>
+          <a href="javascript:;" class="text-dark font-weight-600 text-sm" th:text="${communityDTO.user_id}"></a>
+          <p class="mb-4" th:text="${communityDTO.community_content}"></p>
           <hr class="horizontal dark my-3">
         </div>
         <div class="collapse" id="collapseExample1">
@@ -111,7 +110,10 @@
               </div>
               <div class="flex-grow-1 my-auto">
                 <form>
-                  <textarea class="form-control" placeholder="Write your comment" rows="1"></textarea>
+                  <div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Write your comment" aria-label="Recipient's username" rows="1" aria-describedby="button-addon2">
+  <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+</div>
                 </form>
               </div>
             </div>
@@ -120,120 +122,7 @@
       </div>
     </div>
   </div>
-  <div class="col-12">
-    <div class="card shadow-none">
-      <div class="card-header d-flex align-items-center border-bottom py-3">
-        <div class="d-flex align-items-center">
-          <a href="javascript:;">
-            <img src="/assets/img/team-4.jpg" class="avatar" alt="profile-image">
-          </a>
-          <div class="mx-3">
-            <a href="javascript:;" class="text-dark font-weight-600 text-sm">John Snow</a>
-            <small class="d-block text-muted">2023.03.13</small>
-          </div>
-        </div>
-        <div class="text-end ms-auto">
-          <button type="button" class="btn btn-sm bg-gradient-primary mb-0">
-            <i class="fas fa-plus pe-2" aria-hidden="true"></i> Follow
-          </button>
-        </div>
-      </div>
-      <div class="card-body">
-        <img alt="Image placeholder"
-          src="https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2100&amp;q=80"
-          class="img-fluid border-radius-lg shadow-lg">
-        <div class="row align-items-center px-2 mt-4 mb-2">
-          <div class="col-6">
-            <div class="d-flex">
-              <div class="d-flex align-items-center">
-                <i class="ni ni-like-2 me-1 cursor-pointer"></i>
-                <span class="text-sm me-3 ">150</span>
-              </div>
-              <div class="d-flex align-items-center">
-                <i class="ni ni-chat-round me-1 cursor-pointer" data-bs-toggle="collapse" href="#collapseExample"
-                  role="button" aria-expanded="false" aria-controls="collapseExample"></i>
-                <span class="text-sm me-3">36</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="d-flex align-items-center justify-content-sm-end">
-              <a href="#"><small class="ps-2">수정</small></a>
-              <a href="#"><small class="ps-2">삭제</small></a>
-            </div>
-          </div>
-          <a href="javascript:;" class="text-dark font-weight-600 text-sm">John Snow</a>
-          <p class="mb-4">
-            Personal profiles are the perfect way for you to grab their attention and persuade recruiters to continue
-            reading your CV because you’re telling them from the off exactly why they should hire you.
-          </p>
-          <hr class="horizontal dark my-3">
-        </div>
-        <div class="collapse" id="collapseExample">
-          <div class="card card-body">
-            <div class="d-flex">
-              <div class="flex-shrink-0">
-                <img alt="Image placeholder" class="avatar rounded-circle" src="../../../assets/img/bruce-mars.jpg">
-              </div>
-              <div class="flex-grow-1 ms-3">
-                <h6 class="h5 mt-0">Michael Lewis</h6>
-                <p class="text-sm">I always felt like I could do anything. That’s the main thing people are controlled
-                  by!
-                  Thoughts- their perception of themselves!</p>
-                <div class="row d-flex align-items-center px-2">
-                  <div class="col-6">
-                    <div class="d-flex align-items-center">
-                      <i class="ni ni-like-2 me-1 cursor-pointer"></i>
-                      <span class="text-sm me-2">3 likes</span>
-                    </div>
-                  </div>
-                  <div class="col-6 pe-4">
-                    <div class="d-flex align-items-center justify-content-sm-end">
-                      <a href="#"><small class="ps-2">삭제</small></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="d-flex mt-3">
-              <div class="flex-shrink-0">
-                <img alt="Image placeholder" class="avatar rounded-circle" src="../../../assets/img/bruce-mars.jpg">
-              </div>
-              <div class="flex-grow-1 ms-3">
-                <h6 class="h5 mt-0">Jessica Stones</h6>
-                <p class="text-sm">Society has put up so many boundaries, so many limitations on what’s right and wrong
-                  that
-                  it’s almost impossible to get a pure thought out. It’s like a little kid, a little boy.</p>
-                <div class="row d-flex align-items-center px-2">
-                  <div class="col-6">
-                    <div class="d-flex align-items-center">
-                      <i class="ni ni-like-2 me-1 cursor-pointer"></i>
-                      <span class="text-sm me-2">3 likes</span>
-                    </div>
-                  </div>
-                  <div class="col-6 pe-4">
-                    <div class="d-flex align-items-center justify-content-sm-end">
-                      <a href="#"><small class="ps-2">삭제</small></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="d-flex mt-4">
-              <div class="flex-shrink-0">
-                <img alt="Image placeholder" class="avatar rounded-circle me-3" src="../../../assets/img/team-4.jpg">
-              </div>
-              <div class="flex-grow-1 my-auto">
-                <form>
-                  <textarea class="form-control" placeholder="Write your comment" rows="1"></textarea>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  </th:block>
 </div> <!-- End List -->
 <!-- End Content -->
 </html>

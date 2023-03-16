@@ -21,7 +21,7 @@ public class CommunityServiceImpl implements CommunityService {
 	private ModelMapper modelMapper = new ModelMapper();
 
 	@Override
-	public List<CommunityDTO> selectAll(CommunityDTO communityDTO) {
+	public List<CommunityDTO> selectAll() {
 		
 		return communityMapper.selectAll();
 	}

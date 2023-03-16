@@ -6,7 +6,7 @@ import kr.co.catdog.dto.CommunityDTO;
 
 public interface CommunityService {
 	
-	List<CommunityDTO> selectAll(CommunityDTO communityDTO);
+	List<CommunityDTO> selectAll();
 	
 	CommunityDTO findByCommunity(CommunityDTO communityDTO);
 	
