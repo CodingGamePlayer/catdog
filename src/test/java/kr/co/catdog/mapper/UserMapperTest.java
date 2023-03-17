@@ -19,7 +19,6 @@ UserMapper userMapper;
         UserVO userVO = UserVO.builder()
                 .user_id("1")
                 .user_name("킬러").build();
-
     }
 
     @Test
