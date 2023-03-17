@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.UUID;
 
 @Controller
@@ -52,6 +53,11 @@ public class UserController {
         String filename = uuid+"_"+userDTO.getUser_image();
         userDTO.setUser_image(filename);
         log.info("ha2"+String.valueOf(userDTO));
+//
+//        try {
+//
+//        } catch (IOException) {
+//        }
 
         int result = userService.update(userDTO);
         log.info(String.valueOf(result));
@@ -64,6 +70,7 @@ public class UserController {
         String user_id = (String) session.getAttribute("session_id");
 
         PetDTO pet = petService.findById(user_id);
+
         model.addAttribute("pet", pet);
 
         log.info(String.valueOf(pet));

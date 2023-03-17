@@ -23,21 +23,17 @@
                 <label for="type1">Type1</label>
                 <div class="input-group mb-2">
                   <select class="form-control" id="type1" name="">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <th:block th:each=" pet : ${pet.category1VOList}">
+                      <option th:text="${pet.category1_type}"></option>
+                    </th:block>
                   </select>
                 </div>
                 <label for="type2">Type2</label>
                 <div class="input-group mb-2">
                   <select class="form-control" id="type2" name="">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <th:block th:each=" pet : ${pet.category2VOList}">
+                    <option th:text="${pet.category2_type}"></option>
+                    </th:block>
                   </select>
                 </div>
                 <label>Age</label>
