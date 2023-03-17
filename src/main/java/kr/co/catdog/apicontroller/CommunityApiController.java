@@ -25,37 +25,37 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 public class CommunityApiController {
-	
+
 	@Value("${kr.co.catdog.upload.path}")
 	private String upPath;
-	
+
 	@Autowired
 	private CommunityService communityService;
-	
+
 	@GetMapping("/testimg/{fileName}")
 	public ResponseEntity<Resource> viewFileGet(@PathVariable String fileName){
 		Resource resource = new FileSystemResource(upPath + File.separator+ fileName);
 		log.info("파일 이름 : "+fileName);
 		String resourceName = resource.getFilename();
 		HttpHeaders headers = new HttpHeaders();
-		
-		
+
+
 		try {
 			headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
 		} catch (IOException e) {
-			
+
 			return ResponseEntity.internalServerError().build();
 		}
 		return ResponseEntity.ok().headers(headers).body(resource);
-		
+
 	}
-	
+
 	@PostMapping("/api/user/community/reply")
 	public ResponseEntity<ReplyVO> registerReply(@RequestBody ReplyDTO replyDTO){
 		log.info("replyDTO : "+replyDTO);
 			int result = communityService.registerReply(replyDTO);
 		return  ResponseEntity.status(HttpStatus.OK).build();
-		
+
 	}
 
 }

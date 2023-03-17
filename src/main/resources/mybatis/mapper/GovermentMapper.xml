@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.catdog.mapper.GovermentMapper">
+
+    <resultMap id="govermentMap" type="GovermentDTO">
+        <result property="hospital_id" column="hospital_id"/>
+        <result property="business_name" column="business_name"/>
+        <result property="tel" column="tel"/>
+        <result property="longitude" column="longitude"/>
+        <result property="latitude" column="latitude"/>
+    </resultMap>
+
+    <select id="getAll" resultMap="govermentMap">
+        SELECT hospital_id, business_name, tel, longitude, latitude
+        FROM goverment_data
+        WHERE 영업상태명 ='영업/정상'
+    </select>
+
+</mapper>
