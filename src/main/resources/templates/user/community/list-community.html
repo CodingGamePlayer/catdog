@@ -45,7 +45,7 @@
             </div>
           </div>
           <div class="col-6">
-            <div class="d-flex align-items-center justify-content-sm-end">
+            <div class="d-flex align-items-center justify-content-sm-end" th:if="${user_id == communityDTO.user_id}">
               <a href="#"><small class="ps-2">수정</small></a>
               <a href="#"><small class="ps-2">삭제</small></a>
             </div>
@@ -86,15 +86,54 @@
               </div>
               <div class="flex-grow-1 my-auto">
                 <form>
+                  <input type="hidden" th:value="${user_id}" id="user_id">
+                  <input type="hidden" th:value="${communityDTO.community_no}" id="community_no">
                 <div class="input-group mb-3">
                   <input type="text" class="form-control" placeholder="Write your comment" aria-label="reply-content"
-                         aria-describedby="comment">
+                         aria-describedby="comment" id="reply_content">
                   <button class="btn btn-outline-secondary mb-0" type="button" id="button-reply">등록</button>
                 </div>
                 </form>
               </div>
             </div>
           </div>
+            <script>
+            	const replyBtn = document.getElementById('button-reply');
+            	replyBtn.addEventListener("click", () => {
+            		const input_user_id = document.getElementById('user_id');
+            		const input_community_no = document.getElementById('community_no');
+            		const input_reply_content = document.getElementById('reply_content');
+            		
+            		const reply_if={
+            				user_id : input_user_id,
+            				community_no : input_community_no,
+            				reply_content : input_reply_content
+            		};
+            		if(input_user_id == "" || input_community_no == "" ||
+            				input_reply_content == "" ){
+            	            alert('댓글 등록 실패입니다.')
+            	            return;
+            	        }
+            		
+            		console.log(reply_if);
+            		
+            		const url = "/api/user/community/reply";
+            		
+            		fetch(url, {
+            			method : "POST",
+            			body : JSON.stringify(reply_if),
+            	        headers : {
+            	               "Content-Type" : "application/json"
+            	           }
+            		}).then(response =>{
+            			if(response.ok){
+            				response.text();
+            			}else{
+            				alert('댓글등록 실패!');
+            			}
+            		})
+            	});
+            </script>
         </div>
       </div>
     </div>

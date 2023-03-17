@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.catdog.domain.CommunityVO;
 import kr.co.catdog.dto.CommunityDTO;
 import kr.co.catdog.mapper.CommunityMapper;
 import kr.co.catdog.service.CommunityService;
@@ -21,7 +22,7 @@ public class CommunityServiceImpl implements CommunityService {
 	private ModelMapper modelMapper = new ModelMapper();
 
 	@Override
-	public List<CommunityDTO> selectAll() {
+	public List<CommunityVO> selectAll() {
 		
 		return communityMapper.selectAll();
 	}

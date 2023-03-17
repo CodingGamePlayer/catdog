@@ -25,8 +25,8 @@
     	VALUES (#{community_no}, #{media_type}, #{media_path})
    	</insert>
     
-    <select id="selectAll" resultType="CommunityDTO">
-    	SELECT community.*, media.media_type, media_path FROM community
+    <select id="selectAll" resultType="CommunityVO">
+    	SELECT community.*, media.media_type, media_path,  FROM community
     	LEFT JOIN media ON community.community_no = media.community_no
     	ORDER BY community.community_no DESC
     </select>

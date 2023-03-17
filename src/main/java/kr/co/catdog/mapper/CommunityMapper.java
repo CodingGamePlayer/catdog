@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.catdog.domain.CommunityVO;
 import kr.co.catdog.dto.CommunityDTO;
 
 @Mapper
 public interface CommunityMapper {
 	
-	List<CommunityDTO> selectAll();
+	List<CommunityVO> selectAll();
 	
 	CommunityDTO findByCommunity(CommunityDTO communityDTO);
 	

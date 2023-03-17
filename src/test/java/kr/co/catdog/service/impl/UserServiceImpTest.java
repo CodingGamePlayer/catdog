@@ -23,10 +23,10 @@ class UserServiceImpTest {
         UserDTO userDTO = UserDTO.builder()
                 .user_id("1")
                 .build();
-        UserVO userVO = userMapper.selectOne(modelMapper.map(userDTO, UserVO.class));
-        UserDTO userDTO1 = modelMapper.map(userVO, UserDTO.class);
-        log.info(String.valueOf(userVO));
-        log.info(String.valueOf(userDTO1));
+//        UserVO userVO = userMapper.selectOne(modelMapper.map(userDTO, UserVO.class));
+//        UserDTO userDTO1 = modelMapper.map(userVO, UserDTO.class);
+//        log.info(String.valueOf(userVO));
+//        log.info(String.valueOf(userDTO1));
 
     }
 
