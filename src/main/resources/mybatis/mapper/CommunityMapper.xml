@@ -13,6 +13,12 @@
         <result property="community_content" column="community_content"/>
         <result property="community_regdate" column="community_regdate"/>
         <result property="community_editdate" column="community_editdate"/>
+        <result property="media_type" column="media_type"/>
+        <result property="media_path" column="media_path"/>
+        <result property="reply_no" column="reply_no"/>
+        <result property="reply_user_id" column="reply_user_id"/>
+        <result property="reply_content" column="reply_content"/>
+        <result property="reply_regdate" column="reply_regdate"/>
     </resultMap>
     
     <insert id="register" parameterType="CommunityDTO" useGeneratedKeys="true" keyProperty="community_no">
@@ -24,10 +30,17 @@
     	INSERT INTO media(community_no, media_type, media_path)
     	VALUES (#{community_no}, #{media_type}, #{media_path})
    	</insert>
+   	
+   	<insert id="registerReply" parameterType="ReplyVO">
+   		INSERT INTO reply(community_no, user_id, reply_content, reply_regdate)
+   		VALUES (#{community_no}, #{user_id}, #{reply_content}, now())
+   	</insert>
     
-    <select id="selectAll" resultType="CommunityVO">
-    	SELECT community.*, media.media_type, media_path,  FROM community
+    <select id="selectAll" resultMap="CommunityMap">
+    	SELECT community.*, media.media_type, media_path, reply.reply_no, reply.user_id AS reply_user_id,
+    	reply.reply_content, reply.reply_regdate FROM community
     	LEFT JOIN media ON community.community_no = media.community_no
+    	LEFT JOIN reply ON community.community_no = reply.community_no
     	ORDER BY community.community_no DESC
     </select>
 

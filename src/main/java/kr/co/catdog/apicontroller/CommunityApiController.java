@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.catdog.domain.ReplyVO;
 import kr.co.catdog.dto.ReplyDTO;
+import kr.co.catdog.service.CommunityService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -26,6 +28,9 @@ public class CommunityApiController {
 	
 	@Value("${kr.co.catdog.upload.path}")
 	private String upPath;
+	
+	@Autowired
+	private CommunityService communityService;
 	
 	@GetMapping("/testimg/{fileName}")
 	public ResponseEntity<Resource> viewFileGet(@PathVariable String fileName){
@@ -47,7 +52,8 @@ public class CommunityApiController {
 	
 	@PostMapping("/api/user/community/reply")
 	public ResponseEntity<ReplyVO> registerReply(@RequestBody ReplyDTO replyDTO){
-		
+		log.info("replyDTO : "+replyDTO);
+			int result = communityService.registerReply(replyDTO);
 		return  ResponseEntity.status(HttpStatus.OK).build();
 		
 	}
