@@ -9,12 +9,13 @@
         <result property="user_pw" column="user_pw"/>
         <result property="user_name" column="user_name"/>
         <result property="user_phoneNumber" column="user_phoneNumber"/>
+        <result property="user_regdate" column="user_regdate"/>
         <result property="user_image" column="user_image"/>
         <result property="user_matchinguse" column="user_matchinguse"/>
     </resultMap>
 
     <select id="findById" resultMap="userMap">
-    SELECT * FROM user WHERE user_id = #{user_id}
+        SELECT * FROM user WHERE user_id = #{user_id}
     </select>
 
     <insert id="insert">
@@ -25,7 +26,7 @@
     <update id="update">
         UPDATE user
         SET user_pw = #{user_pw},user_name= #{user_name}, user_phoneNumber=#{user_phoneNumber}, user_image= #{user_image}, user_matchinguse=#{user_matchinguse}
-    WHERE user_id= #{user_id}
+        WHERE user_id= #{user_id}
     </update>
 
     <delete id="delete">

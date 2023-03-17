@@ -1,4 +1,4 @@
-package kr.co.catdog.service.impl;
+ package kr.co.catdog.service.impl;
 
 import kr.co.catdog.domain.UserVO;
 import kr.co.catdog.dto.UserDTO;
@@ -18,17 +18,7 @@ class UserServiceImpTest {
     @Autowired
     UserMapper userMapper;
 
-    @Test
-    void selectOne() {
-        UserDTO userDTO = UserDTO.builder()
-                .user_id("1")
-                .build();
-//        UserVO userVO = userMapper.selectOne(modelMapper.map(userDTO, UserVO.class));
-//        UserDTO userDTO1 = modelMapper.map(userVO, UserDTO.class);
-//        log.info(String.valueOf(userVO));
-//        log.info(String.valueOf(userDTO1));
 
-    }
 
     @Test
     void insert() {
