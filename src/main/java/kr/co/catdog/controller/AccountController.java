@@ -33,9 +33,10 @@ public class AccountController {
 
         if (user.getUser_pw().equals(userDTO.getUser_pw())) {
             HttpSession session = request.getSession();
-            session.setAttribute("loginInfo", userDTO.getUser_id());
+            session.setAttribute("session_id", user.getUser_id());
+            session.setAttribute("session_name",user.getUser_name());
 
-            log.info(String.valueOf(session.getAttribute("loginInfo")));
+            log.info(String.valueOf(session.getAttribute("session_id")));
         }
         return "redirect:/";
     }
