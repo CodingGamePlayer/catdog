@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.catdog.mapper.HospitalMapper">
+
+
+    <insert id="insert">
+        INSERT INTO hospital
+        (`hospital_id`,
+        `business_name`,
+        `tel`,
+        `longitude`,
+        `latitude`,
+        `region_type_b`,
+        `address_name_b`,
+        `region_1depth_name_b`,
+        `region_2depth_name_b`,
+        `region_3depth_name_b`,
+        `region_4depth_name_b`,
+        `code_b`,
+        `longitude_b`,
+        `region_type_h`,
+        `address_name_h`,
+        `region_1depth_name_h`,
+        `region_2depth_name_h`,
+        `region_3depth_name_h`,
+        `region_4depth_name_h`,
+        `code_h`,
+        `longitude_h`,
+        `latitude_h`)
+        VALUES
+        (
+        #{hospital_id},
+        #{business_name},
+        #{tel},
+        #{longitude},
+        #{latitude},
+        #{region_type_b},
+        #{address_name_b},
+        #{region_1depth_name_b},
+        #{region_2depth_name_b},
+        #{region_3depth_name_b},
+        #{region_4depth_name_b},
+        #{code_b},
+        #{longitude_b},
+        #{region_type_h},
+        #{address_name_h},
+        #{region_1depth_name_h},
+        #{region_2depth_name_h},
+        #{region_3depth_name_h},
+        #{region_4depth_name_h},
+        #{code_h},
+        #{longitude_h},
+        #{latitude_h}
+        )
+    </insert>
+</mapper>

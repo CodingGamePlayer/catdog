@@ -1,4 +1,4 @@
-package kr.co.catdog.apicontroller;
+package kr.co.catdog.apiController;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +47,7 @@ public class CommunityApiController {
 	
 	@PostMapping("/api/user/community/reply")
 	public ResponseEntity<ReplyVO> registerReply(@RequestBody ReplyDTO replyDTO){
-		
+
 		return  ResponseEntity.status(HttpStatus.OK).build();
 		
 	}
