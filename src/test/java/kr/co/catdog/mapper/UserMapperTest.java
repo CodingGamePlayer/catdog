@@ -21,7 +21,7 @@ UserMapper userMapper;
                 .user_id("1")
                 .user_name("킬러").build();
 
-        System.out.println(userMapper.selectOne(userVO));
+//        System.out.println(userMapper.selectOne(userVO));
     }
 
     @Test

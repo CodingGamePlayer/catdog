@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.catdog.domain.CommunityVO;
 import kr.co.catdog.dto.CommunityDTO;
 import kr.co.catdog.mapper.CommunityMapper;
 import kr.co.catdog.service.CommunityService;
@@ -21,9 +22,9 @@ public class CommunityServiceImpl implements CommunityService {
 	private ModelMapper modelMapper = new ModelMapper();
 
 	@Override
-	public List<CommunityDTO> selectAll(CommunityDTO communityDTO) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CommunityVO> selectAll() {
+		
+		return communityMapper.selectAll();
 	}
 
 	@Override
@@ -36,7 +37,16 @@ public class CommunityServiceImpl implements CommunityService {
 	public int register(CommunityDTO communityDTO) {
 		int result = communityMapper.register(communityDTO);
 		log.info("db다녀온 communityDTO : "+communityDTO);
-		return result;
+		int comNo = communityDTO.getCommunity_no();
+		if(!(result>0)) {
+			return 0;
+		}else {
+			if( comNo == 0) {
+				return 0;
+			}else {
+				return communityMapper.registerMedia(communityDTO);
+			}
+		}
 	}
 	
 	
