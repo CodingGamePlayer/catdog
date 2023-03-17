@@ -23,7 +23,7 @@
                 <label>Id</label>
                 <div class="input-group mb-2">
                   <input type="email" class="form-control" placeholder="Email" aria-label="Id"
-                         aria-describedby="Id-addon" th:value="${user.user_id}" name="user_id">
+                         aria-describedby="Id-addon" th:value="${user.user_id}" name="user_id" readonly>
                 </div>
                 <label>Password</label>
                 <div class="input-group mb-2">
@@ -41,7 +41,7 @@
                   <button class="btn btn-outline-secondary mb-0" type="button" id="button-file">File</button>
                 </div>
                 <div class="form-check form-switch text-left">
-                  <input class="form-check-input" type="checkbox" value="" id="matching" checked="" th:value="${user.user_matchinguse}">
+                  <input class="form-check-input" type="checkbox" id="matching" checked="1" th:value="${user.user_matchinguse}">
                   <label class="form-check-label" for="matching" name="user_matchinguse">매칭등록여부</label>
                 </div>
                 <div class="text-center">
