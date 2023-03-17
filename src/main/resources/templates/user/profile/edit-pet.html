@@ -42,7 +42,7 @@
                 </div>
                 <label>Age</label>
                 <div class="input-group mb-2">
-                  <input type="number" class="form-control" placeholder="Age" aria-label="Age" aria-describedby="age-addon" th:value="${pet.pet_age}" name="pet_age">
+                  <input type="text" class="form-control" placeholder="Age" aria-label="Age" aria-describedby="age-addon" th:value="${pet.pet_age}" name="pet_age">
                 </div>
                 <label>Pet Number</label>
                 <div class="input-group mb-2">
@@ -51,36 +51,20 @@
                 </div>
                 <label>Gender</label>
                 <div class="d-flex">
-                  <th:block th:if="${pet.pet_gender!=2}">
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="pet_gender" id="flexRadioDefault1" value="1" checked>
-                      <label class="form-check-label mb-0" for="flexRadioDefault1">
-                        <span>Male</span>
-                      </label>
-                    </div>
-                    <div class="form-check mx-3">
-                      <input class="form-check-input" type="radio" name="pet_gender" id="flexRadioDefault2" value="2">
-                      <label class="form-check-label mb-0" for="flexRadioDefault2">
-                        <span>Female</span>
-                      </label>
-                    </div>
-                  </th:block>
-                  <th:block th:unless="${pet.pet_gender!=2}">
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="pet_gender" id="flexRadioDefault3" value="1">
-                      <label class="form-check-label mb-0" for="flexRadioDefault3">
-                        <span>Male</span>
-                      </label>
-                    </div>
-                    <div class="form-check mx-3">
-                      <input class="form-check-input" type="radio" name="pet_gender" id="flexRadioDefault4" value="2" checked>
-                      <label class="form-check-label mb-0" for="flexRadioDefault4">
-                        <span>Female</span>
-                      </label>
-                    </div>
-                  </th:block>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="" id="flexRadioDefault1" checked>
+                    <label class="form-check-label mb-0" for="flexRadioDefault1">
+                      <span>Male</span>
+                    </label>
+                  </div>
+                  <div class="form-check mx-3">
+                    <input class="form-check-input" type="radio" name="" id="flexRadioDefault2">
+                    <label class="form-check-label mb-0" for="flexRadioDefault2">
+                      <span>Female</span>
+                    </label>
+                  </div>
                 </div>
-                <input type="hidden" th:value="${session.session_id}" name="user_id">
+                <input type="hidden" th:value="${session.loginInfo}" name="user_id">
                 <div class="text-center">
                   <button type="submit" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0">수정하기</button>
                 </div>
@@ -88,6 +72,7 @@
             </div>
           </div>
         </div>
+
       </div>
       <!-- End Content -->
 

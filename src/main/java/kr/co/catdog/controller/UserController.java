@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.UUID;
 
 @Controller
 @Slf4j
@@ -35,7 +34,7 @@ public class UserController {
     String editPersonForm(HttpServletRequest request, Model model) {
 
         HttpSession session = request.getSession();
-        String user_id = (String) session.getAttribute("session_id");
+        String user_id = (String) session.getAttribute("loginInfo");
 
         UserDTO user = userService.findById(user_id);
         model.addAttribute("user", user);
@@ -47,12 +46,7 @@ public class UserController {
 
     @PostMapping("/edit-person")
     String editPerson(UserDTO userDTO) {
-        log.info("ha"+String.valueOf(userDTO));
-        String uuid = UUID.randomUUID().toString();
-        String filename = uuid+"_"+userDTO.getUser_image();
-        userDTO.setUser_image(filename);
-        log.info("ha2"+String.valueOf(userDTO));
-
+        log.info(String.valueOf(userDTO));
         int result = userService.update(userDTO);
         log.info(String.valueOf(result));
         return "redirect:/user/profile/edit-person";
@@ -61,7 +55,7 @@ public class UserController {
     @GetMapping("/edit-pet")
     String editPetForm(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
-        String user_id = (String) session.getAttribute("session_id");
+        String user_id = (String) session.getAttribute("loginInfo");
 
         PetDTO pet = petService.findById(user_id);
         model.addAttribute("pet", pet);
@@ -81,7 +75,7 @@ public class UserController {
     @GetMapping("/delete")
     String delete(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String user_id = (String) session.getAttribute("session_id");
+        String user_id = (String) session.getAttribute("loginInfo");
 
         int result = userService.delete(user_id);
         log.info(String.valueOf(result));

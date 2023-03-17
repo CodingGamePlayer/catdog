@@ -22,7 +22,7 @@ public class LoginCheckFilter implements Filter {
 
         HttpSession session = req.getSession();
 
-        if (session.getAttribute("session_id") == null) {
+        if (session.getAttribute("loginInfo") == null) {
             resp.sendRedirect("/login");
             return;
         }
