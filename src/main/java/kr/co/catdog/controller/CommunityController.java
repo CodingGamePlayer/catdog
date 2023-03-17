@@ -34,9 +34,10 @@ public class CommunityController {
 	ModelAndView list(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		String user_id = (String) session.getAttribute("logininfo");
+		String user_id = (String) session.getAttribute("loginInfo");
+		log.info("로그인 아이디 : "+ user_id);
 		mav.addObject("msg", "cnBtn");
-		mav.addObject("communityDTOs", communityservice.selectAll());
+		mav.addObject("communityVOs", communityservice.selectAll());
 		mav.addObject("user_id", user_id);
 		mav.setViewName("/user/community/list-community");
 		return mav;
@@ -50,9 +51,17 @@ public class CommunityController {
 	}
 	
 	@GetMapping("register")
-	ModelAndView register() {
+	ModelAndView register(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		String user_id = (String) session.getAttribute("loginInfo");
+		if(user_id == null) {
+			mav.setViewName("/sign-in");
+		}else {
+		mav.addObject("user_id", user_id);
+		
 		mav.setViewName("/user/community/register");
+		}
 		return mav;
 	}
 	

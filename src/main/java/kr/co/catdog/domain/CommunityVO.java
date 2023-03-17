@@ -21,5 +21,9 @@ public class CommunityVO {
 	private String community_editdate;
 	private int media_type;
 	private String media_path;
+	private int reply_no;
+	private String reply_user_id;
+	private String reply_content;
+	private String reply_regdate;
 
 }
