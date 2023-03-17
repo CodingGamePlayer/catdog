@@ -6,18 +6,18 @@
 
 <!-- Content -->
 <div layout:fragment="content">
-  <th:block th:each="communityDTO : ${communityDTOs}">
+  <th:block th:each="communityVO : ${communityVOs}">
   <div class="col-12">
     <div class="card shadow-none">
       <div class="card-header d-flex align-items-center border-bottom py-3">
         <div class="d-flex align-items-center">
           <a href="javascript:;">
-            <svg data-jdenticon-value="nickname" th:data-jdenticon-value="${communityDTO.user_id}"
+            <svg data-jdenticon-value="nickname" th:data-jdenticon-value="${communityVO.user_id}"
                    width="40" height="40" class="avatar avatar-sm"></svg>
           </a>
           <div class="mx-3">
-            <a href="javascript:;" class="text-dark font-weight-600 text-sm" th:text="${communityDTO.user_id}"></a>
-            <small class="d-block text-muted" th:text="${communityDTO.community_regdate}"></small>
+            <a href="javascript:;" class="text-dark font-weight-600 text-sm" th:text="${communityVO.user_id}"></a>
+            <small class="d-block text-muted" th:text="${communityVO.community_regdate}"></small>
           </div>
         </div>
         <div class="text-end ms-auto">
@@ -28,7 +28,7 @@
       </div>
       <div class="card-body">
         <img alt="Image placeholder"
-          th:src="|/testimg/${communityDTO.media_path}|"
+          th:src="|/testimg/${communityVO.media_path}|"
           class="img-fluid border-radius-lg shadow-lg">
         <div class="row align-items-center px-2 mt-4 mb-2">
           <div class="col-6">
@@ -45,13 +45,13 @@
             </div>
           </div>
           <div class="col-6">
-            <div class="d-flex align-items-center justify-content-sm-end" th:if="${user_id == communityDTO.user_id}">
+            <div class="d-flex align-items-center justify-content-sm-end" th:if="${user_id == communityVO.user_id}">
               <a href="#"><small class="ps-2">수정</small></a>
               <a href="#"><small class="ps-2">삭제</small></a>
             </div>
           </div>
-          <a href="javascript:;" class="text-dark font-weight-600 text-sm" th:text="${communityDTO.user_id}"></a>
-          <p class="mb-4" th:text="${communityDTO.community_content}"></p>
+          <a href="javascript:;" class="text-dark font-weight-600 text-sm" th:text="${communityVO.user_id}"></a>
+          <p class="mb-4" th:text="${communityVO.community_content}"></p>
           <hr class="horizontal dark my-3">
         </div>
         <div class="collapse" id="collapseExample1">
@@ -87,7 +87,7 @@
               <div class="flex-grow-1 my-auto">
                 <form>
                   <input type="hidden" th:value="${user_id}" id="user_id">
-                  <input type="hidden" th:value="${communityDTO.community_no}" id="community_no">
+                  <input type="hidden" th:value="${communityVO.community_no}" id="community_no">
                 <div class="input-group mb-3">
                   <input type="text" class="form-control" placeholder="Write your comment" aria-label="reply-content"
                          aria-describedby="comment" id="reply_content">
@@ -97,48 +97,52 @@
               </div>
             </div>
           </div>
-            <script>
-            	const replyBtn = document.getElementById('button-reply');
-            	replyBtn.addEventListener("click", () => {
-            		const input_user_id = document.getElementById('user_id');
-            		const input_community_no = document.getElementById('community_no');
-            		const input_reply_content = document.getElementById('reply_content');
-            		
-            		const reply_if={
-            				user_id : input_user_id,
-            				community_no : input_community_no,
-            				reply_content : input_reply_content
-            		};
-            		if(input_user_id == "" || input_community_no == "" ||
-            				input_reply_content == "" ){
-            	            alert('댓글 등록 실패입니다.')
-            	            return;
-            	        }
-            		
-            		console.log(reply_if);
-            		
-            		const url = "/api/user/community/reply";
-            		
-            		fetch(url, {
-            			method : "POST",
-            			body : JSON.stringify(reply_if),
-            	        headers : {
-            	               "Content-Type" : "application/json"
-            	           }
-            		}).then(response =>{
-            			if(response.ok){
-            				response.text();
-            			}else{
-            				alert('댓글등록 실패!');
-            			}
-            		})
-            	});
-            </script>
         </div>
       </div>
     </div>
   </div>
   </th:block>
+            <script th:inline="javascript">
+            /*<![CDATA[*/
+            	const replyButton = document.getElementById('button-reply');
+            	replyButton.addEventListener("click", () => {
+            		  const input_user_id = document.getElementById('user_id').value;
+            		  const input_community_no = document.getElementById('community_no').value;
+            		  const input_reply_content = document.getElementById('reply_content').value;
+            		  
+            		  console.log(input_user_id);
+            		  const reply_if={
+            		      user_id : input_user_id,
+            		      community_no : input_community_no,
+            		      reply_content : input_reply_content
+            		  };
+            		  if(input_user_id == "" || input_community_no == "" ||
+            		      input_reply_content == "" ){
+            		            alert('zzz 실패입니다.')
+            		            return;
+            		        }
+            		  
+            		  console.log(reply_if);
+            		  
+            		  const url = "/api/user/community/reply";
+            		  
+            		  fetch(url, {
+            		    method : "POST",
+            		    body : JSON.stringify(reply_if),
+            		    headers : {
+            		               "Content-Type" : "application/json"
+            		           }
+            		  }).then(response =>{
+            		    console.log(reply_if);
+            		    if(response.ok){
+            		      response.text();
+            		    }else{
+            		      alert('댓글등록 실패!');
+            		    }
+            		  })
+            		});
+            	/*]]>*/
+            </script>
 </div> <!-- End List -->
 <!-- End Content -->
 </html>

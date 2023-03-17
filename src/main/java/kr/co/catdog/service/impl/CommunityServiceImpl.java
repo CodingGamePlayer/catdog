@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.catdog.domain.CommunityVO;
+import kr.co.catdog.domain.ReplyVO;
 import kr.co.catdog.dto.CommunityDTO;
+import kr.co.catdog.dto.ReplyDTO;
 import kr.co.catdog.mapper.CommunityMapper;
 import kr.co.catdog.service.CommunityService;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +49,18 @@ public class CommunityServiceImpl implements CommunityService {
 				return communityMapper.registerMedia(communityDTO);
 			}
 		}
+	}
+
+	@Override
+	public int registerReply(ReplyDTO replyDTO) {
+		ReplyVO replyVO = modelMapper.map(replyDTO, ReplyVO.class);
+		log.info("replyVO : "+replyVO );
+		int result= communityMapper.registerReply(replyVO);
+		if(!(result>0)) {
+			return 0;
+		}
+		
+		return 1;
 	}
 	
 	
