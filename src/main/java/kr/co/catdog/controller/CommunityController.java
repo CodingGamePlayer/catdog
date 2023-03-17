@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,13 +24,20 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("user/community")
 public class CommunityController {
 	
+	@Value("${kr.co.catdog.upload.path}")
+	private String upPath;
+	
 	@Autowired
 	private CommunityService communityservice;
 	
 	@GetMapping("list")
-	ModelAndView list() {
+	ModelAndView list(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		String user_id = (String) session.getAttribute("logininfo");
 		mav.addObject("msg", "cnBtn");
+		mav.addObject("communityDTOs", communityservice.selectAll());
+		mav.addObject("user_id", user_id);
 		mav.setViewName("/user/community/list-community");
 		return mav;
 	}
@@ -50,10 +61,10 @@ public class CommunityController {
 		ModelAndView mav = new ModelAndView();
 		UUID uuid = UUID.randomUUID();
 		String fileName = uuid.toString()+communityDTO.getFile().getOriginalFilename();
-		String filePath = "C:\\testimg\\"+fileName;
+		String filePath = upPath + "\\" + fileName;
 		File dest = new File(filePath);
 		communityDTO.getFile().transferTo(dest);
-		communityDTO.setMedia_path(filePath);
+		communityDTO.setMedia_path(fileName);
 		log.info("communityDTO : "+communityDTO);
 		int result = communityservice.register(communityDTO);
 		if(!(result>0)) {
