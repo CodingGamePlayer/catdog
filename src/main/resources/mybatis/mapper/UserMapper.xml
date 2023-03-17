@@ -9,6 +9,7 @@
         <result property="user_pw" column="user_pw"/>
         <result property="user_name" column="user_name"/>
         <result property="user_phoneNumber" column="user_phoneNumber"/>
+        <result property="user_regdate" column="user_regdate"/>
         <result property="user_image" column="user_image"/>
         <result property="user_matchinguse" column="user_matchinguse"/>
     </resultMap>

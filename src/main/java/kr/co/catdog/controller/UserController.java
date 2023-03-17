@@ -46,6 +46,7 @@ public class UserController {
 
     @PostMapping("/edit-person")
     String editPerson(UserDTO userDTO) {
+        log.info(String.valueOf(userDTO));
         int result = userService.update(userDTO);
         log.info(String.valueOf(result));
         return "redirect:/user/profile/edit-person";

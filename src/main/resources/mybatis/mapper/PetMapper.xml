@@ -11,6 +11,7 @@
         <result property="pet_name" column="pet_name"/>
         <result property="pet_age" column="pet_age"/>
         <result property="pet_animalnum" column="pet_animalnum"/>
+        <result property="pet_gender" column="pet_gender"/>
     </resultMap>
     <select id="findById" resultMap="petMap">
         SELECT *
@@ -28,7 +29,8 @@
         SET category_no=#{category_no},
             pet_name=#{pet_name},
             pet_age=#{pet_age},
-            pet_animalnum =#{pet_animalnum}
+            pet_animalnum =#{pet_animalnum},
+            pet_gender = #{pet_gender}
         WHERE user_id = #{user_id}
     </update>
 

@@ -13,5 +13,6 @@ public class PetVO {
     private int category_no;
     private String pet_name;
     private int pet_age;
-    private int pet_animalnum;
+    private long pet_animalnum;
+    private int pet_gender;
 }
