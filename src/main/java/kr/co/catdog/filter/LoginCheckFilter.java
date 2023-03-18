@@ -1,7 +1,7 @@
 package kr.co.catdog.filter;
 
 import lombok.extern.slf4j.Slf4j;
-
+//
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ public class LoginCheckFilter implements Filter {
 
         HttpSession session = req.getSession();
 
-        if (session.getAttribute("loginInfo") == null) {
+        if (session.getAttribute("session_id") == null) {
             resp.sendRedirect("/login");
             return;
         }
