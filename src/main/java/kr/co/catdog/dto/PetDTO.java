@@ -16,8 +16,9 @@ import java.util.List;
 public class PetDTO {
     private int pet_no;
     private String user_id;
+    private int category1_no;
+    private int category2_no;
     private List<Category1VO> category1VOList;
-
     private List<Category2VO> category2VOList;
     private String pet_name;
     private int pet_age;

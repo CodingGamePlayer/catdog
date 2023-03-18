@@ -15,11 +15,11 @@
     </resultMap>
 
     <select id="selectCategory1" resultMap="category1Map">
-        select * from category1
+        SELECT * FROM category1
     </select>
 
     <select id="selectCategory2" resultMap="category2Map">
-        select * from category2
+        SELECT * FROM category2
     </select>
 
 </mapper>
