@@ -2,6 +2,7 @@ package kr.co.catdog.controller;
 
 import kr.co.catdog.dto.UserDTO;
 import kr.co.catdog.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +15,10 @@ import java.io.IOException;
 
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class AccountController {
-    private UserService userService;
+    private final UserService userService;
 
-    public AccountController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/login")
     String signinForm() {

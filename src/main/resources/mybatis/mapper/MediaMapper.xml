@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.catdog.mapper.MediaMapper">
+    <resultMap id="mediaMap" type="MediaVO">
+        <result property="media_no" column="media_no"/>
+        <result property="product_no" column="product_no"/>
+        <result property="media_path" column="media_path"/>
+    </resultMap>
+
+    <select id="findById" resultMap="mediaMap">
+        SELECT * FROM media WHERE product_no = #{product_no}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO media (product_no, media_path) VALUES (#{product_no}, #{media_path})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM media WHERE product_no = #{product_no}
+    </delete>
+</mapper>
