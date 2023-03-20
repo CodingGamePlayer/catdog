@@ -7,74 +7,76 @@
 <!-- Content -->
 <div layout:fragment="content">
   <th:block th:each="communityVO : ${communityVOs}">
-  <div class="col-12">
-    <div class="card shadow-none">
-      <div class="card-header d-flex align-items-center border-bottom py-3">
-        <div class="d-flex align-items-center">
-          <a href="javascript:;">
-            <svg data-jdenticon-value="nickname" th:data-jdenticon-value="${communityVO.user_id}"
-                   width="40" height="40" class="avatar avatar-sm"></svg>
-          </a>
-          <div class="mx-3">
+    <div class="col-12">
+      <div class="card shadow-none">
+        <div class="card-header d-flex align-items-center border-bottom py-3">
+          <div class="d-flex align-items-center">
+            <a href="javascript:;">
+              <svg data-jdenticon-value="nickname" th:data-jdenticon-value="${communityVO.user_id}" width="40"
+                height="40" class="avatar avatar-sm"></svg>
+            </a>
+            <div class="mx-3">
+              <a href="javascript:;" class="text-dark font-weight-600 text-sm" th:text="${communityVO.user_id}"></a>
+              <small class="d-block text-muted" th:text="${communityVO.community_regdate}"></small>
+            </div>
+          </div>
+          <div class="text-end ms-auto">
+            <button type="button" class="btn btn-sm bg-gradient-primary mb-0">
+              <i class="fas fa-plus pe-2" aria-hidden="true"></i> Follow
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <img alt="Image placeholder" th:src="|/testimg/${communityVO.media_path}|"
+            class="img-fluid border-radius-lg shadow-lg">
+          <div class="row align-items-center px-2 mt-4 mb-2">
+            <div class="col-6">
+              <div class="d-flex">
+                <div class="d-flex align-items-center">
+                  <i class="ni ni-like-2 me-1 cursor-pointer"></i>
+                  <span class="text-sm me-3 ">150</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="ni ni-chat-round me-1 cursor-pointer" data-bs-toggle="collapse"
+                    th:href="'#collapseExample'+${communityVO.community_no}"
+                    th:onclick="loadReplys([[${communityVO.community_no}]])" role="button" aria-expanded="false"
+                    aria-controls="collapseExample"><span class="text-sm me-3">36</span></i>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="d-flex align-items-center justify-content-sm-end" th:if="${user_id == communityVO.user_id}">
+                <a href="#"><small class="ps-2">수정</small></a>
+                <a href="#"><small class="ps-2">삭제</small></a>
+              </div>
+            </div>
             <a href="javascript:;" class="text-dark font-weight-600 text-sm" th:text="${communityVO.user_id}"></a>
-            <small class="d-block text-muted" th:text="${communityVO.community_regdate}"></small>
+            <p class="mb-4" th:text="${communityVO.community_content}"></p>
+            <hr class="horizontal dark my-3">
           </div>
-        </div>
-        <div class="text-end ms-auto">
-          <button type="button" class="btn btn-sm bg-gradient-primary mb-0">
-            <i class="fas fa-plus pe-2" aria-hidden="true"></i> Follow
-          </button>
-        </div>
-      </div>
-      <div class="card-body">
-        <img alt="Image placeholder"
-          th:src="|/testimg/${communityVO.media_path}|"
-          class="img-fluid border-radius-lg shadow-lg">
-        <div class="row align-items-center px-2 mt-4 mb-2">
-          <div class="col-6">
-            <div class="d-flex">
-              <div class="d-flex align-items-center">
-                <i class="ni ni-like-2 me-1 cursor-pointer"></i>
-                <span class="text-sm me-3 ">150</span>
-              </div>
-              <div class="d-flex align-items-center">
-                <i class="ni ni-chat-round me-1 cursor-pointer" data-bs-toggle="collapse" href="#collapseExample1"
-                  role="button" aria-expanded="false" aria-controls="collapseExample"><span class="text-sm me-3">36</span></i>
-                
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="d-flex align-items-center justify-content-sm-end" th:if="${user_id == communityVO.user_id}">
-              <a href="#"><small class="ps-2">수정</small></a>
-              <a href="#"><small class="ps-2">삭제</small></a>
-            </div>
-          </div>
-          <a href="javascript:;" class="text-dark font-weight-600 text-sm" th:text="${communityVO.user_id}"></a>
-          <p class="mb-4" th:text="${communityVO.community_content}"></p>
-          <hr class="horizontal dark my-3">
-        </div>
-        <div class="collapse" id="collapseExample1">
-          <div class="card card-body">
-            <div class="d-flex">
-              <div class="flex-shrink-0">
-                <img alt="Image placeholder" class="avatar rounded-circle" src="../../../assets/img/bruce-mars.jpg">
-              </div>
-              <div class="flex-grow-1 ms-3">
-                <h6 class="h5 mt-0">Michael Lewis</h6>
-                <p class="text-sm">I always felt like I could do anything. That’s the main thing people are controlled
-                  by!
-                  Thoughts- their perception of themselves!</p>
-                <div class="row d-flex align-items-center px-2">
-                  <div class="col-6">
-                    <div class="d-flex align-items-center">
-                      <i class="ni ni-like-2 me-1 cursor-pointer"></i>
-                      <span class="text-sm me-2">3 likes</span>
+          <div class="collapse" th:id="'collapseExample'+${communityVO.community_no}">
+            <div class="card card-body" th:id="'cardReplyList'+${communityVO.community_no}">
+              <div class="d-flex">
+                <div class="flex-shrink-0">
+                  <img alt="Image placeholder" class="avatar rounded-circle" src="../../../assets/img/bruce-mars.jpg">
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h6 class="h5 mt-0">Michael Lewis</h6>
+                  <p class="text-sm">I always felt like I could do anything. That’s the main thing people are controlled
+                    by!
+                    Thoughts- their perception of themselves!</p>
+                  <div class="row d-flex align-items-center px-2">
+                    <div class="col-6">
+                      <div class="d-flex align-items-center">
+                        <i class="ni ni-like-2 me-1 cursor-pointer"></i>
+                        <span class="text-sm me-2">3 likes</span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-6 pe-4">
-                    <div class="d-flex align-items-center justify-content-sm-end">
-                      <a href="#"><small class="ps-2">삭제</small></a>
+                    <div class="col-6 pe-4">
+                      <div class="d-flex align-items-center justify-content-sm-end">
+                        <a href="#"><small class="ps-2">삭제</small></a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -87,12 +89,12 @@
               <div class="flex-grow-1 my-auto">
                 <form>
                   <input type="hidden" th:value="${user_id}" id="user_id">
-                  <input type="hidden" th:value="${communityVO.community_no}" id="community_no">
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Write your comment" aria-label="reply-content"
-                         aria-describedby="comment" id="reply_content">
-                  <button class="btn btn-outline-secondary mb-0" type="button" id="button-reply">등록</button>
-                </div>
+                  <input type="hidden" th:value="${communityVO.community_no}" th:id="'community_no'+${communityVO.community_no}">
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Write your comment" aria-label="reply-content"
+                      aria-describedby="comment" th:id="'reply_content'+${communityVO.community_no}">
+                    <button class="btn btn-outline-secondary mb-0" type="button" id="button-reply" th:onclick="'replyOnSubmit('+${communityVO.community_no}+')'">등록</button>
+                  </div>
                 </form>
               </div>
             </div>
@@ -100,49 +102,115 @@
         </div>
       </div>
     </div>
-  </div>
   </th:block>
-            <script th:inline="javascript">
-            /*<![CDATA[*/
-            	const replyButton = document.getElementById('button-reply');
-            	replyButton.addEventListener("click", () => {
-            		  const input_user_id = document.getElementById('user_id').value;
-            		  const input_community_no = document.getElementById('community_no').value;
-            		  const input_reply_content = document.getElementById('reply_content').value;
-            		  
-            		  console.log(input_user_id);
-            		  const reply_if={
-            		      user_id : input_user_id,
-            		      community_no : input_community_no,
-            		      reply_content : input_reply_content
-            		  };
-            		  if(input_user_id == "" || input_community_no == "" ||
-            		      input_reply_content == "" ){
-            		            alert('zzz 실패입니다.')
-            		            return;
-            		        }
-            		  
-            		  console.log(reply_if);
-            		  
-            		  const url = "/api/user/community/reply";
-            		  
-            		  fetch(url, {
-            		    method : "POST",
-            		    body : JSON.stringify(reply_if),
-            		    headers : {
-            		               "Content-Type" : "application/json"
-            		           }
-            		  }).then(response =>{
-            		    console.log(reply_if);
-            		    if(response.ok){
-            		      response.text();
-            		    }else{
-            		      alert('댓글등록 실패!');
-            		    }
-            		  })
-            		});
+
+  <!-- 비동기 댓글 등록  -->
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    	function replyOnSubmit(community_no){
+    	console.log(community_no);
+    	alert('실행중 !!');
+    
+    
+      const input_user_id = document.getElementById('user_id').value;
+      const input_community_no = document.getElementById('community_no'+community_no).value;
+      const input_reply_content = document.getElementById('reply_content'+community_no).value;
+
+      console.log(input_user_id);
+      const reply_if = {
+        user_id: input_user_id,
+        community_no: input_community_no,
+        reply_content: input_reply_content
+      };
+      if (input_user_id == "" || input_community_no == "" ||
+        input_reply_content == "") {
+        alert('zzz 실패입니다.')
+        return;
+      }
+
+      console.log(reply_if);
+
+      const url = "/api/user/community/reply";
+
+      fetch(url, {
+        method: "POST",
+        body: JSON.stringify(reply_if),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(response => {
+        console.log(reply_if);
+        if (!response.ok) {
+
+          throw new Error(response.statusText);
+
+        }
+        loadReplys(input_community_no);
+        input_reply_content.value='';
+
+      }).catch(error => {
+        console.error(error);
+        alert("댓글 등록 실패");
+      });
+    }
             	/*]]>*/
-            </script>
+  </script>
+
+  <!-- 댓글 창 불러오기 -->
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+
+
+    function loadReplys(community_no) {
+      const getUrl = "/api/user/community/reply?community_no=" + community_no;
+      fetch(getUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+
+        }).then(replys => {
+          console.log(replys);
+          const replyList = document.getElementById('cardReplyList'+community_no);
+          replyList.innerHTML = '';
+          replys.forEach(reply => {
+            console.log(reply);
+            console.log("content : "+reply.reply_content);
+            const div = document.createElement('div');
+            div.innerHTML = ` <div class="d-flex">
+            				   <div class="flex-shrink-0">
+				                 <img alt="Image placeholder" class="avatar rounded-circle" src="../../../assets/img/bruce-mars.jpg">
+				               </div>
+                               <div class="flex-grow-1 ms-3">
+                                 <h6 class="h5 mt-0" >${reply.user_id}</h6>
+                                  <p class="text-sm" >${reply.reply_content}</p>
+                                  <div class="row d-flex align-items-center px-2">
+                                    <div class="col-6">
+                                      <div class="d-flex align-items-center">
+                                        <i class="ni ni-like-2 me-1 cursor-pointer"></i>
+                                        <span class="text-sm me-2">3 likes</span>
+                                      </div>
+                                    </div>
+                                    <div class="col-6 pe-4">
+                                      <div class="d-flex align-items-center justify-content-sm-end">
+                                        <a href="#"><small class="ps-2">삭제</small></a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                               </div> `;
+            replyList.appendChild(div);
+          });
+
+        }).catch(error => {
+          console.error(error);
+          alert("댓글창 불러오기 실패");
+        });
+    }
+            	/*]]>*/
+  </script>
 </div> <!-- End List -->
 <!-- End Content -->
+
 </html>

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ReplyDTO {
 	private int reply_no;
-	private String community_no;
+	private int community_no;
 	private String user_id;
 	private String reply_content;
 	private String reply_regdate;

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.catdog.mapper.ReplyMapper">
+
+    
+    <resultMap type="ReplyVO" id="ReplyMap">
+    	<result property="reply_no" column="reply_no"/>
+    	<result property="community_no" column="community_no"/>
+    	<result property="user_id" column="user_id"/>
+    	<result property="reply_content" column="reply_content"/>
+    	<result property="reply_regdate" column="reply_regdate"/>
+    </resultMap>
+   	
+   	<insert id="registerReply" parameterType="ReplyVO">
+   		INSERT INTO reply(community_no, user_id, reply_content, reply_regdate)
+   		VALUES (#{community_no}, #{user_id}, #{reply_content}, now())
+   	</insert>
+    
+    <select id="getReply" parameterType="ReplyVO" resultMap="ReplyMap">
+    	SELECT * FROM reply WHERE community_no = #{community_no}
+    </select>
+
+   
+</mapper>

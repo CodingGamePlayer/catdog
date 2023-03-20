@@ -3,6 +3,7 @@ package kr.co.catdog.apicontroller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.catdog.domain.ReplyVO;
@@ -50,12 +52,6 @@ public class CommunityApiController {
 
 	}
 
-	@PostMapping("/api/user/community/reply")
-	public ResponseEntity<ReplyVO> registerReply(@RequestBody ReplyDTO replyDTO){
-		log.info("replyDTO : "+replyDTO);
-			int result = communityService.registerReply(replyDTO);
-		return  ResponseEntity.status(HttpStatus.OK).build();
 
-	}
 
 }

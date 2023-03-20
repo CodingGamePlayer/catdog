@@ -30,19 +30,14 @@
     	INSERT INTO media(community_no, media_type, media_path)
     	VALUES (#{community_no}, #{media_type}, #{media_path})
    	</insert>
-   	
-   	<insert id="registerReply" parameterType="ReplyVO">
-   		INSERT INTO reply(community_no, user_id, reply_content, reply_regdate)
-   		VALUES (#{community_no}, #{user_id}, #{reply_content}, now())
-   	</insert>
     
     <select id="selectAll" resultMap="CommunityMap">
-    	SELECT community.*, media.media_type, media_path, reply.reply_no, reply.user_id AS reply_user_id,
-    	reply.reply_content, reply.reply_regdate FROM community
+    	SELECT community.*, media.media_type, media_path FROM community
     	LEFT JOIN media ON community.community_no = media.community_no
-    	LEFT JOIN reply ON community.community_no = reply.community_no
     	ORDER BY community.community_no DESC
     </select>
+    
+
 
    
 </mapper>

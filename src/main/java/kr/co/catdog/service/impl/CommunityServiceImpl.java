@@ -51,17 +51,8 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 	}
 
-	@Override
-	public int registerReply(ReplyDTO replyDTO) {
-		ReplyVO replyVO = modelMapper.map(replyDTO, ReplyVO.class);
-		log.info("replyVO : "+replyVO );
-		int result= communityMapper.registerReply(replyVO);
-		if(!(result>0)) {
-			return 0;
-		}
-		
-		return 1;
-	}
+
+
 	
 	
 
