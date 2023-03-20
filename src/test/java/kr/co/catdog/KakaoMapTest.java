@@ -1,26 +1,23 @@
 package kr.co.catdog;
 
 import com.google.gson.Gson;
-import kr.co.catdog.dto.GovermentDTO;
-import kr.co.catdog.dto.HospitalDTO;
-import kr.co.catdog.dto.KaKaoMapResponse;
-import kr.co.catdog.mapper.HospitalMapper;
+import kr.co.catdog.dto.*;
 import kr.co.catdog.service.GoverMentService;
 import kr.co.catdog.service.HospitalService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -31,10 +28,14 @@ import static org.hamcrest.Matchers.equalTo;
 @Slf4j
 public class KakaoMapTest {
 
+    ModelMapper modelMapper = new ModelMapper();
+    @Value("${kakao.map.api.key}")
+    private String apiKey;
     @Autowired
     GoverMentService goverMentService;
     @Autowired
     HospitalService hospitalService;
+
 
     @Test
     @DisplayName("return location input lat, lon")
@@ -91,8 +92,8 @@ public class KakaoMapTest {
         });
     }
 
+    /*
     @Test
-    @Transactional
     @DisplayName("convert goverment data to kakao location")
     public void convertDBTest() {
 
@@ -100,13 +101,13 @@ public class KakaoMapTest {
         String url = "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json";
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization", String.format("KakaoAK 20752786a299122fc1b526bb8dd4dfa8"));
+        httpHeaders.add("Authorization", String.format("KakaoAK "+apiKey));
 
         List<GovermentDTO> all = goverMentService.getAll();
         List<HospitalDTO> hospitalDTOS = new ArrayList<>();
         int bCnt = 0;
         int hCnt = 0;
-        for(int idx = 0; idx < all.size(); idx++) {
+        for(int idx = 0; idx < 1; idx++) {
             Double x = all.get(idx).getLongitude();
             Double y = all.get(idx).getLatitude();
 
@@ -147,5 +148,54 @@ public class KakaoMapTest {
             hospitalService.insert(hospitalDTOS.get(idx));
         }
 
+
+        */
+
+        @Test
+        @DisplayName("update hospital data to government business_name")
+        public void updateHospital() {
+
+            RestTemplate restTemplate = new RestTemplate();
+            String url = "https://dapi.kakao.com/v2/local/search/keyword.json";
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("Authorization", String.format("KakaoAK "+apiKey));
+
+            List<GovermentHospitalDTO> all = hospitalService.getAllGovermentHospital();
+            List<HospitalDTO> responses = new ArrayList<>();
+            for(int idx = 0; idx < all.size(); idx++) {
+                String query = all.get(idx).getBusiness_name();
+                Double x = all.get(idx).getLongitude_b();
+                Double y = all.get(idx).getLatitude_b();
+
+                UriComponents uri = UriComponentsBuilder.newInstance()
+                        .fromHttpUrl(url)
+                        .queryParam("query", query)
+                        .queryParam("x",x)
+                        .queryParam("y",y)
+                        .queryParam("radius", 500)
+                        .build();
+
+                // when
+                HttpEntity requestMessage = new HttpEntity(httpHeaders);
+                ResponseEntity response = restTemplate.exchange(
+                        uri.toUriString(),
+                        HttpMethod.GET,
+                        requestMessage,
+                        String.class);
+
+                // then
+                // 해당 JObject와 Response 객체간의 매핑
+                Gson gson = new Gson();
+                KakaoSearchResponse mapped_data = gson.fromJson(response.getBody().toString(), KakaoSearchResponse.class);
+                if(mapped_data.getDocuments().size() > 0){
+                    HospitalDTO kakaoHospitalDTO = modelMapper.map(mapped_data.getDocuments().get(0), HospitalDTO.class);
+                    responses.add(kakaoHospitalDTO);
+                }
+                assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+            }
+            for(int idx = 0; idx < responses.size(); idx++) {
+                hospitalService.insertSearchData(responses.get(idx));
+            }
     }
 }
