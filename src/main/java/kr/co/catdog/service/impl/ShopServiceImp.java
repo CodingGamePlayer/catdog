@@ -2,7 +2,9 @@ package kr.co.catdog.service.impl;
 
 import kr.co.catdog.domain.MediaVO;
 import kr.co.catdog.domain.ProductVO;
+import kr.co.catdog.dto.CartDTO;
 import kr.co.catdog.dto.ProductDTO;
+import kr.co.catdog.mapper.CartMapper;
 import kr.co.catdog.mapper.CategoryMapper;
 import kr.co.catdog.mapper.MediaMapper;
 import kr.co.catdog.mapper.ProductMapper;
@@ -29,6 +31,7 @@ public class ShopServiceImp implements ShopService {
     private final ProductMapper productMapper;
     private final CategoryMapper categoryMapper;
     private final MediaMapper mediaMapper;
+    private final CartMapper cartMapper;
     @Value("${kr.co.catdog.upload.path}")
     private String uploadPath;
 
@@ -129,4 +132,9 @@ public class ShopServiceImp implements ShopService {
         int result = mediaMapper.delete(modelMapper.map(productDTO, ProductVO.class));
         return !(result>0)? 0 : 1;
     }
+
+    public List<CartDTO> findById(){
+    return null;
+    }
+
 }
