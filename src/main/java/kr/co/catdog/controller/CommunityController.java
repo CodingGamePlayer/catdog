@@ -49,7 +49,7 @@ public class CommunityController {
 		mav.setViewName("/user/community/detail");
 		return mav;
 	}
-	
+	//
 	@GetMapping("register")
 	ModelAndView register(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
