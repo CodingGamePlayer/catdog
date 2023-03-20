@@ -5,6 +5,32 @@
 <mapper namespace="kr.co.catdog.mapper.HospitalMapper">
 
 
+    <resultMap id="hospitalMap" type="HospitalVO">
+        <result property="hospital_id" column="hospital_id"/>
+        <result property="business_name" column="business_name"/>
+        <result property="tel" column="tel"/>
+        <result property="longitude" column="longitude"/>
+        <result property="latitude" column="latitude"/>
+        <result property="region_type_b" column="region_type_b"/>
+        <result property="address_name_b" column="address_name_b"/>
+        <result property="region_1depth_name_b" column="region_1depth_name_b"/>
+        <result property="region_2depth_name_b" column="region_2depth_name_b"/>
+        <result property="region_3depth_name_b" column="region_3depth_name_b"/>
+        <result property="region_4depth_name_b" column="region_4depth_name_b"/>
+        <result property="code_b" column="code_b"/>
+        <result property="longitude_b" column="longitude_b"/>
+        <result property="latitude_b" column="latitude_b"/>
+        <result property="region_type_h" column="region_type_h"/>
+        <result property="address_name_h" column="address_name_h"/>
+        <result property="region_1depth_name_h" column="region_1depth_name_h"/>
+        <result property="region_2depth_name_h" column="region_2depth_name_h"/>
+        <result property="region_3depth_name_h" column="region_3depth_name_h"/>
+        <result property="region_4depth_name_h" column="region_4depth_name_h"/>
+        <result property="code_h" column="code_h"/>
+        <result property="longitude_h" column="longitude_h"/>
+        <result property="latitude_h" column="latitude_h"/>
+    </resultMap>
+
     <insert id="insert">
         INSERT INTO hospital
         (`hospital_id`,
@@ -20,6 +46,7 @@
         `region_4depth_name_b`,
         `code_b`,
         `longitude_b`,
+        `latitude_b`,
         `region_type_h`,
         `address_name_h`,
         `region_1depth_name_h`,
@@ -44,6 +71,7 @@
         #{region_4depth_name_b},
         #{code_b},
         #{longitude_b},
+        #{latitude_b},
         #{region_type_h},
         #{address_name_h},
         #{region_1depth_name_h},
@@ -55,4 +83,9 @@
         #{latitude_h}
         )
     </insert>
+
+    <select id="getAll" resultMap="hospitalMap">
+        SELECT *
+        FROM hospital
+    </select>
 </mapper>

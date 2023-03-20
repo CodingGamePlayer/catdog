@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +32,8 @@ import static org.hamcrest.Matchers.equalTo;
 @Slf4j
 public class KakaoMapTest {
 
+    @Value("${kakao.map.api.key}")
+    private String apiKey;
     @Autowired
     GoverMentService goverMentService;
     @Autowired
@@ -92,7 +95,6 @@ public class KakaoMapTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("convert goverment data to kakao location")
     public void convertDBTest() {
 
@@ -100,13 +102,13 @@ public class KakaoMapTest {
         String url = "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json";
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization", String.format("KakaoAK 20752786a299122fc1b526bb8dd4dfa8"));
+        httpHeaders.add("Authorization", String.format("KakaoAK "+apiKey));
 
         List<GovermentDTO> all = goverMentService.getAll();
         List<HospitalDTO> hospitalDTOS = new ArrayList<>();
         int bCnt = 0;
         int hCnt = 0;
-        for(int idx = 0; idx < all.size(); idx++) {
+        for(int idx = 0; idx < 1; idx++) {
             Double x = all.get(idx).getLongitude();
             Double y = all.get(idx).getLatitude();
 
@@ -147,5 +149,60 @@ public class KakaoMapTest {
             hospitalService.insert(hospitalDTOS.get(idx));
         }
 
+
+        @Test
+        @DisplayName("convert goverment data to kakao location")
+        public void convertDBTest() {
+
+            RestTemplate restTemplate = new RestTemplate();
+            String url = "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json";
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("Authorization", String.format("KakaoAK "+apiKey));
+
+            List<GovermentDTO> all = goverMentService.getAll();
+            List<HospitalDTO> hospitalDTOS = new ArrayList<>();
+            int bCnt = 0;
+            int hCnt = 0;
+            for(int idx = 0; idx < 1; idx++) {
+                Double x = all.get(idx).getLongitude();
+                Double y = all.get(idx).getLatitude();
+
+                UriComponents uri = UriComponentsBuilder.newInstance()
+                        .fromHttpUrl(url)
+                        .queryParam("x",x)
+                        .queryParam("y",y)
+                        .queryParam("input_coord","TM")
+                        .build();
+
+                // when
+                HttpEntity requestMessage = new HttpEntity(httpHeaders);
+                ResponseEntity response = restTemplate.exchange(
+                        uri.toUriString(),
+                        HttpMethod.GET,
+                        requestMessage,
+                        String.class);
+
+                // then
+                // 해당 JObject와 Response 객체간의 매핑
+                Gson gson = new Gson();
+                KaKaoMapResponse mapped_data = gson.fromJson(response.getBody().toString(),KaKaoMapResponse.class);
+                hospitalDTOS.add(
+                        new HospitalDTO(all.get(idx).getHospital_id(), all.get(idx).getBusiness_name(), all.get(idx).getTel(),
+                                all.get(idx).getLongitude(), all.get(idx).getLatitude(),
+                                mapped_data.getDocuments().get(0).getRegion_type(), mapped_data.getDocuments().get(0).getAddress_name(),
+                                mapped_data.getDocuments().get(0).getRegion_1depth_name(), mapped_data.getDocuments().get(0).getRegion_2depth_name(),
+                                mapped_data.getDocuments().get(0).getRegion_3depth_name(), mapped_data.getDocuments().get(0).getRegion_4depth_name(),
+                                mapped_data.getDocuments().get(0).getCode(), mapped_data.getDocuments().get(0).x, mapped_data.getDocuments().get(0).y,
+                                mapped_data.getDocuments().get(1).getRegion_type(), mapped_data.getDocuments().get(1).getAddress_name(),
+                                mapped_data.getDocuments().get(1).getRegion_1depth_name(), mapped_data.getDocuments().get(1).getRegion_2depth_name(),
+                                mapped_data.getDocuments().get(1).getRegion_3depth_name(), mapped_data.getDocuments().get(1).getRegion_4depth_name(),
+                                mapped_data.getDocuments().get(1).getCode(), mapped_data.getDocuments().get(1).x, mapped_data.getDocuments().get(1).y));
+                assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+            }
+
+            for(int idx = 0; idx < hospitalDTOS.size(); idx++) {
+                hospitalService.insert(hospitalDTOS.get(idx));
+            }
     }
 }

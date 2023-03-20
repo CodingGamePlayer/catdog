@@ -10,10 +10,6 @@ import lombok.*;
 @ToString
 @Builder
 public class HospitalVO {
-
-    private GovermentDTO govermentDTO;
-    private KaKaoMapResponse kaKaoMapResponse;
-/*
     private int hospital_id;
     private String business_name;
     private String tel;
@@ -25,7 +21,7 @@ public class HospitalVO {
     private String region_2depth_name_b;
     private String region_3depth_name_b;
     private String region_4depth_name_b;
-    private int code_b;
+    private String code_b;
     private Double longitude_b;
     private Double latitude_b;
 
@@ -35,8 +31,7 @@ public class HospitalVO {
     private String region_2depth_name_h;
     private String region_3depth_name_h;
     private String region_4depth_name_h;
-    private int code_h;
+    private String code_h;
     private Double longitude_h;
     private Double latitude_h;
-    */
 }
