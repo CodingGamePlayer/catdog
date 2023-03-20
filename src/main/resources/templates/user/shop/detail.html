@@ -67,22 +67,26 @@
                 </div>
               </div>
               <div class="col-12 mx-auto px-4">
-                <h3 class="mt-lg-0 mt-4" th:text="${product.product_name}"></h3>
-                <h5 th:text="|₩ ${product.product_price}|"></h5>
-                <label class="mt-4">Description</label>
-                <ul class="text-sm">
-                  <li th:text="${product.product_content}"></li>
-                </ul>
-                <label>Quantity</label>
-                <li class="nav-link dropdown pb-2 px-3">
-                  <input class="form-control form-control-sm" type="number" onfocus="focused(this)" onfocusout="defocused(this)" th:value="1" name="product_stock">
-                </li>
-                <div class="row mt-2">
-                  <div class="text-center">
-                    <button type="button" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0">ADD TO
-                      CART</button>
+                <form th:action="@{/user/shop/cart/register}" method="post">
+                  <h3 class="mt-lg-0 mt-4" th:text="${product.product_name}"></h3>
+                  <h5 th:text="|₩ ${product.product_price}|"></h5>
+                  <label class="mt-4">Description</label>
+                  <ul class="text-sm">
+                    <li th:text="${product.product_content}"></li>
+                  </ul>
+                  <label>Quantity</label>
+                  <li class="nav-link dropdown pb-2 px-3">
+                    <input class="form-control form-control-sm" type="number" onfocus="focused(this)" onfocusout="defocused(this)" th:value="1" name="cart_quantity">
+                  </li>
+                  <input type="hidden" th:value="${session.session_id}" name="user_id">
+                  <input type="hidden" th:value="${product.product_no}" name="product_no">
+                  <div class="row mt-2">
+                    <div class="text-center">
+                      <button type="submit" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0">ADD TO
+                        CART</button>
+                    </div>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
 

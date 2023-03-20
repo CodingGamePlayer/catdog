@@ -1,6 +1,7 @@
 package kr.co.catdog.controller;
 
 import kr.co.catdog.dto.UserDTO;
+import kr.co.catdog.service.ShopService;
 import kr.co.catdog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AccountController {
     private final UserService userService;
-
+    private final ShopService shopService;
 
     @GetMapping("/login")
     String signinForm() {
@@ -34,8 +35,11 @@ public class AccountController {
             HttpSession session = request.getSession();
             session.setAttribute("session_id", user.getUser_id());
             session.setAttribute("session_name",user.getUser_name());
+            int cart = shopService.findById_Cart(user.getUser_id()).size();
+            session.setAttribute("session_cart",cart);
 
-            log.info(String.valueOf(session.getAttribute("session_id")));
+            log.info(String.valueOf(session.getAttribute("session_cart")));
+            log.info(String.valueOf(cart));
         }
         return "redirect:/";
     }

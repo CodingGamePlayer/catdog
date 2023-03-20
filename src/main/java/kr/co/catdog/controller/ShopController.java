@@ -1,6 +1,7 @@
 package kr.co.catdog.controller;
 
 import groovy.util.logging.Slf4j;
+import kr.co.catdog.dto.CartDTO;
 import kr.co.catdog.dto.ProductDTO;
 import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 @Slf4j
 @RequiredArgsConstructor
@@ -20,8 +24,30 @@ public class ShopController {
 
 
     @GetMapping("/cart")
-    String cart() {
+    String cartList(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String user_id = (String)session.getAttribute("session_id");
+        model.addAttribute("cartList",shopService.findById_Cart(user_id));
+
         return "user/shop/cart";
+    }
+    @PostMapping("/cart/register")
+    String register_cart(HttpServletRequest request, CartDTO cartDTO){
+        shopService.insert_Cart(cartDTO);
+
+        HttpSession session = request.getSession();
+        int cart = shopService.findById_Cart(cartDTO.getUser_id()).size();
+        session.setAttribute("session_cart",cart);
+        return "redirect:/user/shop/cart";
+    }
+    @GetMapping("/cart/delete/{cart_no}")
+    String delete_cart(@PathVariable("cart_no")int cart_no, HttpServletRequest request){
+        shopService.delete_Cart(cart_no);
+
+        HttpSession session = request.getSession();
+        int cart = shopService.findById_Cart((String)session.getAttribute("session_id")).size();
+        session.setAttribute("session_cart",cart);
+        return "redirect:/user/shop/cart";
     }
 
     @GetMapping("/list")

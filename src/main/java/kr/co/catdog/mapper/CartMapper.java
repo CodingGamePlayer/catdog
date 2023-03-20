@@ -11,4 +11,5 @@ public interface CartMapper {
     int insert(CartVO cartVO);
     int update(CartVO cartVO);
     int delete(CartVO cartVO);
+    CartVO findById_No(CartVO cartVO);
 }
