@@ -366,14 +366,14 @@
               for (var i = 0; i < mapData.length; i++ ) {
                 // 지도에 마커를 생성하고 표시한다.
                 var marker = new kakao.maps.Marker({
-                  position: new kakao.maps.LatLng(mapData[i].latitude_b, mapData[i].longitude_b), // 마커의 좌표
-                  title: mapData.region_3depth_name_b,
+                  position: new kakao.maps.LatLng(mapData[i].latitude, mapData[i].longitude), // 마커의 좌표
+                  title: mapData.address_name,
                   map: map // 마커를 표시할 지도 객체
                 });
 
                 // 인포윈도우를 생성하고 지도에 표시합니다.
                 var infowindow = new kakao.maps.InfoWindow({
-                  content : mapData[i].business_name,
+                  content : mapData[i].place_name,
                 });
 
                 // 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저를 만듭니다
@@ -402,11 +402,11 @@
   });
 
   kakao.maps.event.addEventListener(map, 'zoom_changed', function (){
-
+    console.log('zoom chagned');
   });
 
   kakao.maps.event.addEventListener(map, 'dragend', function (){
-
+    console.log('dragend');
   });
 
   function checkArea() {
@@ -414,6 +414,7 @@
 
   }
 
+  /*
   function getLngLat() {
     let bounds = map.getBounds();
     let sw = bounds.getSouthWest();
@@ -425,6 +426,7 @@
     let lng2 = sw.Ga;
 
   }
+   */
 
 </script>
 

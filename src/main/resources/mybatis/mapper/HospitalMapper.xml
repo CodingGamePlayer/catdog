@@ -4,8 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.catdog.mapper.HospitalMapper">
 
-
     <resultMap id="hospitalMap" type="HospitalVO">
+        <result property="hospital_id" column="hospital_id"/>
+        <result property="address_name" column="address_name"/>
+        <result property="phone" column="phone"/>
+        <result property="place_name" column="place_name"/>
+        <result property="place_url" column="place_url"/>
+        <result property="road_address_name" column="road_address_name"/>
+        <result property="longitude" column="longitude"/>
+        <result property="latitude" column="latitude"/>
+    </resultMap>
+
+    <resultMap id="govermentHospitalMap" type="GovermentHospitalVO">
         <result property="hospital_id" column="hospital_id"/>
         <result property="business_name" column="business_name"/>
         <result property="tel" column="tel"/>
@@ -32,7 +42,7 @@
     </resultMap>
 
     <insert id="insert">
-        INSERT INTO hospital
+        INSERT INTO goverment_hospital
         (`hospital_id`,
         `business_name`,
         `tel`,
@@ -83,6 +93,33 @@
         #{latitude_h}
         )
     </insert>
+
+    <insert id="insertSearchData">
+        INSERT INTO `catdog`.`kakaohospital`
+        (
+        `address_name`,
+        `phone`,
+        `place_name`,
+        `place_url`,
+        `road_address_name`,
+        `x`,
+        `y`)
+        VALUES
+        (
+        #{address_name},
+        #{phone},
+        #{place_name},
+        #{place_url},
+        #{road_address_name},
+        #{x},
+        #{y}
+        );
+    </insert>
+
+    <select id="getAllGovermentHospital" resultMap="govermentHospitalMap">
+        SELECT *
+        FROM goverment_hospital
+    </select>
 
     <select id="getAll" resultMap="hospitalMap">
         SELECT *

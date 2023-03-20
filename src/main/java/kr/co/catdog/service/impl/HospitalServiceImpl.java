@@ -1,7 +1,7 @@
 package kr.co.catdog.service.impl;
 
+import kr.co.catdog.dto.GovermentHospitalDTO;
 import kr.co.catdog.dto.HospitalDTO;
-import kr.co.catdog.dto.UserDTO;
 import kr.co.catdog.mapper.HospitalMapper;
 import kr.co.catdog.service.HospitalService;
 import org.modelmapper.ModelMapper;
@@ -20,8 +20,19 @@ public class HospitalServiceImpl implements HospitalService {
 
 
     @Override
-    public int insert(HospitalDTO hospitalDTO) {
+    public int insert(GovermentHospitalDTO hospitalDTO) {
         return hospitalMapper.insert(hospitalDTO);
+    }
+
+    @Override
+    public int insertSearchData(HospitalDTO kakaoHospitalDTO) {
+        return hospitalMapper.insertSearchData(kakaoHospitalDTO);
+    }
+
+
+    @Override
+    public List<GovermentHospitalDTO> getAllGovermentHospital() {
+        return hospitalMapper.getAllGovermentHospital().stream().map(govermentHospitalVO -> modelMapper.map(govermentHospitalVO, GovermentHospitalDTO.class)).collect(Collectors.toList());
     }
 
     @Override
