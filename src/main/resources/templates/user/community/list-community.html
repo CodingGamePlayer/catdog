@@ -47,7 +47,7 @@
             </div>
             <div class="col-6">
               <div class="d-flex align-items-center justify-content-sm-end" th:if="${user_id == communityVO.user_id}">
-                <a href="#"><small class="ps-2">수정</small></a>
+                <a th:href="'/user/community/update?community_no='+${communityVO.community_no}"><small class="ps-2">수정</small></a>
                 <a href="#"><small class="ps-2">삭제</small></a>
               </div>
             </div>

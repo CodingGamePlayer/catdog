@@ -11,10 +11,9 @@ public interface CommunityService {
 	
 	List<CommunityVO> selectAll();
 	
-	CommunityDTO findByCommunity(CommunityDTO communityDTO);
-	
 	int register(CommunityDTO communityDTO);
 	
+	CommunityDTO findByCommunity(CommunityDTO communityDTO);
 
 	
 	

@@ -37,6 +37,12 @@
     	ORDER BY community.community_no DESC
     </select>
     
+    <select id="findByCommunity" parameterType="communityVO" resultMap="CommunityMap">
+    	SELECT community.*, media.media_type, media_path FROM community
+    	LEFT JOIN media ON community.community_no = media.community_no
+    	WHERE community.community_no = #{community_no}
+    </select>
+    
 
 
    

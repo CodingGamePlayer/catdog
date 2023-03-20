@@ -30,12 +30,6 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public CommunityDTO findByCommunity(CommunityDTO communityDTO) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int register(CommunityDTO communityDTO) {
 		int result = communityMapper.register(communityDTO);
 		log.info("db다녀온 communityDTO : "+communityDTO);
@@ -49,6 +43,16 @@ public class CommunityServiceImpl implements CommunityService {
 				return communityMapper.registerMedia(communityDTO);
 			}
 		}
+	}
+
+	@Override
+	public CommunityDTO findByCommunity(CommunityDTO communityDTO) {
+		
+		CommunityVO communityVO = CommunityVO.builder()
+											.community_no(communityDTO.getCommunity_no())
+											.build();
+		
+		return modelMapper.map(communityMapper.findByCommunity(communityVO), CommunityDTO.class);
 	}
 
 

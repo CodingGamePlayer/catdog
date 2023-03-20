@@ -86,5 +86,15 @@ public class CommunityController {
 		
 		return mav;
 	}
+	
+	@GetMapping("update")
+	ModelAndView update(CommunityDTO communityDTO) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("communityDTO", communityservice.findByCommunity(communityDTO));
+		mav.setViewName("/user/community/update");
+		
+		return mav;
+	}
 
 }

@@ -13,11 +13,10 @@ public interface CommunityMapper {
 	
 	List<CommunityVO> selectAll();
 	
-	CommunityDTO findByCommunity(CommunityDTO communityDTO);
-	
 	int register(CommunityDTO communityDTO);
 	
 	int registerMedia(CommunityDTO communityDTO);
 	
+	CommunityVO findByCommunity(CommunityVO communityVO);
 
 }
