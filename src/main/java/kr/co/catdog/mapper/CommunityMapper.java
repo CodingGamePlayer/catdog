@@ -19,5 +19,5 @@ public interface CommunityMapper {
 	
 	int registerMedia(CommunityDTO communityDTO);
 	
-	int registerReply(ReplyVO replyVO);
+
 }

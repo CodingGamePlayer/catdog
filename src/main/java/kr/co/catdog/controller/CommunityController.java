@@ -34,7 +34,7 @@ public class CommunityController {
 	ModelAndView list(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		String user_id = (String) session.getAttribute("loginInfo");
+		String user_id = (String) session.getAttribute("session_id");
 		log.info("로그인 아이디 : "+ user_id);
 		mav.addObject("msg", "cnBtn");
 		mav.addObject("communityVOs", communityservice.selectAll());
