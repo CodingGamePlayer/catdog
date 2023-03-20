@@ -33,16 +33,19 @@
                   </div>
                   <div class=" d-flex align-items-center">
                     <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
-                                     class="bi bi-dash-circle" viewBox="0 0 16 16">
+                                     class="bi bi-dash-circle" viewBox="0 0 16 16" th:onclick="down(${cart.cart_no})">
                       <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                       <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                     </svg></a>
+                    <input type="button" th:onclick="quantity('minus',[[${cart.cart_no}]],[[${cart.cart_quantity}]])">
+
                     <div class=" mx-2">
                       <input type="text text-align-center" class="form-control" aria-label="Sizing example input"
                              aria-describedby="inputGroup-sizing-sm" th:value="${cart.cart_quantity}" style="width: 50px !important; height: 30px !important;">
                     </div>
+                    <input type="button" th:onclick="quantity('plus',[[${cart.cart_no}]],[[${cart.cart_quantity}]])">
                     <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
-                                     class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                     class="bi bi-plus-circle" viewBox="0 0 16 16" id="quantityUpBtn">
                       <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                       <path
                               d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
@@ -58,18 +61,18 @@
           </th:block>
           <div class="col-12 p-4">
             <h6 class="px-3">결제할 상품</h6>
-            <div class="d-flex justify-content-between px-3">
+            <div class="d-flex justify-content-between align-content-center px-3">
               <span class="">총 상품금액</span>
               <span class="" id="priceSum"></span>
             </div>
-            <div class="d-flex justify-content-between px-3">
+            <div class="d-flex justify-content-between align-content-center px-3">
               <span class="">배송비</span>
-              <span class="">$300</span>
+              <span class="">무료배송</span>
             </div>
             <hr class="horizontal dark my-3">
-            <div class="d-flex justify-content-between h6 px-3">
+            <div class="d-flex justify-content-between align-content-center h6 px-3">
               <span class="">총 주문금액</span>
-              <span class="">$1800</span>
+              <span class="" id="priceSumFinal"></span>
             </div>
             <div class="row mt-2 px-3">
               <div class="text-center">
@@ -80,6 +83,11 @@
           </div>
         </div>
         <script>
+
+          document.addEventListener("DOMContentLoaded",function(){
+            price();
+          });
+
           function price(){
             const query = 'input[name="checkedProduct"]:checked';
             const selectedEls = document.querySelectorAll(query);
@@ -90,8 +98,48 @@
               result += (el.value * 1);
             });
             console.log(result);
+            document.getElementById('priceSum').innerText = '₩ '+result;
+            document.getElementById('priceSumFinal').innerText = '₩ '+result;
 
           }
+
+          function quantity(plus_minus,cart_no,cart_quantity){
+            console.log(plus_minus);
+            console.log(cart_no);
+            console.log(cart_quantity);
+            const input_cart_no = cart_no;
+            let input_cart_quantity=0;
+
+            if(plus_minus != "minus"){
+              input_cart_quantity = cart_quantity+1;
+            } else {
+              input_cart_quantity = cart_quantity-1;
+            }
+            console.log(input_cart_quantity);
+            const cart= {
+              cart_no : input_cart_no,
+              cart_quantity : input_cart_quantity
+            }
+            console.log(cart);
+            const url ="/api/user/shop/cart/"
+
+            fetch(url,{
+              method : "PUT",
+              body : JSON.stringify(cart),
+              headers :{
+                "Content-Type": "application/json"
+              }
+            }).then(response => {
+              if (response.ok){
+                alert('성공');
+                window.location.reload();
+              } else {
+                alert('변경에 실패하였습니다.')
+              }
+            })
+          }
+
+
         </script>
       </div>
       <!-- End Content -->

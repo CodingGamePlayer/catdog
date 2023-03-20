@@ -1,6 +1,7 @@
 package kr.co.catdog.mapper;
 
 import kr.co.catdog.domain.CartVO;
+import kr.co.catdog.dto.CartDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface CartMapper {
     int update(CartVO cartVO);
     int delete(CartVO cartVO);
     CartVO findById_No(CartVO cartVO);
+    CartVO findByNo(CartDTO cartDTO);
 }

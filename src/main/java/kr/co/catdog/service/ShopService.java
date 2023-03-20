@@ -17,5 +17,6 @@ public interface ShopService {
     int deleteMedia(ProductDTO productDTO);
     List<CartDTO> findById_Cart(String user_id);
     int insert_Cart(CartDTO cartDTO);
+    int update_Cart(CartDTO cartDTO);
     int delete_Cart(int cart_no);
 }

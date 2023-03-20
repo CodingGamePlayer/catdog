@@ -171,6 +171,7 @@ public class ShopServiceImp implements ShopService {
 
         return !(result>0)? 0 : 1;
     }
+    @Override
     public int update_Cart(CartDTO cartDTO){
         int result = cartMapper.update(modelMapper.map(cartDTO, CartVO.class));
         return !(result>0)? 0 : 1;
