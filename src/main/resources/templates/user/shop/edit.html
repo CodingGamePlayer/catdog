@@ -9,6 +9,7 @@
       <!-- Content -->
       <div layout:fragment="content">
         <div class="row mx-2">
+          <form th:action="@{/user/shop/edit}" method="post">
           <div class="col-12">
             <div class="card h-100">
               <div class="card-body">
@@ -50,8 +51,8 @@
                   </div>
                   <div class="col-12 mt-4">
                     <div class="d-flex">
-                      <button class="btn btn-pink btn-sm mb-0 me-2" type="button" name="button">Edit</button>
-                      <button class="btn btn-outline-pink btn-sm mb-0" type="button" name="button">Remove</button>
+                      <button class="btn btn-pink btn-sm mb-0 me-2" type="button">Edit</button>
+                      <button class="btn btn-outline-pink btn-sm mb-0" type="button">Remove</button>
                     </div>
                   </div>
                 </div>
@@ -65,52 +66,46 @@
                 <div class="row">
                   <div class="col-12">
                     <label>Name</label>
-                    <input class="form-control" type="text" value="Minimal Bar Stool" onfocus="focused(this)"
-                           onfocusout="defocused(this)">
+                    <input class="form-control" type="text" th:value="${product.product_name}" onfocus="focused(this)"
+                           onfocusout="defocused(this)" name="product_name">
                   </div>
                   <div class="col-12">
                     <label class="mt-4">Price</label>
-                    <input class="form-control" type="text" value="$90" onfocus="focused(this)" onfocusout="defocused(this)">
+                    <input class="form-control" type="text" onfocus="focused(this)" onfocusout="defocused(this)" th:value="${product.product_price}" name="product_price">
                   </div>
                   <div class="col-12">
                     <label>Stock</label>
-                    <input class="form-control" type="number" value="2" onfocus="focused(this)" onfocusout="defocused(this)">
+                    <input class="form-control" type="number" onfocus="focused(this)" onfocusout="defocused(this)" th:value="${product.product_stock}" name="product_stock">
                   </div>
                   <div class="col-12">
-                    <label>Type1</label>
-                    <div class="input-group">
-                      <select class="form-control" id="type1">
-                        <option>강아지</option>
-                        <option selected>고양이</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <label>Type2</label>
-                    <div class="input-group">
-                      <select class="form-control" id="type2">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                      </select>
-                    </div>
+                    <label>Category</label>
+                    <select class="form-control" id="Category1" name="category1_no">
+                      <th:block th:each=" category : ${product.category1VOList}">
+                        <th:block th:if="${product.category1_no} == ${category.category1_no}">
+                          <option th:text="${category.category1_type}" th:value="${category.category1_no}" selected></option>
+                        </th:block>
+                        <th:block th:unless="${product.category1_no} == ${category.category1_no}">
+                          <option th:text="${category.category1_type}" th:value="${category.category1_no}"></option>
+                        </th:block>
+                      </th:block>
+                    </select>
                   </div>
                   <div class="col-12">
                     <label>Content</label>
-                    <textarea class="form-control" placeholder="Write your comment" rows="2" style="resize: none;"></textarea>
+                    <textarea class="form-control" placeholder="Write your comment" rows="2" style="resize: none;" th:text="${product.product_content}" name="product_content"></textarea>
                   </div>
+                  <input type="hidden" th:value="${product.product_no}" name="product_no">
                 </div>
                 <div class="col-12 mt-4">
                   <div class="d-flex">
-                    <button class="btn btn-pink btn-sm mb-0 me-2" type="button" name="button">Edit</button>
-                    <button class="btn btn-outline-pink btn-sm mb-0" type="button" name="button">Remove</button>
+                    <button class="btn btn-pink btn-sm mb-0 me-2" type="submit">Edit</button>
+                    <button class="btn btn-outline-pink btn-sm mb-0" type="reset">Remove</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          </form>
         </div>
 
       </div>

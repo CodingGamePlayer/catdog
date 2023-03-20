@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.catdog.mapper.ProductMapper">
+
+    <resultMap id="productMap" type="ProductVO">
+        <result property="product_no" column="product_no"/>
+        <result property="category1_no" column="category1_no"/>
+        <result property="product_name" column="product_name"/>
+        <result property="product_stock" column="product_stock"/>
+        <result property="product_image" column="product_image"/>
+        <result property="product_content" column="product_content"/>
+        <result property="product_price" column="product_price"/>
+        <result property="product_regdate" column="product_regdate"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="productMap">
+        SELECT * FROM product
+    </select>
+
+    <select id="findById" resultMap="productMap">
+        SELECT * FROM product
+        WHERE product_no = #{product_no}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO product (category1_no, product_name, product_stock, product_image, product_content, product_price)
+        VALUES (#{category1_no}, #{product_name}, #{product_stock}, #{product_image}, #{product_content}, #{product_price})
+    </insert>
+
+    <update id="update">
+        UPDATE product
+        SET category1_no = #{category1_no}, product_name = #{product_name}, product_stock = #{product_stock}, product_image = #{product_image},
+            product_content = #{product_content}, product_price = #{product_price}
+        WHERE product_no = #{product_no}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM product
+        WHERE product_no = #{product_no}
+    </delete>
+</mapper>

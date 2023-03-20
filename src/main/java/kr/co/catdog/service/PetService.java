@@ -1,6 +1,5 @@
 package kr.co.catdog.service;
 
-import kr.co.catdog.domain.PetVO;
 import kr.co.catdog.dto.PetDTO;
 
 public interface PetService {

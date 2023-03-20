@@ -7,12 +7,14 @@
     <resultMap id="petMap" type="PetVO">
         <result property="pet_no" column="pet_no"/>
         <result property="user_id" column="user_id"/>
-        <result property="category_no" column="category_no"/>
+        <result property="category1_no" column="category1_no"/>
+        <result property="category2_no" column="category2_no"/>
         <result property="pet_name" column="pet_name"/>
         <result property="pet_age" column="pet_age"/>
         <result property="pet_animalnum" column="pet_animalnum"/>
         <result property="pet_gender" column="pet_gender"/>
     </resultMap>
+
     <select id="findById" resultMap="petMap">
         SELECT *
         FROM pet
@@ -26,7 +28,8 @@
 
     <update id="update">
         UPDATE pet
-        SET category_no=#{category_no},
+        SET category1_no=#{category1_no},
+            category2_no=#{category2_no},
             pet_name=#{pet_name},
             pet_age=#{pet_age},
             pet_animalnum =#{pet_animalnum},

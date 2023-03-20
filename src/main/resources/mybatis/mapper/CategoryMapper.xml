@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.catdog.mapper.CategoryMapper">
+
+    <resultMap id="category1Map" type="Category1VO">
+        <result property="category1_no" column="category1_no"/>
+        <result property="category1_type" column="category1_type"/>
+    </resultMap>
+
+    <resultMap id="category2Map" type="Category2VO">
+        <result property="category2_no" column="category2_no"/>
+        <result property="category2_type" column="category2_type"/>
+    </resultMap>
+
+    <select id="selectCategory1" resultMap="category1Map">
+        SELECT * FROM category1
+    </select>
+
+    <select id="selectCategory2" resultMap="category2Map">
+        SELECT * FROM category2
+    </select>
+
+</mapper>
