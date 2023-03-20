@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("user/community")
 public class CommunityController {
 	
-	@Value("c:\testimg")
+	@Value("${kr.co.catdog.upload.path}")
 	private String upPath;
 	
 	@Autowired
