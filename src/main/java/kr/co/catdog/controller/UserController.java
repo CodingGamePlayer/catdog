@@ -2,14 +2,10 @@ package kr.co.catdog.controller;
 
 import kr.co.catdog.dto.PetDTO;
 import kr.co.catdog.dto.UserDTO;
-import kr.co.catdog.mapper.UserMapper;
 import kr.co.catdog.service.PetService;
 import kr.co.catdog.service.UserService;
-import kr.co.catdog.service.impl.UserServiceImp;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,18 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.UUID;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/user/profile")
 public class UserController {
-
     private final UserService userService;
-
     private final PetService petService;
-
 
     @GetMapping("/edit-person")
     String editPersonForm(HttpServletRequest request, Model model) {
@@ -47,11 +39,6 @@ public class UserController {
 
     @PostMapping("/edit-person")
     String editPerson(UserDTO userDTO) {
-        log.info("ha"+String.valueOf(userDTO));
-        String uuid = UUID.randomUUID().toString();
-        String filename = uuid+"_"+userDTO.getUser_image();
-        userDTO.setUser_image(filename);
-        log.info("ha2"+String.valueOf(userDTO));
 
         int result = userService.update(userDTO);
         log.info(String.valueOf(result));
@@ -64,6 +51,7 @@ public class UserController {
         String user_id = (String) session.getAttribute("session_id");
 
         PetDTO pet = petService.findById(user_id);
+
         model.addAttribute("pet", pet);
 
         log.info(String.valueOf(pet));

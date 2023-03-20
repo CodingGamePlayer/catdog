@@ -10,7 +10,8 @@ import lombok.*;
 public class PetVO {
     private int pet_no;
     private String user_id;
-    private int category_no;
+    private int category1_no;
+    private int category2_no;
     private String pet_name;
     private int pet_age;
     private long pet_animalnum;
