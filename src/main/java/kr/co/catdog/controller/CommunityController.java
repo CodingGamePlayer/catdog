@@ -54,7 +54,7 @@ public class CommunityController {
 	ModelAndView register(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		String user_id = (String) session.getAttribute("loginInfo");
+		String user_id = (String) session.getAttribute("session_id");
 		if(user_id == null) {
 			mav.setViewName("/sign-in");
 		}else {
