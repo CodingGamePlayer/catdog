@@ -208,16 +208,25 @@
                                             class="visually-hidden">unread messages</span></span>
                                 </button>
                                 </a>
-                                <button class="navbar-toggler shadow-none border-0 mx-2" type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
-                                        aria-label="Toggle navigation">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
-                                         class="bi bi-person" viewBox="0 0 16 16">
-                                        <path
-                                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
-                                    </svg>
-                                </button>
+                                <th:block th:if="${session.session_id != null}">
+                                    <button class="navbar-toggler shadow-none border-0 mx-2" type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
+                                            aria-label="Toggle navigation">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                                             class="bi bi-person" viewBox="0 0 16 16">
+                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                                        </svg>
+                                    </button>
+                                </th:block>
+                                <th:block th:unless="${session.session_id != null}">
+                                    <button class="navbar-toggler shadow-none border-0 mx-2" type="button" th:onclick="profile()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                                             class="bi bi-person" viewBox="0 0 16 16">
+                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                                        </svg>
+                                    </button>
+                                </th:block>
                             </div>
                             <div class="collapse navbar-collapse pt-3 pb-2 w-100" id="navigation">
                                 <ul class="navbar-nav navbar-nav-hover w-100">
@@ -297,6 +306,10 @@
         <th:block th:if="${msg == 'cnBtn'}">
             <a class="btn rounded-circle btn-outline-primary"
                style=" position:sticky; z-index:10; bottom:100px; left:310px;" th:onclick="regCommunity()">글쓰기</a>
+        </th:block>
+        <th:block th:if="${msg == 'productRegisterBtn'}">
+            <a class="btn rounded-circle btn-outline-primary"
+               style=" position:sticky; z-index:10; bottom:100px; left:310px;" th:onclick="profile()">글쓰기</a>
         </th:block>
         <!-- Bottom bar -->
         <div class="container position-sticky z-index-sticky bottom-0">
@@ -448,6 +461,9 @@
 
     function regCommunity() {
         window.location.href = "/user/community/register";
+    }
+    function profile() {
+        window.location.href = "/user/shop/register";
     }
 </script>
 
