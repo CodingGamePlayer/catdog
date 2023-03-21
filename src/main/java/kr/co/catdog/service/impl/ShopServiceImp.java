@@ -64,6 +64,9 @@ public class ShopServiceImp implements ShopService {
 
     @Override
     public int insert(ProductDTO productDTO) {
+        productDTO.getMediaVOList().stream()
+                .map(mediaVO -> mediaMapper.insert(mediaVO));
+
         int result = productMapper.insert(modelMapper.map(productDTO, ProductVO.class));
         return !(result>0)? 0 : 1;
     }

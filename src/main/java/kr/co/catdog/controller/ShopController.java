@@ -1,10 +1,11 @@
 package kr.co.catdog.controller;
 
-import groovy.util.logging.Slf4j;
 import kr.co.catdog.dto.CartDTO;
 import kr.co.catdog.dto.ProductDTO;
 import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 @Controller
 @Slf4j
@@ -21,7 +25,8 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/user/shop")
 public class ShopController {
     private final ShopService shopService;
-
+    @Value("${kr.co.catdog.upload.path}")
+    private String upPath;
 
     @GetMapping("/cart")
     String cartList(HttpServletRequest request, Model model) {
@@ -72,8 +77,18 @@ public class ShopController {
     }
 
     @PostMapping("/register")
-    String register(ProductDTO productDTO) {
+    String register(ProductDTO productDTO) throws IOException {
+        log.info("gkgkgk"+String.valueOf(productDTO));
+        String fileName = UUID.randomUUID().toString() + "_" + productDTO.getFile().getOriginalFilename();
+        String filePath = upPath+"\\"+ fileName;
+        File dest = new File(filePath);
+        productDTO.getFile().transferTo(dest);
+//        productDTO.setUser_image(fileName);
+        log.info(String.valueOf(productDTO));
         int result = shopService.insert(productDTO);
+
+        log.info(String.valueOf(result));
+
 
         return "redirect:/user/shop/list";
     }
