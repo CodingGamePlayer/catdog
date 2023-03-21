@@ -51,7 +51,7 @@ public class UserServiceImp implements UserService {
 //        }
 //
 //        userDTO.setUser_image((filename));
-        int result = userMapper.insert(modelMapper.map(userDTO,UserVO.class));
+        int result = userMapper.update(modelMapper.map(userDTO,UserVO.class));
         log.info(String.valueOf(result));
 
         return !(result > 0) ? 0 : 1;

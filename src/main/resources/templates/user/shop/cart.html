@@ -16,7 +16,6 @@
                 <div class="col-1 d-flex justify-content-center form-check form-check-info text-left">
                   <input class="form-check-input" type="checkbox" th:value="${cart.product_price * cart.cart_quantity}" name="checkedProduct" checked th:onclick="price()">
                 </div>
-
                 <div class="col-4">
                   <img class="img border-radius-lg max-width-100 w-100" src="/assets/img/bruce-mars.jpg" alt="bruce">
                 </div>
@@ -32,27 +31,23 @@
                     </a>
                   </div>
                   <div class=" d-flex align-items-center">
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
-                                     class="bi bi-dash-circle" viewBox="0 0 16 16" th:onclick="down(${cart.cart_no})">
+                    <a href="#" th:onclick="quantity('minus',[[${cart.cart_no}]],[[${cart.cart_quantity}]])"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
+                                     class="bi bi-dash-circle" viewBox="0 0 16 16">
                       <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                       <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                     </svg></a>
-                    <input type="button" th:onclick="quantity('minus',[[${cart.cart_no}]],[[${cart.cart_quantity}]])">
-
-                    <div class=" mx-2">
+                    <div class="mx-2">
                       <input type="text text-align-center" class="form-control" aria-label="Sizing example input"
                              aria-describedby="inputGroup-sizing-sm" th:value="${cart.cart_quantity}" style="width: 50px !important; height: 30px !important;">
                     </div>
-                    <input type="button" th:onclick="quantity('plus',[[${cart.cart_no}]],[[${cart.cart_quantity}]])">
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
-                                     class="bi bi-plus-circle" viewBox="0 0 16 16" id="quantityUpBtn">
+                    <a href="#" th:onclick="quantity('plus',[[${cart.cart_no}]],[[${cart.cart_quantity}]])"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
+                                     class="bi bi-plus-circle" viewBox="0 0 16 16">
                       <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                      <path
-                              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                     </svg></a>
                   </div>
                   <div class="d-flex justify-content-end font-weight-bolder pe-1">
-                    <span th:text="|₩ ${cart.product_price * cart.cart_quantity}|" th:value="${cart.product_price * cart.cart_quantity}" name=""></span>
+                    <span th:text="|₩ ${cart.product_price * cart.cart_quantity}|"></span>
                   </div>
                 </div>
               </div>
@@ -76,8 +71,7 @@
             </div>
             <div class="row mt-2 px-3">
               <div class="text-center">
-                <button type="button" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0" th:onclick="buy()">ADD TO
-                  CART</button>
+                <button type="button" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0" th:onclick="buy()">Buy Now</button>
               </div>
             </div>
           </div>
@@ -97,6 +91,7 @@
             selectedEls.forEach((el) => {
               result += (el.value * 1);
             });
+            result -=result%10;
             console.log(result);
             document.getElementById('priceSum').innerText = '₩ '+result;
             document.getElementById('priceSumFinal').innerText = '₩ '+result;
@@ -131,7 +126,6 @@
               }
             }).then(response => {
               if (response.ok){
-                alert('성공');
                 window.location.reload();
               } else {
                 alert('변경에 실패하였습니다.')

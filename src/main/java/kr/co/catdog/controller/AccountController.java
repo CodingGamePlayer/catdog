@@ -35,9 +35,9 @@ public class AccountController {
             HttpSession session = request.getSession();
             session.setAttribute("session_id", user.getUser_id());
             session.setAttribute("session_name",user.getUser_name());
+            session.setAttribute("session_img",user.getUser_image());
             int cart = shopService.findById_Cart(user.getUser_id()).size();
             session.setAttribute("session_cart",cart);
-
             log.info(String.valueOf(session.getAttribute("session_cart")));
             log.info(String.valueOf(cart));
         }
