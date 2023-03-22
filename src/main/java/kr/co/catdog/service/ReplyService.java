@@ -11,4 +11,8 @@ public interface ReplyService {
 	
 	int registerReply(ReplyDTO replyDTO);
 	
+	int replyCount(int community_no);
+	
+	int replyDelete(int reply_no);
+	
 }

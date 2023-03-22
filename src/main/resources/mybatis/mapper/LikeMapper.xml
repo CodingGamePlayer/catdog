@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.catdog.mapper.LikeMapper">
+
+    <resultMap id="LikeMap" type="LikeVO">
+    	<result property="like_no" column="like_no"/>
+        <result property="community_no" column="community_no"/>
+        <result property="user_id" column="user_id"/>
+        <result property="like_boolean" column="like_boolean"/>
+    </resultMap>
+    
+    <update id="likeUpdate" parameterType="LikeVO">
+    	UPDATE catdog.like SET like_boolean = #{like_boolean}
+    	WHERE community_no = #{community_no} AND user_id = #{user_id}
+    </update>
+    
+    <select id="getLikeCnt" parameterType="LikeVO" resultType="int">
+    	SELECT COUNT(*) FROM catdog.like WHERE community_no = #{community_no}
+    	AND like_boolean = true
+    </select>
+    
+    <select id="getInfo" parameterType="LikeVO" resultMap="LikeMap">
+    	SELECT * FROM catdog.like WHERE community_no = #{community_no}
+    	AND user_id = #{user_id}
+    </select>
+    
+    <insert id="likeRegister" parameterType="LikeVO">
+    	INSERT INTO catdog.like(community_no, user_id, like_boolean)
+    	VALUES(#{community_no}, #{user_id}, #{like_boolean})
+    </insert>
+   
+</mapper>
