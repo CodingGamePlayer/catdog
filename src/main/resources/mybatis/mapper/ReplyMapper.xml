@@ -22,6 +22,14 @@
     <select id="getReply" parameterType="ReplyVO" resultMap="ReplyMap">
     	SELECT * FROM reply WHERE community_no = #{community_no}
     </select>
+    
+    <select id="replyCount" parameterType="ReplyVO" resultType="int">
+    	SELECT COUNT(*) FROM reply WHERE community_no = #{community_no}
+    </select>
+    
+    <delete id="replyDelete" parameterType="ReplyVO" >
+    	DELETE FROM reply WHERE reply_no = #{reply_no}
+    </delete>
 
    
 </mapper>

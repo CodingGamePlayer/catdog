@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.catdog.domain.CommunityVO;
+import kr.co.catdog.domain.MediaVO;
 import kr.co.catdog.domain.ReplyVO;
 import kr.co.catdog.dto.CommunityDTO;
 import kr.co.catdog.dto.ReplyDTO;
@@ -24,9 +25,10 @@ public class CommunityServiceImpl implements CommunityService {
 	private ModelMapper modelMapper = new ModelMapper();
 
 	@Override
-	public List<CommunityVO> selectAll() {
+	public List<CommunityVO> selectAll(CommunityVO communityVO) {
+		List<CommunityVO> comList = communityMapper.selectAll(communityVO);
 		
-		return communityMapper.selectAll();
+		return comList;
 	}
 
 	@Override
@@ -53,6 +55,50 @@ public class CommunityServiceImpl implements CommunityService {
 											.build();
 		
 		return modelMapper.map(communityMapper.findByCommunity(communityVO), CommunityDTO.class);
+	}
+
+	@Override
+	public int update(CommunityDTO communityDTO) {
+		CommunityVO communityVO = CommunityVO.builder()
+											.community_no(communityDTO.getCommunity_no())
+											.category_no(communityDTO.getCategory_no())
+											.community_content(communityDTO.getCommunity_content())
+											.build();
+		int result = communityMapper.update(communityVO);
+		log.info("update 다녀온 result : "+result);
+		if(!(result>0)) {
+			return 0;
+		}else {
+			if(communityDTO.getMedia_path()!=null) {
+				MediaVO media = MediaVO.builder()
+										.media_no(communityDTO.getMedia_no())
+										.media_path(communityDTO.getMedia_path())
+										.build();
+				int mResult = communityMapper.updateMedia(media);
+				log.info("updateMedia 다녀온 mResult : "+mResult);
+				
+				if(!(mResult>0)) {
+					return 0;
+				}
+			}
+		}
+		
+		return 1;
+	}
+
+	@Override
+	public int delete(CommunityDTO communityDTO) {
+		
+		CommunityVO communityVO = CommunityVO.builder()
+											.community_no(communityDTO.getCommunity_no())
+											.build();
+		int result = communityMapper.delete(communityVO);
+		
+		if(!(result>0)) {
+			return 0;
+		}
+		
+		return 1;
 	}
 
 

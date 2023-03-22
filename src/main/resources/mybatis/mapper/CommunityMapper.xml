@@ -19,6 +19,9 @@
         <result property="reply_user_id" column="reply_user_id"/>
         <result property="reply_content" column="reply_content"/>
         <result property="reply_regdate" column="reply_regdate"/>
+        <result property="reply_count" column="reply_count"/>
+        <result property="like_count" column="like_count"/>
+        <result property="like_boolean" column="like_boolean"/>
     </resultMap>
     
     <insert id="register" parameterType="CommunityDTO" useGeneratedKeys="true" keyProperty="community_no">
@@ -31,18 +34,44 @@
     	VALUES (#{community_no}, #{media_type}, #{media_path})
    	</insert>
     
-    <select id="selectAll" resultMap="CommunityMap">
-    	SELECT community.*, media.media_type, media_path FROM community
+    <select id="selectAlllike" resultMap="CommunityMap">
+    	SELECT community.*, media.media_type, media_path,
+    	(SELECT COUNT(*) FROM reply WHERE reply.community_no = community.community_no) AS reply_count 
+    	FROM community 
     	LEFT JOIN media ON community.community_no = media.community_no
     	ORDER BY community.community_no DESC
     </select>
     
-    <select id="findByCommunity" parameterType="communityVO" resultMap="CommunityMap">
-    	SELECT community.*, media.media_type, media_path FROM community
+    <select id="selectAll" parameterType="CommunityVO" resultMap="CommunityMap">
+    	SELECT community.*, media.media_type, media_path,
+    	(SELECT COUNT(*) FROM reply WHERE reply.community_no = community.community_no) AS reply_count,
+    	(SELECT COUNT(*) from catdog.like WHERE community.community_no = catdog.like.community_no AND catdog.like.like_boolean = true ) AS like_count,
+    	(SELECT catdog.like.like_boolean FROM catdog.like WHERE community.community_no = catdog.like.community_no AND 
+    	catdog.like.user_id = #{user_id}) AS like_boolean FROM community 
+    	LEFT JOIN media ON community.community_no = media.community_no
+    	ORDER BY community.community_no DESC
+    </select>
+    
+    <select id="findByCommunity" parameterType="CommunityVO" resultMap="CommunityMap">
+    	SELECT community.*,media.media_no, media.media_type, media_path FROM community
     	LEFT JOIN media ON community.community_no = media.community_no
     	WHERE community.community_no = #{community_no}
     </select>
     
+    <update id="update" parameterType="CommunityVO">
+    	UPDATE community SET category_no = #{category_no}, community_content = #{community_content},
+   			   community_editdate = now()
+    	WHERE community_no = #{community_no}
+    </update>
+    
+    <update id="updateMedia" parameterType="MediaVO">
+    	UPDATE media SET media_path = #{media_path}
+    	WHERE media_no = #{media_no}
+    </update>
+    
+    <delete id="delete" parameterType="CommunityVO">
+    	DELETE FROM community WHERE community_no = #{community_no}
+    </delete>
 
 
    
