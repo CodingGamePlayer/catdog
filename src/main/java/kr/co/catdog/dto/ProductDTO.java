@@ -18,13 +18,15 @@ import java.util.List;
 public class ProductDTO {
     private int product_no;
     private int category1_no;
-    private List<Category1VO> category1VOList;
     private String product_name;
     private int product_stock;
-    private String product_image;
-    private List<MediaVO> mediaVOList;
-    private MultipartFile file;
     private String product_content;
     private int product_price;
     private LocalDate product_regdate;
+
+    private List<Category1VO> category1VOList;
+
+    private List<MediaVO> mediaVOList;
+    private String media_path;
+    private List<MultipartFile> files;
 }

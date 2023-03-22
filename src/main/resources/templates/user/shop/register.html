@@ -9,59 +9,37 @@
       <!-- Content -->
       <div layout:fragment="content">
         <div class="row mx-2">
-          <form th:action="@{/user/shop/register}" method="post">
-          <div class="col-12">
-            <div class="card h-100">
-              <div class="card-body">
-                <h5 class="font-weight-bolder">Product Image</h5>
-                <div class="row">
-                  <div class="col-12">
-                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                      <div class="carousel-inner">
-                        <div class="carousel-item active">
-                          <div class="page-header min-vh-25 m-3 border-radius-xl">
-                            <img id="preview" src="" alt="" width="290" height="234.25">
-                            <span class="mask"></span>
-                          </div>
-                        </div>
-                        <div class="carousel-item">
-                          <div class="page-header min-vh-25 m-3 border-radius-xl"
-                               style="background-image: url('/assets/img/charles.jpg');">
-                            <span class="mask"></span>
-                          </div>
-                        </div>
-                        <div class="carousel-item">
-                          <div class="page-header min-vh-25 m-3 border-radius-xl"
-                               style="background-image: url('/assets/img/meeting.jpg');">
-                            <span class="mask"></span>
-                          </div>
+          <form th:action="@{/user/shop/register}" method="post" enctype="multipart/form-data">
+            <div class="col-12">
+              <div class="card h-100">
+                <label for="fileInput">
+                  <div class="card-body">
+                    <h5 class="font-weight-bolder">Product Image</h5>
+                    <div class="row">
+                      <div class="col-12 text-center">
+                        <div class="my-gallery d-flex mt-4 pt-2 uploadResult" itemscope=""
+                             itemtype="http://schema.org/ImageGallery"
+                             data-pswp-uid="1">
+                          <figure className="col-12" itemProp="associatedMedia" itemScope=""
+                                  itemType="http://schema.org/ImageObject">
+                            <img className="w-75 min-height-100 max-height-100 border-radius-lg"
+                                 src="/assets/img/new.png"
+                                 itemProp="thumbnail" alt="Image description">
+                          </figure>
+
                         </div>
                       </div>
-                      <div class="position-absolute w-100 top-0" style="min-height: 32vh;">
-                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-                          <span class="carousel-control-prev-icon position-absolute bottom-50" aria-hidden="true"></span>
-                          <span class="visually-hidden">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-                          <span class="carousel-control-next-icon position-absolute bottom-50" aria-hidden="true"></span>
-                          <span class="visually-hidden">Next</span>
-                        </a>
-                      </div>
+                      <!--                  <div class="col-12 mt-4">-->
+                      <!--                    <div class="d-flex">-->
+                      <!--                      <label for="fileInput">-->
+                      <!--                        <div class="btn btn-pink btn-sm mb-0 me-2">Add</div>-->
+                      <!--                      </label>-->
+                      <input type="file" accept="image/*" name="files" id="fileInput" style="display: none;" multiple>
+                      <!--                    </div>-->
+                      <!--                  </div>-->
                     </div>
                   </div>
-                  <div class="col-12 mt-4">
-                    <div class="d-flex">
-                      <label for="fileInput">
-                        <div class="btn btn-pink btn-sm mb-0 me-2">Add</div>
-                      </label>
-                      <input type="file" name="file" id="fileInput" style="display: none;" multiple>
-                      <label>
-                        <div class="btn btn-outline-pink btn-sm mb-0" onclick="fileReset()">Remove</div>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                </label>
             </div>
           </div>
           <div class="col-12 mt-4">
@@ -98,7 +76,7 @@
                 <div class="col-12 mt-4">
                   <div class="d-flex">
                     <button class="btn btn-pink btn-sm mb-0 me-2" type="submit">Add</button>
-                    <button class="btn btn-outline-pink btn-sm mb-0" type="reset">Remove</button>
+                    <button class="btn btn-outline-pink btn-sm mb-0" type="reset" onclick="fileReset()">Remove</button>
                   </div>
                 </div>
               </div>
@@ -107,28 +85,46 @@
           </form>
         </div>
         <script>
-          const fileInput = document.getElementById('fileInput');
-          const preview = document.getElementById('preview');
 
-          fileInput.addEventListener('change',function (){
-            const file = this.files[0];
-            const reader = new FileReader();
+          document.querySelector("#fileInput").addEventListener('change', function () {
 
-            reader.addEventListener('load',function () {
-              preview.src = reader.result;
-            });
-            // const str = `<div class="carousel-item">
-            //               <div class="page-header min-vh-25 m-3 border-radius-xl">
-            //                 <img id="preview" src="" alt="" width="290" height="234.25">
-            //                 <span class="mask"></span>
-            //               </div>
-            //             </div>`
-            if (file) {
-              reader.readAsDataURL(file);
+            const fileInput = document.querySelector("input[name='files']")
+            const files = fileInput.files
+            if (files.length ==0){
+              return;
+            }
+            console.log(files);
+            document.querySelector(".uploadResult").innerHTML = ''
+            for (let i = 0; i < files.length; i++) {
+              previewAdd(URL.createObjectURL(files[i]));
+            }
+          });
 
+          function previewAdd(e) {
+            console.log(e);
+            if (e.length!=0) {
+              const str = `<figure class="col-3" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+                          <a href="${e}"
+                             itemprop="contentUrl" data-size="500x600">
+                            <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
+                                 src="${e}"
+                                 itemprop="thumbnail" alt="Image description">
+                          </a>
+                        </figure>`
+
+              document.querySelector(".uploadResult").innerHTML += str
+            } else {
+              console.log("sdfd")
+              const str = `<figure className="col-12" itemProp="associatedMedia" itemScope=""
+                      itemType="http://schema.org/ImageObject">
+                <img className="w-75 min-height-100 max-height-100 border-radius-lg"
+                     src="/assets/img/new.png"
+                     itemProp="thumbnail" alt="Image description">
+              </figure>`
+              document.querySelector(".uploadResult").innerHTML = str
             }
 
-          });
+          }
 
 
         </script>

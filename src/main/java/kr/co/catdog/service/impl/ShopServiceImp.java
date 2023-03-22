@@ -15,9 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,7 +38,7 @@ public class ShopServiceImp implements ShopService {
     private final MediaMapper mediaMapper;
     private final CartMapper cartMapper;
     @Value("${kr.co.catdog.upload.path}")
-    private String uploadPath;
+    private String upPath;
 
 //  Start Product ------------------------------------------------------------------------
     @Override
@@ -57,17 +59,31 @@ public class ShopServiceImp implements ShopService {
         ProductVO productVO = productMapper.findById(VO);
         ProductDTO productDTO = modelMapper.map(productVO, ProductDTO.class);
         productDTO.setCategory1VOList(categoryMapper.selectCategory1());
-//        dto.setMediaVOList(mediaMapper.findById(productVO));
 
         return productDTO;
     }
-
+    @Transactional
     @Override
     public int insert(ProductDTO productDTO) {
-        productDTO.getMediaVOList().stream()
-                .map(mediaVO -> mediaMapper.insert(mediaVO));
 
-        int result = productMapper.insert(modelMapper.map(productDTO, ProductVO.class));
+        int result = productMapper.insert(productDTO);
+        log.info(String.valueOf("ggg"+String.valueOf(productDTO)));
+
+        productDTO.getFiles().forEach(multipartFile -> {
+            String fileName = UUID.randomUUID().toString() + "_" + multipartFile.getOriginalFilename();
+            String filePath = upPath+"\\"+ fileName;
+            File dest = new File(filePath);
+            try {
+                multipartFile.transferTo(dest);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            productDTO.setMedia_path(fileName);
+
+            mediaMapper.insert(productDTO);
+
+        });
+
         return !(result>0)? 0 : 1;
     }
     @Override

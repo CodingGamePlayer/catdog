@@ -25,8 +25,6 @@ import java.util.UUID;
 @RequestMapping("/user/shop")
 public class ShopController {
     private final ShopService shopService;
-    @Value("${kr.co.catdog.upload.path}")
-    private String upPath;
 
     @GetMapping("/cart")
     String cartList(HttpServletRequest request, Model model) {
@@ -77,18 +75,10 @@ public class ShopController {
     }
 
     @PostMapping("/register")
-    String register(ProductDTO productDTO) throws IOException {
-        log.info("gkgkgk"+String.valueOf(productDTO));
-        String fileName = UUID.randomUUID().toString() + "_" + productDTO.getFile().getOriginalFilename();
-        String filePath = upPath+"\\"+ fileName;
-        File dest = new File(filePath);
-        productDTO.getFile().transferTo(dest);
-//        productDTO.setUser_image(fileName);
-        log.info(String.valueOf(productDTO));
+    String register(ProductDTO productDTO) {
         int result = shopService.insert(productDTO);
 
         log.info(String.valueOf(result));
-
 
         return "redirect:/user/shop/list";
     }
