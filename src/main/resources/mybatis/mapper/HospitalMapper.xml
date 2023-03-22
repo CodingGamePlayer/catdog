@@ -147,5 +147,6 @@
         and
         longitude BETWEEN #{swLng} and #{neLng}
         ORDER BY distance
+        LIMIT 100
     </select>
 </mapper>

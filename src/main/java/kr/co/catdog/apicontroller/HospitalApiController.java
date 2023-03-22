@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,8 @@ public class HospitalApiController {
     @GetMapping("/api/user/hospital/map")
     public List<Map<String, Object>> mapList(@RequestParam Double[] position){
 
+        DecimalFormat df = new DecimalFormat("0.00");
+
         JSONObject jsonObj;
         JSONArray jsonArr = new JSONArray();
         HashMap<String, Double> locPositino = new HashMap<>();
@@ -35,6 +38,8 @@ public class HospitalApiController {
         locPositino.put("centerLng", position[5]);
         HashMap<String, Object> hash = new HashMap<>();
 
+
+
         List<HospitalDTO> listAll = hospitalService.getAll(locPositino);
         for (int i = 0; i < listAll.size(); i++) {
             hash.put("hospital_id", listAll.get(i).getHospital_id());
@@ -45,7 +50,7 @@ public class HospitalApiController {
             hash.put("road_address_name", listAll.get(i).getRoad_address_name());
             hash.put("longitude", listAll.get(i).getLongitude());
             hash.put("latitude", listAll.get(i).getLatitude());
-            //hash.put("distance", listAll.get(i).getDistance());
+            hash.put("distance", df.format(listAll.get(i).getDistance()));
             jsonObj = new JSONObject(hash);
             jsonArr.add(jsonObj);
         }
