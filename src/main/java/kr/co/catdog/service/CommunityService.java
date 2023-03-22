@@ -9,14 +9,14 @@ import kr.co.catdog.dto.ReplyDTO;
 
 public interface CommunityService {
 	
-	List<CommunityVO> selectAll();
-	
-	CommunityDTO findByCommunity(CommunityDTO communityDTO);
+	List<CommunityVO> selectAll(CommunityVO communityVO);
 	
 	int register(CommunityDTO communityDTO);
 	
+	CommunityDTO findByCommunity(CommunityDTO communityDTO);
 
+	int update(CommunityDTO communityDTO);
 	
-	
+	int delete(CommunityDTO communityDTO);
 
 }

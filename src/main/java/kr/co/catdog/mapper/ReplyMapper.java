@@ -12,4 +12,8 @@ public interface ReplyMapper {
 	int registerReply(ReplyVO replyVO);
 	
 	List<ReplyVO> getReply(ReplyVO replyVO);
+	
+	int replyCount(ReplyVO replyVO);
+	
+	int replyDelete(ReplyVO replyVO);
 }

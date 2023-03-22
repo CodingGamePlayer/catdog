@@ -46,6 +46,22 @@ public class ReplyServiceImpl implements ReplyService {
 		return 1;
 	}
 
+	@Override
+	public int replyCount(int community_no) {
+		ReplyVO replyVO = ReplyVO.builder()
+								.community_no(community_no)
+								.build();
+		return replyMapper.replyCount(replyVO);
+	}
+
+	@Override
+	public int replyDelete(int reply_no) {
+		ReplyVO replyVO = ReplyVO.builder()
+								.reply_no(reply_no)
+								.build();
+		return replyMapper.replyDelete(replyVO);
+	}
+
 	
 	
 }

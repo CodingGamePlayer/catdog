@@ -16,7 +16,7 @@
 		        <form role="form" id="contact-form" method="post" autocomplete="off" action="/user/community/register" enctype="multipart/form-data">
 		          <div class="card-body">
 		            <div class="mb-4">
-		              <label>Email Address</label>
+		              <label>Id</label>
 		              <div class="input-group">
 		                <input type="email" class="form-control" th:value="${user_id}" placeholder="" name="user_id" readonly>
 		              </div>
@@ -42,7 +42,7 @@
 		            <div class="upload mb-4" style="display: none;" >
 					  <label for="formFile" class="form-label">사진첨부</label>
 					  <input class="form-control form-control-sm mb-4" type="file" id="fileInput" name="file">
-					  <img id="previewImage" src="" alt="Preview Image" style="display : none;">
+					  <img class="img-fluid border-radius-lg shadow-lg" id="previewImage" src="" alt="Preview Image" style="display : none;">
 					</div>
 		            <div class="path mb-4"  style="display:none;">
 					  <label for="formUrl" class="form-label">영상경로</label>
@@ -54,7 +54,7 @@
 		            </div>
 		            <div class="row">
 		              <div class="col-md-12">
-		                <button type="submit" class="btn btn-pink w-100">Send Message</button>
+		                <button type="submit" class="btn btn-pink w-100">글 등록</button>
 		              </div>
 		            </div>
 		          </div>
@@ -94,7 +94,7 @@ fileInput.addEventListener('change', function() {
   });
 
   if (file) {
-    document.getElementById('previewImage').setAttribute('style','display:inline; width: 280px; height: 240px;');
+    document.getElementById('previewImage').setAttribute('style','display:inline;');
     reader.readAsDataURL(file);
   }
 });
