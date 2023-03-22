@@ -16,4 +16,5 @@ public class HospitalVO {
     public String road_address_name;
     public double longitude;
     public double latitude;
+    public double distance;
 }
