@@ -66,6 +66,7 @@
                     <label>Content</label>
                     <textarea class="form-control" placeholder="Content" rows="2" style="resize: none;" name="product_content"></textarea>
                   </div>
+                  <input type="hidden" th:value="${session.session_id}" name="user_id">
                 </div>
                 <div class="col-12 mt-4">
                   <div class="d-flex">

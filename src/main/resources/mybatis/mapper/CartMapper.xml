@@ -11,7 +11,7 @@
     </resultMap>
 
     <select id="findById" resultMap="cartMap">
-        SELECT * FROM cart WHERE user_id = #{user_id}
+        SELECT * FROM cart WHERE user_id = #{user_id} ORDER BY cart_no DESC
     </select>
 
     <select id="findById_No" resultMap="cartMap">

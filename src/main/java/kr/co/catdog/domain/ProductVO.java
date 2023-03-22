@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 public class ProductVO {
     private int product_no;
+    private String user_id;
     private int category1_no;
     private String product_name;
     private int product_stock;

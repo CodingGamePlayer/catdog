@@ -6,6 +6,7 @@
 
     <resultMap id="productMap" type="ProductVO">
         <result property="product_no" column="product_no"/>
+        <result property="user_id" column="user_id"/>
         <result property="category1_no" column="category1_no"/>
         <result property="product_name" column="product_name"/>
         <result property="product_stock" column="product_stock"/>
@@ -15,7 +16,7 @@
     </resultMap>
 
     <select id="selectAll" resultMap="productMap">
-        SELECT * FROM product
+        SELECT * FROM product ORDER BY product_no DESC
     </select>
 
     <select id="findById" resultMap="productMap">
@@ -24,8 +25,8 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="product_no">
-        INSERT INTO product (category1_no, product_name, product_stock, product_content, product_price)
-        VALUES (#{category1_no}, #{product_name}, #{product_stock}, #{product_content}, #{product_price})
+        INSERT INTO product (user_id, category1_no, product_name, product_stock, product_content, product_price)
+        VALUES (#{user_id}, #{category1_no}, #{product_name}, #{product_stock}, #{product_content}, #{product_price})
     </insert>
 
     <update id="update">

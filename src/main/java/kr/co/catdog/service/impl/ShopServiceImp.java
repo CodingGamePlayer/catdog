@@ -40,22 +40,24 @@ public class ShopServiceImp implements ShopService {
     @Value("${kr.co.catdog.upload.path}")
     private String upPath;
 
-//  Start Product ------------------------------------------------------------------------
+    //  Start Product ------------------------------------------------------------------------
     @Override
     public List<ProductDTO> selectAll() {
         List<ProductVO> productVOList = productMapper.selectAll();
-        List<ProductDTO> productDTOList = productVOList.stream()
-                .map(productVO -> modelMapper.map(productVO, ProductDTO.class))
+        List<ProductDTO> productDTOList = productVOList.stream().map(productVO ->
+                modelMapper.map(productVO, ProductDTO.class))
                 .collect(Collectors.toList());
 
         return productDTOList;
     }
 
     @Override
-    public ProductDTO findById(ProductDTO productDTO) {
+    public ProductDTO findById(int product_no) {
 
-        ProductVO productVO = productMapper.findById(productDTO);
-        if (productVO == null){
+
+        ProductVO productVO = productMapper.findById(ProductDTO.builder()
+                .product_no(product_no).build());
+        if (productVO == null) {
             return null;
         }
         ProductDTO DTO = modelMapper.map(productVO, ProductDTO.class);
@@ -68,11 +70,11 @@ public class ShopServiceImp implements ShopService {
     public int insert(ProductDTO productDTO) {
 
         int result = productMapper.insert(productDTO);
-        log.info(String.valueOf("ggg"+String.valueOf(productDTO)));
+        log.info(String.valueOf("ggg" + String.valueOf(productDTO)));
 
         productDTO.getFiles().forEach(multipartFile -> {
             String fileName = UUID.randomUUID().toString() + "_" + multipartFile.getOriginalFilename();
-            String filePath = upPath+"\\"+ fileName;
+            String filePath = upPath + "\\" + fileName;
             File dest = new File(filePath);
             try {
                 multipartFile.transferTo(dest);
@@ -85,26 +87,27 @@ public class ShopServiceImp implements ShopService {
 
         });
 
-        return !(result>0)? 0 : 1;
+        return !(result > 0) ? 0 : 1;
     }
+
     @Override
-    public ProductDTO insertCategory(){
+    public ProductDTO insertCategory() {
         ProductDTO productDTO = ProductDTO.builder()
-                .category1VOList(categoryMapper.selectCategory1())
-                .build();
+                .category1VOList(categoryMapper.selectCategory1()).build();
         return productDTO;
     }
 
     @Override
     public int update(ProductDTO productDTO) {
         int result = productMapper.update(productDTO);
-        return !(result>0)? 0 : 1;
+        return !(result > 0) ? 0 : 1;
     }
 
     @Override
-    public int delete(ProductDTO productDTO) {
-        int result = productMapper.delete(productDTO);
-        return !(result>0)? 0 : 1;
+    public int delete(int product_no) {
+        int result = productMapper.delete(ProductDTO.builder()
+                .product_no(product_no).build());
+        return !(result > 0) ? 0 : 1;
     }
 //    End Product ------------------------------------------------------------------------
 
@@ -112,17 +115,16 @@ public class ShopServiceImp implements ShopService {
 //    Start Cart ------------------------------------------------------------------------
 
     @Override
-    public List<CartDTO> findById_Cart(String user_id){
+    public List<CartDTO> findById_Cart(String user_id) {
 
         List<CartVO> cartVOList = cartMapper.findById(CartDTO.builder()
                 .user_id(user_id).build());
-        List<CartDTO>cartDTOList = cartVOList.stream()
-                .map(cartVO -> modelMapper.map(cartVO,CartDTO.class))
-                .collect(Collectors.toList());
+        List<CartDTO> cartDTOList = cartVOList.stream().map(cartVO ->
+                modelMapper.map(cartVO, CartDTO.class)).collect(Collectors.toList());
 
         cartDTOList.forEach(cartDTO -> {
-            ProductDTO productDTO = findById(ProductDTO.builder().product_no(cartDTO.getProduct_no()).build());
-            if (productDTO == null){
+            ProductDTO productDTO = findById(cartDTO.getProduct_no());
+            if (productDTO == null) {
                 return;
             }
             cartDTO.setProduct_name(productDTO.getProduct_name());
@@ -132,30 +134,33 @@ public class ShopServiceImp implements ShopService {
     }
 
     @Override
-    public int insert_Cart(CartDTO cartDTO){
+    public int insert_Cart(CartDTO cartDTO) {
         CartVO cartVO = cartMapper.findById_No(cartDTO);
 
-        if (cartVO != null){
-            cartDTO.setCart_quantity(cartVO.getCart_quantity()+cartDTO.getCart_quantity());
+        if (cartVO != null) {
+            cartDTO.setCart_quantity(cartVO.getCart_quantity() + cartDTO.getCart_quantity());
             int result = cartMapper.update(cartDTO);
 
-            return !(result>0)? 0 : 1;
+            return !(result > 0) ? 0 : 1;
         }
         int result = cartMapper.insert(cartDTO);
 
-        return !(result>0)? 0 : 1;
+        return !(result > 0) ? 0 : 1;
     }
+
     @Override
-    public int update_Cart(CartDTO cartDTO){
+    public int update_Cart(CartDTO cartDTO) {
         int result = cartMapper.update(cartDTO);
 
-        return !(result>0)? 0 : 1;
+        return !(result > 0) ? 0 : 1;
     }
-    @Override
-    public int delete_Cart(CartDTO cartDTO){
-        int result = cartMapper.delete(cartDTO);
 
-        return !(result>0)? 0 : 1;
+    @Override
+    public int delete_Cart(int cart_no) {
+        int result = cartMapper.delete(CartDTO.builder()
+                .cart_no(cart_no).build());
+
+        return !(result > 0) ? 0 : 1;
     }
 
 //    End Cart ------------------------------------------------------------------------

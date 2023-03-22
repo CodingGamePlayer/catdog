@@ -45,17 +45,19 @@ public class UserController {
 
     @PostMapping("/edit-person")
     String editPerson(UserDTO userDTO, HttpServletRequest request) throws IOException {
-        log.info("gkgkgk"+String.valueOf(userDTO));
+
         String fileName = UUID.randomUUID().toString() + "_" + userDTO.getFile().getOriginalFilename();
-        String filePath = upPath+"\\"+ fileName;
+        String filePath = upPath + "\\" + fileName;
         File dest = new File(filePath);
+
         userDTO.getFile().transferTo(dest);
         userDTO.setUser_image(fileName);
-        log.info(String.valueOf(userDTO));
+
         int result = userService.update(userDTO);
+
         HttpSession session = request.getSession();
-        session.setAttribute("session_img",userDTO.getUser_image());
-        log.info(String.valueOf(result));
+        session.setAttribute("session_img", userDTO.getUser_image());
+
         return "redirect:/user/profile/edit-person";
     }
 
@@ -74,7 +76,7 @@ public class UserController {
     }
 
     @PostMapping("/edit-pet")
-    String editPet(PetDTO petDTO){
+    String editPet(PetDTO petDTO) {
         int result = petService.update(petDTO);
         log.info(String.valueOf(result));
         return "redirect:/user/profile/edit-pet";

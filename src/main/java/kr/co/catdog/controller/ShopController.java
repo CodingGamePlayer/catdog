@@ -35,9 +35,9 @@ public class ShopController {
     }
 
     @GetMapping("/detail/{product_no}")
-    String detail(@PathVariable ProductDTO productDTO, Model model) {
-
-        model.addAttribute("product", shopService.findById(productDTO));
+    String detail(@PathVariable int product_no, Model model) {
+        log.info("여기"+String.valueOf(product_no));
+        model.addAttribute("product", shopService.findById(product_no));
         return "user/shop/detail";
     }
 
@@ -57,8 +57,8 @@ public class ShopController {
     }
 
     @GetMapping("/edit/{product_no}")
-    String editForm(@PathVariable ProductDTO productDTO, Model model) {
-        ProductDTO DTO = shopService.findById(productDTO);
+    String editForm(@PathVariable int product_no, Model model) {
+        ProductDTO DTO = shopService.findById(product_no);
         model.addAttribute("product", DTO);
 
         return "user/shop/edit";
@@ -72,8 +72,9 @@ public class ShopController {
     }
 
     @GetMapping("/delete/{product_no}")
-    String delete(@PathVariable ProductDTO productDTO){
-        int result = shopService.delete(productDTO);
+    String delete(@PathVariable int product_no){
+
+        int result = shopService.delete(product_no);
 
         return "redirect:/user/shop/list";
     }
@@ -97,8 +98,8 @@ public class ShopController {
         return "redirect:/user/shop/cart";
     }
     @GetMapping("/cart/delete/{cart_no}")
-    String delete_cart(@PathVariable CartDTO cartDTO, HttpServletRequest request){
-        shopService.delete_Cart(cartDTO);
+    String delete_cart(@PathVariable int cart_no, HttpServletRequest request){
+        shopService.delete_Cart(cart_no);
 
         HttpSession session = request.getSession();
         int cart = shopService.findById_Cart((String)session.getAttribute("session_id")).size();
