@@ -38,14 +38,12 @@ public class AccountController {
             session.setAttribute("session_img",user.getUser_image());
             int cart = shopService.findById_Cart(user.getUser_id()).size();
             session.setAttribute("session_cart",cart);
-            log.info(String.valueOf(session.getAttribute("session_cart")));
-            log.info(String.valueOf(cart));
         }
         return "redirect:/";
     }
 
     @GetMapping("/logout")
-    String logout(HttpServletRequest request) throws IOException, ServletException {
+    String logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
         if(session!=null){
@@ -63,7 +61,7 @@ public class AccountController {
     @PostMapping("/signup")
     String signup(UserDTO userDTO) {
         int result = userService.insert(userDTO);
-        log.info(String.valueOf(result));
+
         return "redirect:/login";
     }
 

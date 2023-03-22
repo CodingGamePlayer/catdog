@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface ShopService {
     List<ProductDTO> selectAll();
-    ProductDTO findById(int product_no);
+    ProductDTO findById(ProductDTO productDTO);
     int insert(ProductDTO productDTO);
-    int update(ProductDTO productDTO);
-    int delete(int product_no);
     ProductDTO insertCategory();
-    int insertMedia(ProductDTO productDTO);
-    int deleteMedia(ProductDTO productDTO);
+    int update(ProductDTO productDTO);
+    int delete(ProductDTO productDTO);
+
+
     List<CartDTO> findById_Cart(String user_id);
     int insert_Cart(CartDTO cartDTO);
     int update_Cart(CartDTO cartDTO);
-    int delete_Cart(int cart_no);
+    int delete_Cart(CartDTO cartDTO);
 }

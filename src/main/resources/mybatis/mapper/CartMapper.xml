@@ -14,8 +14,8 @@
         SELECT * FROM cart WHERE user_id = #{user_id}
     </select>
 
-    <select id="findByNo" resultMap="cartMap">
-        SELECT * FROM cart WHERE cart_no = #{cart_no}
+    <select id="findById_No" resultMap="cartMap">
+        SELECT * FROM cart WHERE user_id = #{user_id} AND product_no = #{product_no} LIMIT 1;
     </select>
 
     <insert id="insert">
@@ -30,8 +30,6 @@
         DELETE FROM cart WHERE cart_no = #{cart_no}
     </delete>
 
-    <select id="findById_No" resultMap="cartMap">
-        SELECT * FROM cart WHERE user_id = #{user_id} AND product_no = #{product_no} LIMIT 1;
-    </select>
+
 
 </mapper>

@@ -10,10 +10,10 @@ import java.util.List;
 @Mapper
 public interface ProductMapper {
     List<ProductVO> selectAll();
-    ProductVO findById(ProductVO productVO);
+    ProductVO findById(ProductDTO productDTO);
     int insert(ProductDTO productDTO);
-    int update(ProductVO productVO);
-    int delete(ProductVO productVO);
+    int update(ProductDTO productDTO);
+    int delete(ProductDTO productDTO);
 
 
 

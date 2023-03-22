@@ -52,17 +52,18 @@ public class ShopServiceImp implements ShopService {
     }
 
     @Override
-    public ProductDTO findById(int product_no) {
-        ProductVO VO = ProductVO.builder()
-                .product_no(product_no)
-                .build();
-        ProductVO productVO = productMapper.findById(VO);
-        ProductDTO productDTO = modelMapper.map(productVO, ProductDTO.class);
-        productDTO.setCategory1VOList(categoryMapper.selectCategory1());
+    public ProductDTO findById(ProductDTO productDTO) {
 
-        return productDTO;
+        ProductVO productVO = productMapper.findById(productDTO);
+        if (productVO == null){
+            return null;
+        }
+        ProductDTO DTO = modelMapper.map(productVO, ProductDTO.class);
+        DTO.setCategory1VOList(categoryMapper.selectCategory1());
+
+        return DTO;
     }
-    @Transactional
+
     @Override
     public int insert(ProductDTO productDTO) {
 
@@ -96,111 +97,64 @@ public class ShopServiceImp implements ShopService {
 
     @Override
     public int update(ProductDTO productDTO) {
-        int result = productMapper.update(modelMapper.map(productDTO, ProductVO.class));
+        int result = productMapper.update(productDTO);
         return !(result>0)? 0 : 1;
     }
 
     @Override
-    public int delete(int product_no) {
-        ProductVO productVO = ProductVO.builder()
-                .product_no(product_no)
-                .build();
-        int result = productMapper.delete(productVO);
+    public int delete(ProductDTO productDTO) {
+        int result = productMapper.delete(productDTO);
         return !(result>0)? 0 : 1;
     }
 //    End Product ------------------------------------------------------------------------
-    @Override
-    public int insertMedia(ProductDTO productDTO){
 
-//            productDTO.getMediaVOList().stream()
-//                    .map(mediaVO -> {
-//                        String filename = UUID.randomUUID().toString()+"_"+mediaVO.getMedia_path();
-//                        Path savePath = Paths.get(uploadPath, filename);
-//                        MediaVO mediaVO1 = MediaVO.builder()
-//                                .product_no(mediaVO.getProduct_no())
-//                                .media_path(mediaVO.getMedia_path())
-//                                .build();
-//                        try {
-//                            productDTO.getFile().transferTo(savePath);
-//                        }catch (IOException e){
-//                            e.printStackTrace();
-//                            return 0;
-//                        }
-//                        int result = mediaMapper.insert(mediaVO1);
-//                        log.info(String.valueOf(result));
-//
-//                        return result;
-//                    });
 
-//            productDTO.getMediaVOList().forEach(
-//                mediaVO -> {
-//                    String filename = UUID.randomUUID().toString()+"_"+mediaVO.getMedia_path();
-//                    Path savePath = Paths.get(uploadPath, filename);
-//                    MediaVO mediaVO1 = MediaVO.builder()
-//                            .product_no(mediaVO.getProduct_no())
-//                            .media_path(mediaVO.getMedia_path())
-//                            .build();
-//                    try {
-//                        productDTO.getFile().transferTo(savePath);
-//                    }catch (IOException e){
-//                        e.printStackTrace();
-//                    }
-//                    int result = mediaMapper.insert(mediaVO1);
-//                    log.info(String.valueOf(result));
-//                });
-            return 0;
-
-    }
-    @Override
-    public int deleteMedia(ProductDTO productDTO){
-        int result = mediaMapper.delete(modelMapper.map(productDTO, ProductVO.class));
-        return !(result>0)? 0 : 1;
-    }
 //    Start Cart ------------------------------------------------------------------------
 
     @Override
     public List<CartDTO> findById_Cart(String user_id){
-        CartVO cartVO = CartVO.builder()
-                .user_id(user_id)
-                .build();
-        List<CartVO> cartVOList = cartMapper.findById(cartVO);
+
+        List<CartVO> cartVOList = cartMapper.findById(CartDTO.builder()
+                .user_id(user_id).build());
         List<CartDTO>cartDTOList = cartVOList.stream()
-                .map(cartVO1 -> modelMapper.map(cartVO1,CartDTO.class))
+                .map(cartVO -> modelMapper.map(cartVO,CartDTO.class))
                 .collect(Collectors.toList());
 
         cartDTOList.forEach(cartDTO -> {
-            cartDTO.setProduct_name(findById(cartDTO.getProduct_no()).getProduct_name());
-            cartDTO.setProduct_price(findById(cartDTO.getProduct_no()).getProduct_price());
+            ProductDTO productDTO = findById(ProductDTO.builder().product_no(cartDTO.getProduct_no()).build());
+            if (productDTO == null){
+                return;
+            }
+            cartDTO.setProduct_name(productDTO.getProduct_name());
+            cartDTO.setProduct_price(productDTO.getProduct_price());
         });
         return cartDTOList;
     }
 
     @Override
     public int insert_Cart(CartDTO cartDTO){
-        CartVO cartVO = cartMapper.findById_No(modelMapper.map(cartDTO, CartVO.class));
+        CartVO cartVO = cartMapper.findById_No(cartDTO);
 
         if (cartVO != null){
-            CartDTO DTO = modelMapper.map(cartVO, CartDTO.class);
-            DTO.setCart_quantity(DTO.getCart_quantity()+cartDTO.getCart_quantity());
-            int result = cartMapper.update(modelMapper.map(DTO, CartVO.class));
+            cartDTO.setCart_quantity(cartVO.getCart_quantity()+cartDTO.getCart_quantity());
+            int result = cartMapper.update(cartDTO);
 
             return !(result>0)? 0 : 1;
         }
-        int result = cartMapper.insert(modelMapper.map(cartDTO, CartVO.class));
+        int result = cartMapper.insert(cartDTO);
 
         return !(result>0)? 0 : 1;
     }
     @Override
     public int update_Cart(CartDTO cartDTO){
-        int result = cartMapper.update(modelMapper.map(cartDTO, CartVO.class));
+        int result = cartMapper.update(cartDTO);
+
         return !(result>0)? 0 : 1;
     }
     @Override
-    public int delete_Cart(int cart_no){
-        CartVO cartVO = CartVO.builder()
-                .cart_no(cart_no)
-                .build();
-        int result = cartMapper.delete(cartVO);
+    public int delete_Cart(CartDTO cartDTO){
+        int result = cartMapper.delete(cartDTO);
+
         return !(result>0)? 0 : 1;
     }
 
