@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.catdog.domain.CommunityVO;
 import kr.co.catdog.dto.CommunityDTO;
 import kr.co.catdog.service.CommunityService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +37,11 @@ public class CommunityController {
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("session_id");
 		log.info("로그인 아이디 : "+ user_id);
+		CommunityVO communityVO = CommunityVO.builder()
+											.user_id(user_id)
+											.build();
 		mav.addObject("msg", "cnBtn");
-		mav.addObject("communityVOs", communityservice.selectAll());
+		mav.addObject("communityVOs", communityservice.selectAll(communityVO));
 		mav.addObject("user_id", user_id);
 		mav.setViewName("/user/community/list-community");
 		return mav;
@@ -85,6 +89,48 @@ public class CommunityController {
 		}
 		
 		return mav;
+	}
+	
+	@GetMapping("update")
+	ModelAndView updateForm(CommunityDTO communityDTO) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("communityDTO", communityservice.findByCommunity(communityDTO));
+		mav.setViewName("/user/community/updateForm");
+		
+		return mav;
+	}
+	
+	@PostMapping("update")
+	ModelAndView update(CommunityDTO communityDTO) throws IllegalStateException, IOException {
+		ModelAndView mav = new ModelAndView();
+		log.info("업데이트 DTO"+communityDTO);
+		if(communityDTO.getFile() != null) {
+			UUID uuid = UUID.randomUUID();
+			String fileName = uuid.toString()+communityDTO.getFile().getOriginalFilename();
+			String filePath = upPath + "\\" + fileName;
+			File dest = new File(filePath);
+			communityDTO.getFile().transferTo(dest);
+			communityDTO.setMedia_path(fileName);
+			communityservice.update(communityDTO);
+			mav.setViewName("redirect:list");
+			log.info("filename : "+fileName);
+			log.info("communityDTO.path : "+communityDTO.getMedia_path());
+		}else {
+			communityservice.update(communityDTO);
+			mav.setViewName("redirect:list");
+			
+		}
+		return mav;
+	}
+	
+	@GetMapping("delete")
+	ModelAndView delete(CommunityDTO communityDTO) {
+		ModelAndView mav = new ModelAndView();
+		communityservice.delete(communityDTO);
+		mav.setViewName("redirect:list");
+		return mav;
+		
 	}
 
 }

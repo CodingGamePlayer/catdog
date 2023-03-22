@@ -21,6 +21,7 @@ public class CommunityDTO {
 	private String community_regdate;
 	private String community_editdate;
 	private MultipartFile file;
+	private int media_no;
 	private int media_type;
 	private String media_path;
 
