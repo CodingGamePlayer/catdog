@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,8 +37,8 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
-    public List<HospitalDTO> getAll() {
-        return hospitalMapper.getAll().stream().map(hospitalVO -> modelMapper.map(hospitalVO, HospitalDTO.class)).collect(Collectors.toList());
+    public List<HospitalDTO> getAll(HashMap<String, Double> locPosition) {
+        return hospitalMapper.getAll(locPosition).stream().map(hospitalVO -> modelMapper.map(hospitalVO, HospitalDTO.class)).collect(Collectors.toList());
     }
 
 

@@ -18,4 +18,9 @@ public class HospitalDTO {
     public String road_address_name;
     public double longitude;
     public double latitude;
+    public double distance;
+
+    public void floorDistance(Double distance) {
+        this.distance = Math.floor((distance * 100) / 100.0);
+    }
 }

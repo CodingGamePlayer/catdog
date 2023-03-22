@@ -13,6 +13,7 @@
         <result property="road_address_name" column="road_address_name"/>
         <result property="longitude" column="longitude"/>
         <result property="latitude" column="latitude"/>
+        <result property="distance" column="distance"/>
     </resultMap>
 
     <resultMap id="govermentHospitalMap" type="GovermentHospitalVO">
@@ -120,9 +121,31 @@
         SELECT *
         FROM goverment_hospital
     </select>
-
-    <select id="getAll" resultMap="hospitalMap">
+<!--
+    <select id="getAll" resultMap="hospitalMap" parameterType="hashmap">
         SELECT *
         FROM hospital
+    </select>
+-->
+
+    <select id="getAll" resultMap="hospitalMap" parameterType="hashmap">
+        SELECT
+        *,
+        (
+        6371 * acos (
+        cos ( radians(latitude ) )
+        * cos ( radians(#{centerLat} ) )
+        * cos ( radians(longitude) - radians(#{centerLng} ) )
+        + sin ( radians(latitude))
+        * sin ( radians(#{centerLat} ) )
+        )
+        )
+        AS distance
+        FROM hospital
+        where
+        latitude BETWEEN #{swLat} and #{neLat}
+        and
+        longitude BETWEEN #{swLng} and #{neLng}
+        ORDER BY distance
     </select>
 </mapper>
