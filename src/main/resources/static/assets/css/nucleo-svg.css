@@ -133,3 +133,21 @@ Stroke effects - Nucleo outline icons
   -o-transform: translateX(0.5px) translateY(0.5px);
   transform: translateX(0.5px) translateY(0.5px);
 }
+
+
+/* 좋아요 체크박스 기본 스타일 숨기기*/
+.custom-checkbox input[type="checkbox"] {
+
+}
+/* 좋아요 체크박스 커스텀 스타일 */
+.custom-checkbox .checkicon::before {
+  content: "\F406"; /* 체크되지 않은 상태의 Font Awesome 아이콘 */
+  font-family: 'Font Awesome 6 Pro'; /* Font Awesome 폰트 패밀리 */
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* 좋아요 체크된 상태 체크박스 스타일링 */
+.custom-checkbox input[type="checkbox"]:checked + .checkicon::before {
+  content: "\F406"; /* 체크된 상태의 Font Awesome 아이콘 */
+}

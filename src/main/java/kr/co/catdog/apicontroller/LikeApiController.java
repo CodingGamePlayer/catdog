@@ -25,7 +25,7 @@ public class LikeApiController {
 //	좋아요 체크 => 체크해제
 	@PutMapping("/api/user/community/like")
 	public ResponseEntity<LikeVO> likeFalse(@RequestBody LikeVO likeVO){
-		
+		log.info("controller로 넘어온 좋아요 정보 : "+likeVO);
 		int result = likeService.likeUpdate(likeVO);
 		
 		if(!(result>0)) {
