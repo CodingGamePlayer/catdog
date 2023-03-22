@@ -5,126 +5,137 @@
       layout:decorate="~{layout/default_layout.html}">
 
 
-
-      <!-- Content -->
-      <div layout:fragment="content">
-        <div class="row mx-2">
-          <form th:action="@{/user/shop/register}" method="post" enctype="multipart/form-data">
+<!-- Content -->
+<div layout:fragment="content">
+    <div class="row mx-2">
+        <form th:action="@{/user/shop/register}" method="post" enctype="multipart/form-data">
             <div class="col-12">
-              <div class="card h-100">
-                <div for="fileInput">
-                  <div class="card-body">
-                    <h5 class="font-weight-bolder">Product Image</h5>
-                    <div class="row">
-                      <div class="col-12 text-center">
-                        <div class="my-gallery d-flex mt-4 pt-2 uploadResult" itemscope="" itemtype="http://schema.org/ImageGallery" data-pswp-uid="1">
-                          <figure className="col-12" itemProp="associatedMedia" itemScope="" itemType="http://schema.org/ImageObject">
-                            <img className="w-75 min-height-100 max-height-100 border-radius-lg" src="/assets/img/new.png" itemProp="thumbnail" alt="Image description">
-                          </figure>
+                <div class="card h-100">
+                    <label for="fileInput">
+                        <div class="card-body">
+                            <h5 class="font-weight-bolder">Product Image</h5>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <div class="my-gallery d-flex mt-4 pt-2 uploadResult" itemscope=""
+                                         itemtype="http://schema.org/ImageGallery" data-pswp-uid="1">
+                                        <figure className="col-12" itemProp="associatedMedia" itemScope=""
+                                                itemType="http://schema.org/ImageObject">
+                                            <img className="w-75 min-height-100 max-height-100 border-radius-lg"
+                                                 src="/assets/img/new.png" itemProp="thumbnail" alt="Image description">
+                                        </figure>
+                                    </div>
+                                </div>
+                                <!--                  <div class="col-12 mt-4">-->
+                                <!--                    <div class="d-flex">-->
+                                <!--                      <label for="fileInput">-->
+                                <!--                        <div class="btn btn-pink btn-sm mb-0 me-2">Add</div>-->
+                                <!--                      </label>-->
+                                <input type="file" accept="image/*" name="files" id="fileInput" style="display: none;"
+                                       multiple>
+                                <!--                    </div>-->
+                                <!--                  </div>-->
+                            </div>
                         </div>
-                      </div>
-                      <!--                  <div class="col-12 mt-4">-->
-                      <!--                    <div class="d-flex">-->
-                      <!--                      <label for="fileInput">-->
-                      <!--                        <div class="btn btn-pink btn-sm mb-0 me-2">Add</div>-->
-                      <!--                      </label>-->
-                      <input type="file" accept="image/*" name="files" id="fileInput" style="display: none;" multiple>
-                      <!--                    </div>-->
-                      <!--                  </div>-->
+                    </label>
+                </div>
+            </div>
+            <div class="col-12 mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="font-weight-bolder">Product Information</h5>
+                        <div class="row">
+                            <div class="col-12">
+                                <label>Name</label>
+                                <input class="form-control" type="text" placeholder="Name" onfocus="focused(this)"
+                                       onfocusout="defocused(this)" name="product_name">
+                            </div>
+                            <div class="col-12">
+                                <label class="mt-4">Price</label>
+                                <input class="form-control" type="text" placeholder="Price" onfocus="focused(this)"
+                                       onfocusout="defocused(this)" name="product_price">
+                            </div>
+                            <div class="col-12">
+                                <label>Stock</label>
+                                <input class="form-control" type="number" placeholder="Stock" onfocus="focused(this)"
+                                       onfocusout="defocused(this)" name="product_stock">
+                            </div>
+                            <div class="col-12">
+                                <label>Category</label>
+                                <select class="form-control" id="Category1" name="category1_no">
+                                    <th:block th:each="category : ${category.category1VOList}">
+                                        <option th:text="${category.category1_type}"
+                                                th:value="${category.category1_no}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label>Content</label>
+                                <textarea class="form-control" placeholder="Content" rows="2" style="resize: none;"
+                                          name="product_content"></textarea>
+                            </div>
+                            <input type="hidden" th:value="${session.session_id}" name="user_id">
+                        </div>
+                        <div class="col-12 mt-4">
+                            <div class="d-flex">
+                                <button class="btn btn-pink btn-sm mb-0 me-2" type="submit">Add</button>
+                                <button class="btn btn-outline-pink btn-sm mb-0" type="reset" onclick="fileReset()">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
             </div>
-          </div>
-          <div class="col-12 mt-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="font-weight-bolder">Product Information</h5>
-                <div class="row">
-                  <div class="col-12">
-                    <label>Name</label>
-                    <input class="form-control" type="text" placeholder="Name" onfocus="focused(this)"
-                           onfocusout="defocused(this)" name="product_name">
-                  </div>
-                  <div class="col-12">
-                    <label class="mt-4">Price</label>
-                    <input class="form-control" type="text" placeholder="Price" onfocus="focused(this)" onfocusout="defocused(this)" name="product_price">
-                  </div>
-                  <div class="col-12">
-                    <label>Stock</label>
-                    <input class="form-control" type="number" placeholder="Stock" onfocus="focused(this)" onfocusout="defocused(this)" name="product_stock">
-                  </div>
-                  <div class="col-12">
-                    <label>Category</label>
-                    <select class="form-control" id="Category1" name="category1_no">
-                      <th:block th:each="category : ${category.category1VOList}">
-                        <option th:text="${category.category1_type}" th:value="${category.category1_no}"></option>
-                      </th:block>
-                    </select>
-                  </div>
-                  <div class="col-12">
-                    <label>Content</label>
-                    <textarea class="form-control" placeholder="Content" rows="2" style="resize: none;" name="product_content"></textarea>
-                  </div>
-                  <input type="hidden" th:value="${session.session_id}" name="user_id">
-                </div>
-                <div class="col-12 mt-4">
-                  <div class="d-flex">
-                    <button class="btn btn-pink btn-sm mb-0 me-2" type="submit">Add</button>
-                    <button class="btn btn-outline-pink btn-sm mb-0" type="reset" onclick="fileReset()">Remove</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          </form>
-        </div>
-        <script>
+        </form>
+    </div>
+    <script>
+        const fileInput = document.querySelector("input[name='files']")
 
-          document.querySelector("#fileInput").addEventListener('change', function () {
-
-            const fileInput = document.querySelector("input[name='files']")
+        document.querySelector("#fileInput").addEventListener('change', function () {
             const files = fileInput.files
-            if (files.length ==0){
-              return;
+            // const file = this.files[0]
+            // console.log(file);
+
+            if (files.length == 0) {
+                return;
             }
             console.log(files);
             document.querySelector(".uploadResult").innerHTML = ''
             for (let i = 0; i < files.length; i++) {
-              previewAdd(URL.createObjectURL(files[i]));
+                previewAdd(URL.createObjectURL(files[i]));
             }
-          });
+        });
 
-          function previewAdd(e) {
-            console.log(e);
-            if (e.length!=0) {
-              const str = `<figure class="col-3" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-                          <a href="${e}"
-                             itemprop="contentUrl" data-size="500x600">
-                            <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
-                                 src="${e}"
-                                 itemprop="thumbnail" alt="Image description">
-                          </a>
-                        </figure>`
+        function previewAdd(img) {
+            console.log(img);
+            if (img.length != 0) {
+                const str = `<figure class="col-3" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+                              <a href="${img}" itemprop="contentUrl" data-size="500x600">
+                                <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
+                                     src="${img}" itemprop="thumbnail" alt="Image description">
+                              </a>
+                            </figure>`
 
-              document.querySelector(".uploadResult").innerHTML += str
+                document.querySelector(".uploadResult").innerHTML += str
             } else {
-              console.log("sdfd")
-              const str = `<figure className="col-12" itemProp="associatedMedia" itemScope=""
-                      itemType="http://schema.org/ImageObject">
-                <img className="w-75 min-height-100 max-height-100 border-radius-lg"
-                     src="/assets/img/new.png"
-                     itemProp="thumbnail" alt="Image description">
-              </figure>`
-              document.querySelector(".uploadResult").innerHTML = str
+                console.log("sdfd")
+                fileReset()
             }
+        }
 
-          }
+        function fileReset() {
+            const str = `<figure className="col-12" itemProp="associatedMedia" itemScope=""
+                                  itemType="http://schema.org/ImageObject">
+                            <img className="w-75 min-height-100 max-height-100 border-radius-lg"
+                                 src="/assets/img/new.png"
+                                 itemProp="thumbnail" alt="Image description">
+                         </figure>`
+            document.querySelector(".uploadResult").innerHTML = str
+        }
 
-
-        </script>
-      </div>
-      <!-- End Content -->
+    </script>
+</div>
+<!-- End Content -->
 
 
 </html>
