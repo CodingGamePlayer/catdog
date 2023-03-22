@@ -4,55 +4,18 @@
 
 
 <div layout:fragment="content">
-  <style>
-    .ovr {
-      width: 50px;
-      height: 50px;
-      background-color: #9c0;
-      text-align: center;
-      border-radius: 30px;
-      box-shadow: 0 0 3px;
-      display: table-cell;
-      vertical-align: middle;
-    }
-  </style>
   <div class="col-12 d-flex justify-content-center py-2 px-4">
     <div id="map" style="width:100%;height:250px;"></div>
   </div>
   <hr class="border border-primary border-1 opacity-75">
-  <div class="col-12 d-flex justify-content-center py-2 px-4">
-    <div class="col-4">
-      <img class="img border-radius-lg max-width-100 w-100" src="/assets/img/hospital.png" alt="bruce">
-    </div>
-    <div class="col-8">
-      <div class="d-flex justify-content-between align-items-center mb-1 text-sm">
-        <h4 class="mb-0">불타는 지옥 병원</h4>
-        <div class="d-block">
-          <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill text-primary text-gradient" viewBox="0 0 16 16">
-            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-          </svg></a>
-        </div>
-      </div>
-      <div class="row mb-1 text-xs">
-        <div class="col-auto">
-          <span class="h6">777</span>
-          <span>Posts</span>
-        </div>
-        <div class="col-auto">
-          <span class="h6">7.7Mk</span>
-          <span>Followers</span>
-        </div>
-      </div>
-      <p class="text-xs mb-0">
-        Decisions: 우리 고양이는 물어요. <br>
-        <a href="javascript:;" class="text-info icon-move-right">More about me
-          <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-        </a>
-      </p>
-    </div>
-  </div>
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd70fd57d8ee6b2f63d1997fc16c9cf5&libraries=services&libraries=clusterer"></script>
-  <script>
+  <section class="col-12 d-flex justify-content-center py-2 px-1">
+    <ul class="list-group list-group-flush">
+
+    </ul>
+  </section>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd70fd57d8ee6b2f63d1997fc16c9cf5&libraries=services,clusterer,drawing"></script>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
 
     // navigator.geolocation logic -> 현재 위.경도를 가져옴 -> 못가져오면 기본 값으로 map을 생성함
     if(navigator.geolocation){
@@ -70,7 +33,7 @@
     let mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
               center: new kakao.maps.LatLng(36.49334, 127.27856), // 지도의 중심좌표
-              level: 8, // 지도의 확대 레벨
+              level: 7, // 지도의 확대 레벨
               mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
             };
 
@@ -81,7 +44,7 @@
     let clusterer = new kakao.maps.MarkerClusterer({
       map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
       averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-      minLevel: 9 // 클러스터 할 최소 지도 레벨
+      minLevel: 10 // 클러스터 할 최소 지도 레벨
     });
 
     // 지도 타입 변경 컨트롤을 생성한다
@@ -116,6 +79,36 @@
       fetch('/api/user/hospital/map?position='+position)
               .then(response => response.json())
               .then(data => {
+
+                const nearList = document.querySelector(".list-group-flush");
+                nearList.innerHTML = ``;
+                const staticOption = document.createElement('li');
+                staticOption.innerHTML = `<li class="list-group-item py-2"><h5>내 주변 병원</h5></li>`;
+                nearList.appendChild(staticOption);
+
+                if(data.length > 0){
+                  for(let idx = 0; idx < 5; idx++) {
+                    const item = document.createElement('li');
+                    item.innerHTML = `<li class="list-group-item p-0 py-2">
+                                                <div class="d-flex justify-content-evenly align-items-center">
+                                                  <span class="text-primary text-md text-bolder">${data[idx].place_name}</span>
+                                                  <span class="text-xs">${data[idx].address_name}</span><span class="text-xs">${data[idx].distance}km</span>
+                                                  <a href=${data[idx].place_url} class="btn btn-primary btn-sm p-2 mt-2">자세히</a>
+                                                 <a href="tel:"${data[idx].phone} class="btn btn-outline-secondary btn-xs p-0 mt-2 text-center"><img
+                                                         src="/assets/img/phone-call.png"> </img>전화 </a>
+                                                </div>
+                                              </li>`;
+                    nearList.appendChild(item);
+                  }
+                }else {
+                  const item = document.createElement('li');
+                  item.innerHTML = `<li class="list-group-item p-0 py-2">
+                                                <div class="d-flex justify-content-evenly align-items-center">
+                                                  <h3>지도내에 병원이 없습니다!</h3>
+                                                </div>
+                                              </li>`;
+                  nearList.appendChild(item);
+                }
 
                 for (let i = 0; i < data.length; i++ ) {
                   // 지도에 마커를 생성하고 표시한다.
@@ -164,22 +157,19 @@
 
     // 다중 마커 생성
     document.addEventListener('DOMContentLoaded', () =>{
-       getData();
-
+      kakao.maps.load(getData());
     });
 
     kakao.maps.event.addListener(map, 'zoom_changed', function() {
       deleteClusterMarkers();
       deleteMarkers();
-      getData();
-
+      kakao.maps.load(getData());
     });
 
     kakao.maps.event.addListener(map, 'dragend', function () {
       deleteClusterMarkers();
       deleteMarkers();
-      getData();
-
+      kakao.maps.load(getData());
     });
 
     kakao.maps.event.addListener( clusterer, 'clustered', function( clusterer ) {
@@ -207,7 +197,7 @@
       clusterer = new kakao.maps.MarkerClusterer({
         map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-        minLevel: 9 // 클러스터 할 최소 지도 레벨
+        minLevel: 10 // 클러스터 할 최소 지도 레벨
       });
     }
 
