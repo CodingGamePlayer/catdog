@@ -13,5 +13,6 @@ public interface HospitalService {
     int insertSearchData(HospitalDTO kakaoHospitalDTO);
 
     List<GovermentHospitalDTO> getAllGovermentHospital();
-    List<HospitalDTO> getAll(HashMap<String, Double> locPosition);
+    List<HospitalDTO> getAll();
+    List<HospitalDTO> getNearestHospital(HashMap<String, Double> locPosition);
 }
