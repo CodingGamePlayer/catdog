@@ -6,105 +6,45 @@
 
 <!-- Content -->
 <div layout:fragment="content">
-  <th:block th:each="communityVO : ${communityVOs}">
+	<div id="cardReplyList">
+  <th:block th:each="reply : ${replyVOs}">
     <div class="col-12">
       <div class="card shadow-none">
-        <div class="card-body">
           <!-- 기본 댓글 템플릿 start -->
-          <div class="collapse" >
             <div class="card card-body" >
               <div class="d-flex">
                 <div class="flex-shrink-0">
-                  <img alt="Image placeholder" class="avatar rounded-circle" src="../../../assets/img/bruce-mars.jpg">
+                  <a href="javascript:;">
+                    <img src="/assets/img/siba.jpg" class="avatar" alt="profile-image">
+                  </a>
                 </div>
                 <div class="flex-grow-1 ms-3">
-                  <h6 class="h5 mt-0" th:text="${reply.user_id}">Michael Lewis</h6>
-                  <p class="text-sm" th:text="#{reply.reply_content}">I always felt like I could do anything. That’s the main thing people are controlled
-                    by!
-                    Thoughts- their perception of themselves!</p>
-                  <div class="row d-flex align-items-center px-2">
-                    <div class="col-6"></div>
-                    <div class="col-6 pe-4">
-                      <div class="d-flex align-items-center justify-content-sm-end">
-                        <a href="#"><small class="ps-2">삭제</small></a>
+                  <h6 class="h6 mt-0" th:text="${reply.user_id}"></h6>
+                    <div class="row d-flex align-items-center px-2">
+                      <div class="col-8 d-flex align-items-center">
+                        <p class="text-sm" th:text="${reply.reply_content}"></p>
+                      </div>
+                      <div class="col-4 pe-4">
+                        <div class="d-flex align-items-center justify-content-sm-end">
+                          <a href="#" th:onclick="replyDelete([[${reply.reply_no}]], [[${reply.user_id}]])" ><small class="ps-2">삭제</small></a>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
               </div>
             </div>
-          </div>
           <!-- 기본 댓글 템플릿 end -->
-        </div>
       </div>
     </div>
   </th:block>
-
-  <!-- 비동기 댓글 등록  -->
-  <script th:inline="javascript">
-    /*<![CDATA[*/
-
-
-    function replyOnSubmit(community_no) {
-      console.log(community_no);
-      const input_user_id = document.getElementById('user_id').value;
-      const input_community_no = document.getElementById('community_no' + community_no).value;
-      const input_reply_content = document.getElementById('reply_content' + community_no).value;
-
-      console.log(input_user_id);
-      const reply_if = {
-        user_id: input_user_id,
-        community_no: input_community_no,
-        reply_content: input_reply_content
-      };
-      if (input_user_id == "" || input_community_no == "" ||
-        input_reply_content == "") {
-        alert('zzz 실패입니다.')
-        return;
-      }
-
-      console.log(reply_if);
-
-      const url = "/api/user/community/reply";
-
-      fetch(url, {
-        method: "POST",
-        body: JSON.stringify(reply_if),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then(response => {
-        console.log(reply_if);
-        if (!response.ok) {
-
-          throw new Error(response.statusText);
-
-        }
-        loadReplys(input_community_no, input_user_id);
-        reCntPlus(input_community_no);
-        console.log("리플 컨텐트 : "+document.getElementById('reply_content' + community_no).value);
-        document.getElementById('reply_content' + community_no).value= '';
-
-      }).catch(error => {
-        console.error(error);
-        alert("댓글 등록 실패");
-      });
-    }
-            	/*]]>*/
-  </script>
+</div>
 
   <!-- 댓글 창 불러오기 -->
   <script th:inline="javascript">
     /*<![CDATA[*/
 
-    // document.addEventListener('DOMContentLoaded', ()=>{
-    //	console.log("[[${session.id}]]");
-    // })
-
-    function loadReplys(community_no, s_user_id) {
-      console.log("세션 user_id :" + user_id);
-      reCntPlus(community_no);
-      const getUrl = "/api/user/community/reply?community_no=" + community_no;
+    function loadReplys(s_user_id) {
+      const getUrl = "/api/user/community/myreply?user_id=" + s_user_id;
       fetch(getUrl)
         .then(response => {
           if (!response.ok) {
@@ -115,57 +55,40 @@
 
         }).then(replys => {
           console.log(replys);
-          const replyList = document.getElementById('cardReplyList' + community_no);
+          const replyList = document.getElementById('cardReplyList');
           replyList.innerHTML = '';
           replys.forEach(reply => {
             console.log(reply);
             console.log("content : " + reply.reply_content);
             const div = document.createElement('div');
 
-            if (reply.user_id == s_user_id) {
 
-
-              div.innerHTML = ` <div class="d-flex">
-                                  <div class="flex-shrink-0">
-                                    <a href="javascript:;">
-                                      <img src="/assets/img/team-4.jpg" class="avatar" alt="profile-image">
-                                    </a>
-                                  </div>
-                                  <div class="flex-grow-1 ms-3">
-                                    <h6 class="h6 mt-0" >${reply.user_id}</h6>
-                                      <div class="row d-flex align-items-center px-2">
-                                        <div class="col-8 d-flex align-items-center">
-                                          <p class="text-sm" >${reply.reply_content}</p>
-                                        </div>
-                                        <div class="col-4 pe-4">
-                                          <div class="d-flex align-items-center justify-content-sm-end">
-                                            <a href="#" onclick="replyDelete(${reply.reply_no},${reply.community_no},'${s_user_id}')" ><small class="ps-2">삭제</small></a>
-                                          </div>
-                                        </div>
-                                      </div>
-                                  </div>
-                                </div> `;
-            } else {
-              div.innerHTML = ` <div class="d-flex">
-            	                      <div class="flex-shrink-0">
-            	                        <a href="javascript:;">
-            	                          <img src="/assets/img/team-4.jpg" class="avatar" alt="profile-image">
-            	                        </a>
-            	                  </div>
-            	                      <div class="flex-grow-1 ms-3">
-            	                        <h6 class="h6 mt-0" >${reply.user_id}</h6>
-            	                        <div class="row d-flex align-items-center px-2">
-            	                          <div class="col-8 d-flex align-items-center">
-            	                                <p class="text-sm" >${reply.reply_content}</p>
-            	                          </div>
-            	                          <div class="col-4 pe-4">
-            	                            <div class="d-flex align-items-center justify-content-sm-end">
-            	                            </div>
-            	                          </div>
-            	                        </div>
-            	                      </div>
-            	                    </div> `;
-            }
+              div.innerHTML = ` <div class="col-12">
+                  				  <div class="card shadow-none">
+                  				   <div class="card card-body" >
+	              					<div class="d-flex">
+	                                  <div class="flex-shrink-0">
+	                                    <a href="javascript:;">
+	                                      <img src="/assets/img/siba.jpg" class="avatar" alt="profile-image">
+	                                    </a>
+	                                  </div>
+	                                  <div class="flex-grow-1 ms-3">
+	                                    <h6 class="h6 mt-0" >${reply.user_id}</h6>
+	                                      <div class="row d-flex align-items-center px-2">
+	                                        <div class="col-8 d-flex align-items-center">
+	                                          <p class="text-sm" >${reply.reply_content}</p>
+	                                        </div>
+	                                        <div class="col-4 pe-4">
+	                                          <div class="d-flex align-items-center justify-content-sm-end">
+	                                            <a href="#" onclick="replyDelete(${reply.reply_no}, '${s_user_id}')" ><small class="ps-2">삭제</small></a>
+	                                          </div>
+	                                        </div>
+	                                      </div>
+	                                  </div>
+	                                </div>
+	                                </div>
+	                              </div>
+	                             </div>`;
 
             replyList.appendChild(div);
           });
@@ -178,44 +101,19 @@
             	/*]]>*/
   </script>
 
-  <!-- 댓글 개수 -->
-  <script th:inline="javascript">
-    /*<![CDATA[*/
-    function reCntPlus(community_no) {
-      const reCntUrl = "/api/user/community/reply_count?community_no=" + community_no;
-
-      fetch(reCntUrl)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          };
-          return response.json();
-        }).then(reCount => {
-          console.log("리플 카운트 : " + reCount);
-          document.getElementById('replyCount' + community_no).innerHTML = reCount;
-        }).catch(error => {
-          console.error(error);
-          alert("댓글 카운트 불러오기 실패");
-        });
-    }
-
-    /*]]>*/
-  </script>
 
   <!-- 댓글 삭제 -->
   <script th:inline="javascript">
     /*<![CDATA[*/
-    function replyDelete( reply_no, community_no, s_user_id ) {
+    function replyDelete(reply_no, s_user_id) {
       const reDeleteUrl = "/api/user/community/delete?reply_no=" + reply_no;
-      console.log("reply_no : " + reply_no + "  community_no : " + community_no);
       fetch(reDeleteUrl, {
         method: "DELETE"
       }).then(response => {
         if (!response.ok) {
           throw new Error(response.statusText);
         }
-        reCntPlus(community_no);
-        loadReplys(community_no, s_user_id);
+        loadReplys(s_user_id);
 
       }).catch(error => {
         console.error(error);
@@ -227,100 +125,7 @@
     /*]]>*/
   </script>
 
-  <!-- 좋아요 토글 -->
-  <script th:inline="javascript">
-    /*<![CDATA[*/
-    	
-    	
-    function likeToggle(checkbox,input_community_no, s_user_id) {
-      console.log("토글 실행 됨");
-      
-      if (checkbox.checked) {
-    	  
-          likeUrl = "/api/user/community/like";
-          likeif = {
-            community_no: input_community_no,
-            user_id: s_user_id,
-            like_boolean: true
-          };
-          fetch(likeUrl, {
-            method: "POST",
-            body: JSON.stringify(likeif),
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }).then(response => {
-            if (!response.ok) {
-              throw new Error(response.statusText);
-            }
-            
-            console.log("좋아요 카운트 불러오기 전까지 실행됨");
-            getLikeCnt(input_community_no);
-          }).catch(error => {
-            console.error(error);
-            alert("좋아요 업데이트 중 오류")
 
-          });
-
-      } else {
-    	  
-          let likeUrl = "/api/user/community/like";
-          let likeif = {
-            community_no: input_community_no,
-            user_id: s_user_id,
-            like_boolean: false
-          };
-          fetch(likeUrl, {
-            method: "PUT",
-            body: JSON.stringify(likeif),
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }).then(response => {
-            if (!response.ok) {
-              throw new Error(response.statusText);
-            }
-                     
-            console.log("좋아요 카운트 불러오기 전까지 실행됨");
-            getLikeCnt(input_community_no);
-          }).catch(error => {
-            console.error(error);
-            alert("좋아요 업데이트 중 오류")
-
-          });
-
-
-      }
-
-
-    }
-    /*]]>*/
-  </script>
-
-  <!-- 좋아요 카운트 비동기로 받아오기 -->
-  <script th:inline="javascript">
-    /*<![CDATA[*/
-    function getLikeCnt(community_no) {
-
-      likeUrl = "/api/user/community/like?community_no="+community_no;
-
-      fetch(likeUrl)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          };
-          return response.json();
-        }).then(likeCount => {
-          console.log("좋아요 카운트 : " + likeCount);
-          document.getElementById('likeCnt' + community_no).innerHTML = likeCount;
-        }).catch(error => {
-          console.error(error);
-          alert("좋아요 카운트 불러오기 실패");
-        });
-    }
-
-    /*]]>*/
-  </script>
 </div> <!-- End List -->
 <!-- End Content -->
 
