@@ -18,5 +18,7 @@ public interface CommunityService {
 	int update(CommunityDTO communityDTO);
 	
 	int delete(CommunityDTO communityDTO);
+	
+	List<CommunityVO> myCommunity(CommunityDTO communityDTO);
 
 }
