@@ -30,6 +30,10 @@
     <delete id="replyDelete" parameterType="ReplyVO" >
     	DELETE FROM reply WHERE reply_no = #{reply_no}
     </delete>
+    
+    <select id="myReply" resultMap="ReplyMap">
+    	SELECT * FROM reply WHERE user_id = #{user_id} ORDER BY reply_no DESC
+    </select>
 
    
 </mapper>

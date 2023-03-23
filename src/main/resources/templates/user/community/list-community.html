@@ -20,15 +20,10 @@
               <small class="d-block text-muted" th:text="${communityVO.community_regdate}"></small>
             </div>
           </div>
-          <div class="text-end ms-auto">
-            <button type="button" class="btn btn-sm bg-gradient-primary mb-0">
-              <i class="fas fa-plus pe-2" aria-hidden="true"></i> Follow
-            </button>
-          </div>
         </div>
         <div class="card-body">
           <div class="d-flex justify-content-sm-center">
-            <img alt="" th:src="|/testimg/${communityVO.media_path}|" class="img-fluid border-radius-lg shadow-lg">
+            <img alt="" th:src="|/testimg/${communityVO.media_path}|" class="img-fluid border-radius-lg shadow-lg" onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
           </div>
           <div class="row align-items-center px-2 mt-4 mb-2">
             <div class="col-6">
@@ -70,7 +65,7 @@
             <div class="card card-body" th:id="'cardReplyList'+${communityVO.community_no}">
               <div class="d-flex">
                 <div class="flex-shrink-0">
-                  <img alt="Image placeholder" class="avatar rounded-circle" src="../../../assets/img/bruce-mars.jpg">
+                  <img alt="Image placeholder" class="avatar rounded-circle" src="../../../assets/img/siba.jpg">
                 </div>
                 <div class="flex-grow-1 ms-3">
                   <h6 class="h5 mt-0">Michael Lewis</h6>
@@ -95,7 +90,7 @@
             </div>
             <div class="d-flex mt-4">
               <div class="flex-shrink-0">
-                <img alt="Image placeholder" class="avatar rounded-circle me-3" src="../../../assets/img/team-4.jpg">
+                <img alt="Image placeholder" class="avatar rounded-circle me-3" src="../../../assets/img/siba.jpg">
               </div>
               <div class="flex-grow-1 my-auto">
                 <form>
@@ -160,7 +155,8 @@
         }
         loadReplys(input_community_no, input_user_id);
         reCntPlus(input_community_no);
-        input_reply_content.value = '';
+        console.log("리플 컨텐트 : "+document.getElementById('reply_content' + community_no).value);
+        document.getElementById('reply_content' + community_no).value= '';
 
       }).catch(error => {
         console.error(error);
@@ -180,12 +176,14 @@
 
     function loadReplys(community_no, s_user_id) {
       console.log("세션 user_id :" + user_id);
+      reCntPlus(community_no);
       const getUrl = "/api/user/community/reply?community_no=" + community_no;
       fetch(getUrl)
         .then(response => {
           if (!response.ok) {
             throw new Error(response.statusText);
           }
+          
           return response.json();
 
         }).then(replys => {
@@ -203,7 +201,7 @@
               div.innerHTML = ` <div class="d-flex">
                                   <div class="flex-shrink-0">
                                     <a href="javascript:;">
-                                      <img src="/assets/img/team-4.jpg" class="avatar" alt="profile-image">
+                                      <img src="/assets/img/siba.jpg" class="avatar" alt="profile-image">
                                     </a>
                                   </div>
                                   <div class="flex-grow-1 ms-3">
@@ -214,7 +212,7 @@
                                         </div>
                                         <div class="col-4 pe-4">
                                           <div class="d-flex align-items-center justify-content-sm-end">
-                                            <a href="#" onclick="replyDelete(${reply.reply_no},${reply.community_no},${s_user_id}})"><small class="ps-2">삭제</small></a>
+                                            <a href="#" onclick="replyDelete(${reply.reply_no},${reply.community_no},'${s_user_id}')" ><small class="ps-2">삭제</small></a>
                                           </div>
                                         </div>
                                       </div>
@@ -224,7 +222,7 @@
               div.innerHTML = ` <div class="d-flex">
             	                      <div class="flex-shrink-0">
             	                        <a href="javascript:;">
-            	                          <img src="/assets/img/team-4.jpg" class="avatar" alt="profile-image">
+            	                          <img src="/assets/img/siba.jpg" class="avatar" alt="profile-image">
             	                        </a>
             	                  </div>
             	                      <div class="flex-grow-1 ms-3">
@@ -253,7 +251,7 @@
             	/*]]>*/
   </script>
 
-  <!-- 댓글 개수 플러스 -->
+  <!-- 댓글 개수 -->
   <script th:inline="javascript">
     /*<![CDATA[*/
     function reCntPlus(community_no) {
@@ -280,7 +278,7 @@
   <!-- 댓글 삭제 -->
   <script th:inline="javascript">
     /*<![CDATA[*/
-    function replyDelete(reply_no, community_no, s_user_id) {
+    function replyDelete( reply_no, community_no, s_user_id ) {
       const reDeleteUrl = "/api/user/community/delete?reply_no=" + reply_no;
       console.log("reply_no : " + reply_no + "  community_no : " + community_no);
       fetch(reDeleteUrl, {

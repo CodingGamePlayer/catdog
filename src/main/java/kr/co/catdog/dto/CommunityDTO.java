@@ -2,8 +2,8 @@ package kr.co.catdog.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import groovy.transform.builder.Builder;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

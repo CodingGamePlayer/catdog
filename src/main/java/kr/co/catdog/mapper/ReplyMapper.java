@@ -16,4 +16,6 @@ public interface ReplyMapper {
 	int replyCount(ReplyVO replyVO);
 	
 	int replyDelete(ReplyVO replyVO);
+	
+	List<ReplyVO> myReply(ReplyVO replyVO);
 }

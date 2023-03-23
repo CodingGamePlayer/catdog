@@ -24,5 +24,7 @@ public interface CommunityMapper {
 	int updateMedia(MediaVO mediaVO);
 	
 	int delete(CommunityVO communityVO);
+	
+	List<CommunityVO> myCommunity(CommunityVO communityVO);
 
 }

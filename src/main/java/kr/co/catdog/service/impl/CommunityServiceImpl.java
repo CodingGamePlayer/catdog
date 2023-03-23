@@ -101,6 +101,17 @@ public class CommunityServiceImpl implements CommunityService {
 		return 1;
 	}
 
+	@Override
+	public List<CommunityVO> myCommunity(CommunityDTO communityDTO) {
+		
+		CommunityVO communityVO = CommunityVO.builder()
+											.user_id(communityDTO.getUser_id())
+											.build();
+		
+		
+		return communityMapper.myCommunity(communityVO);
+	}
+
 
 
 	
