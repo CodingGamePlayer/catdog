@@ -1,6 +1,5 @@
 package kr.co.catdog.controller;
 
-import kr.co.catdog.dto.CartDTO;
 import kr.co.catdog.dto.ProductDTO;
 import kr.co.catdog.service.CategoryService;
 import kr.co.catdog.service.ShopService;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -76,35 +73,5 @@ public class ShopController {
         return "redirect:/user/shop/list";
     }
 
-//    Start Cart ------------------------------------------------------------------------
-    @GetMapping("/cart/{user_id}")
-    String cartList(@PathVariable String user_id, Model model) {
-
-        model.addAttribute("cartList",shopService.findById_Cart(user_id));
-
-        return "user/shop/cart";
-    }
-    @PostMapping("/cart/register")
-    String register_cart(CartDTO cartDTO, HttpServletRequest request){
-        shopService.insert_Cart(cartDTO);
-
-        HttpSession session = request.getSession();
-        int cart = shopService.findById_Cart(cartDTO.getUser_id()).size();
-        session.setAttribute("session_cart",cart);
-
-        return "redirect:/user/shop/cart";
-    }
-    @GetMapping("/cart/delete/{cart_no}")
-    String delete_cart(@PathVariable int cart_no, HttpServletRequest request){
-        shopService.delete_Cart(cart_no);
-
-        HttpSession session = request.getSession();
-        int cart = shopService.findById_Cart((String)session.getAttribute("session_id")).size();
-        session.setAttribute("session_cart",cart);
-
-        return "redirect:/user/shop/cart";
-    }
-
-//    End Cart ------------------------------------------------------------------------
 
 }

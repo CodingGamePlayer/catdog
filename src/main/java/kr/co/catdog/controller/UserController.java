@@ -46,7 +46,7 @@ public class UserController {
         HttpSession session = request.getSession();
         session.setAttribute("session_img", DTO.getUser_image());
 
-        return "redirect:/user/profile/edit-person";
+        return "redirect:/user/profile/edit-person/"+userDTO.getUser_id();
     }
 
     @GetMapping("/edit-pet/{user_id}")
@@ -64,14 +64,14 @@ public class UserController {
     String editPet(PetDTO petDTO) {
         int result = petService.update(petDTO);
 
-        return "redirect:/user/profile/edit-pet";
+        return "redirect:/user/profile/edit-pet/"+petDTO.getUser_id();
     }
 
     @GetMapping("/delete/{user_id}")
     String delete(@PathVariable String user_id) {
         int result = userService.delete(user_id);
 
-        return "redirect:/";
+        return "redirect:/logout";
     }
 
 

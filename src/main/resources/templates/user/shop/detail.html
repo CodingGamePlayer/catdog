@@ -49,7 +49,7 @@
                 </div>
               </div>
               <div class="col-12 mx-auto px-4">
-                <form action="/user/shop/cart/register" method="post">
+                <form th:action="@{/user/shop/cart/register}" method="post">
                   <h3 class="mt-lg-0 mt-4" th:text="${product.product_name}"></h3>
                   <th:block th:if="${product.product_stock != 0}">
                     <h5 th:text="|₩ ${product.product_price}|"></h5>
