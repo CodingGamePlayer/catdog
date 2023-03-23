@@ -38,23 +38,41 @@ public class HospitalApiController {
         locPositino.put("centerLng", position[5]);
         HashMap<String, Object> hash = new HashMap<>();
 
-
-
-        List<HospitalDTO> listAll = hospitalService.getAll(locPositino);
+        List<HospitalDTO> listAll = hospitalService.getNearestHospital(locPositino);
         for (int i = 0; i < listAll.size(); i++) {
-            hash.put("hospital_id", listAll.get(i).getHospital_id());
-            hash.put("address_name", listAll.get(i).getAddress_name());
-            hash.put("phone", listAll.get(i).getPhone());
-            hash.put("place_name", listAll.get(i).getPlace_name());
-            hash.put("place_url", listAll.get(i).getPlace_url());
-            hash.put("road_address_name", listAll.get(i).getRoad_address_name());
-            hash.put("longitude", listAll.get(i).getLongitude());
-            hash.put("latitude", listAll.get(i).getLatitude());
+            fillMapData(hash, listAll, i);
             hash.put("distance", df.format(listAll.get(i).getDistance()));
             jsonObj = new JSONObject(hash);
             jsonArr.add(jsonObj);
         }
         return jsonArr;
+    }
+
+    @GetMapping("/api/user/hospital/initMap")
+    public List<Map<String, Object>> mapAllList(){
+
+        JSONObject jsonObj;
+        JSONArray jsonArr = new JSONArray();
+        HashMap<String, Object> hash = new HashMap<>();
+
+        List<HospitalDTO> listAll = hospitalService.getAll();
+        for (int i = 0; i < listAll.size(); i++) {
+            fillMapData(hash, listAll, i);
+            jsonObj = new JSONObject(hash);
+            jsonArr.add(jsonObj);
+        }
+        return jsonArr;
+    }
+
+    private void fillMapData(HashMap<String, Object> hash, List<HospitalDTO> listAll, int i) {
+        hash.put("hospital_id", listAll.get(i).getHospital_id());
+        hash.put("address_name", listAll.get(i).getAddress_name());
+        hash.put("phone", listAll.get(i).getPhone());
+        hash.put("place_name", listAll.get(i).getPlace_name());
+        hash.put("place_url", listAll.get(i).getPlace_url());
+        hash.put("road_address_name", listAll.get(i).getRoad_address_name());
+        hash.put("longitude", listAll.get(i).getLongitude());
+        hash.put("latitude", listAll.get(i).getLatitude());
     }
 
     @Autowired

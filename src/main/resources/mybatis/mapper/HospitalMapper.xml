@@ -13,6 +13,17 @@
         <result property="road_address_name" column="road_address_name"/>
         <result property="longitude" column="longitude"/>
         <result property="latitude" column="latitude"/>
+    </resultMap>
+
+    <resultMap id="hospitalDistanceMap" type="HospitalVO">
+        <result property="hospital_id" column="hospital_id"/>
+        <result property="address_name" column="address_name"/>
+        <result property="phone" column="phone"/>
+        <result property="place_name" column="place_name"/>
+        <result property="place_url" column="place_url"/>
+        <result property="road_address_name" column="road_address_name"/>
+        <result property="longitude" column="longitude"/>
+        <result property="latitude" column="latitude"/>
         <result property="distance" column="distance"/>
     </resultMap>
 
@@ -121,14 +132,14 @@
         SELECT *
         FROM goverment_hospital
     </select>
-<!--
+
     <select id="getAll" resultMap="hospitalMap" parameterType="hashmap">
         SELECT *
         FROM hospital
     </select>
--->
 
-    <select id="getAll" resultMap="hospitalMap" parameterType="hashmap">
+
+    <select id="getNearestHospital" resultMap="hospitalDistanceMap" parameterType="hashmap">
         SELECT
         *,
         (
@@ -147,6 +158,6 @@
         and
         longitude BETWEEN #{swLng} and #{neLng}
         ORDER BY distance
-        LIMIT 100
+        LIMIT 5
     </select>
 </mapper>
