@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko" itemscope itemtype="http://schema.org/WebPage" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout.html}">
+
+
+
+<!-- Content -->
+<div layout:fragment="content">
+	<div id="cardReplyList">
+  <th:block th:each="reply : ${replyVOs}">
+    <div class="col-12">
+      <div class="card shadow-none">
+          <!-- 기본 댓글 템플릿 start -->
+            <div class="card card-body" >
+              <div class="d-flex">
+                <div class="flex-shrink-0">
+                  <a href="javascript:;">
+                    <img src="/assets/img/siba.jpg" class="avatar" alt="profile-image">
+                  </a>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h6 class="h6 mt-0" th:text="${reply.user_id}"></h6>
+                    <div class="row d-flex align-items-center px-2">
+                      <div class="col-8 d-flex align-items-center">
+                        <p class="text-sm" th:text="${reply.reply_content}"></p>
+                      </div>
+                      <div class="col-4 pe-4">
+                        <div class="d-flex align-items-center justify-content-sm-end">
+                          <a href="#" th:onclick="replyDelete([[${reply.reply_no}]], [[${reply.user_id}]])" ><small class="ps-2">삭제</small></a>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          <!-- 기본 댓글 템플릿 end -->
+      </div>
+    </div>
+  </th:block>
+</div>
+
+  <!-- 댓글 창 불러오기 -->
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+
+    function loadReplys(s_user_id) {
+      const getUrl = "/api/user/community/myreply?user_id=" + s_user_id;
+      fetch(getUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          
+          return response.json();
+
+        }).then(replys => {
+          console.log(replys);
+          const replyList = document.getElementById('cardReplyList');
+          replyList.innerHTML = '';
+          replys.forEach(reply => {
+            console.log(reply);
+            console.log("content : " + reply.reply_content);
+            const div = document.createElement('div');
+
+
+              div.innerHTML = ` <div class="col-12">
+                  				  <div class="card shadow-none">
+                  				   <div class="card card-body" >
+	              					<div class="d-flex">
+	                                  <div class="flex-shrink-0">
+	                                    <a href="javascript:;">
+	                                      <img src="/assets/img/siba.jpg" class="avatar" alt="profile-image">
+	                                    </a>
+	                                  </div>
+	                                  <div class="flex-grow-1 ms-3">
+	                                    <h6 class="h6 mt-0" >${reply.user_id}</h6>
+	                                      <div class="row d-flex align-items-center px-2">
+	                                        <div class="col-8 d-flex align-items-center">
+	                                          <p class="text-sm" >${reply.reply_content}</p>
+	                                        </div>
+	                                        <div class="col-4 pe-4">
+	                                          <div class="d-flex align-items-center justify-content-sm-end">
+	                                            <a href="#" onclick="replyDelete(${reply.reply_no}, '${s_user_id}')" ><small class="ps-2">삭제</small></a>
+	                                          </div>
+	                                        </div>
+	                                      </div>
+	                                  </div>
+	                                </div>
+	                                </div>
+	                              </div>
+	                             </div>`;
+
+            replyList.appendChild(div);
+          });
+
+        }).catch(error => {
+          console.error(error);
+          alert("댓글창 불러오기 실패");
+        });
+    }
+            	/*]]>*/
+  </script>
+
+
+  <!-- 댓글 삭제 -->
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    function replyDelete(reply_no, s_user_id) {
+      const reDeleteUrl = "/api/user/community/delete?reply_no=" + reply_no;
+      fetch(reDeleteUrl, {
+        method: "DELETE"
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        loadReplys(s_user_id);
+
+      }).catch(error => {
+        console.error(error);
+        alert("댓글 삭제 중 오류")
+
+      });
+
+    }
+    /*]]>*/
+  </script>
+
+
+</div> <!-- End List -->
+<!-- End Content -->
+
+</html>

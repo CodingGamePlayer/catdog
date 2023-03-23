@@ -62,6 +62,15 @@ public class ReplyServiceImpl implements ReplyService {
 		return replyMapper.replyDelete(replyVO);
 	}
 
+	@Override
+	public List<ReplyVO> myReply(String user_id) {
+		ReplyVO replyVO = ReplyVO.builder()
+								.user_id(user_id)
+								.build();
+		
+		return replyMapper.myReply(replyVO);
+	}
+
 	
 	
 }

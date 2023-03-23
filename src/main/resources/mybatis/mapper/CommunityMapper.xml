@@ -72,6 +72,17 @@
     <delete id="delete" parameterType="CommunityVO">
     	DELETE FROM community WHERE community_no = #{community_no}
     </delete>
+    
+    <select id="myCommunity" parameterType="CommunityVO" resultMap="CommunityMap">
+    	SELECT community.*, media.media_type, media_path,
+    	(SELECT COUNT(*) FROM reply WHERE reply.community_no = community.community_no) AS reply_count,
+    	(SELECT COUNT(*) from catdog.like WHERE community.community_no = catdog.like.community_no AND catdog.like.like_boolean = true ) AS like_count,
+    	(SELECT catdog.like.like_boolean FROM catdog.like WHERE community.community_no = catdog.like.community_no AND 
+    	catdog.like.user_id = #{user_id}) AS like_boolean FROM community 
+    	LEFT JOIN media ON community.community_no = media.community_no
+    	WHERE community.user_id = #{user_id}
+    	ORDER BY community.community_no DESC
+    </select>
 
 
    

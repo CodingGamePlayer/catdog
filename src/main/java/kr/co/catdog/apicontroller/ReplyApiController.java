@@ -55,5 +55,11 @@ public class ReplyApiController {
 		log.info("넘어온 replyNo : "+reply_no);
 		return replyService.replyDelete(reply_no);
 	}
+	
+	@GetMapping("/api/user/community/myreply")
+	public List<ReplyVO> myReply(@RequestParam("user_id") String user_id){
+		log.info("reply list에서 넘어온 replyNo : "+user_id);
+		return replyService.myReply(user_id);
+	}
 
 }
