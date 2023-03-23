@@ -15,7 +15,7 @@
               <p class="mb-0 text-sm">Personal info and options to manage it.</p>
             </div>
             <div class="card-body">
-              <form role="form text-left" th:action="@{/user/profile/edit-person}" method="post">
+              <form role="form text-left" th:action="@{/user/profile/edit-person}" method="post" enctype="multipart/form-data">
                 <label>Name</label>
                 <div class="input-group mb-2">
                   <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name-addon" th:value="${user.user_name}" name="user_name">
@@ -35,10 +35,13 @@
                   <input type="tel" class="form-control" placeholder="Phone" aria-label="Phone" aria-describedby="phone-addon" th:value="${user.user_phoneNumber}" name="user_phoneNumber">
                 </div>
                 <label>Photo</label>
-                <div class="input-group mb-3">
-                  <input type="file" class="form-control" placeholder="Add a photo" aria-label="Photo"
-                         aria-describedby="photo-addon" th:value="${user.user_image}" name="file">
-                  <button class="btn btn-outline-secondary mb-0" type="button" id="button-file">File</button>
+                <div class="mb-3">
+                  <input type="file" class="input-group form-control" placeholder="Add a photo" aria-label="Photo"
+                         aria-describedby="photo-addon" name="file" id="fileInput">
+                  <div class="d-flex justify-content-center">
+                    <img id="preview" src="" alt="" class="pt-1" style="display : none;">
+                    <img id="previewSaved" th:src="|/testimg/${user.user_image}|" alt="" class="pt-1" style="display:inline; width: 280px; height: 240px;">
+                  </div>
                 </div>
                 <div class="form-check form-switch text-left">
                   <th:block th:if="${user.user_matchinguse} != true">
@@ -67,6 +70,28 @@
             </div>
           </div>
         </div>
+        <script>
+          const fileInput = document.getElementById('fileInput');
+          const preview = document.getElementById('preview');
+
+          fileInput.addEventListener('change',function (){
+            const file = this.files[0];
+            const reader = new FileReader();
+
+            reader.addEventListener('load',function () {
+              preview.src = reader.result;
+            });
+
+            if (file) {
+              document.getElementById('previewSaved').setAttribute('style','display : none;')
+
+              document.getElementById('preview').setAttribute('style','display:inline; width: 280px; height: 240px;');
+              reader.readAsDataURL(file);
+            }
+
+          });
+        </script>
+
       </div>
       <!-- End Content -->
 
