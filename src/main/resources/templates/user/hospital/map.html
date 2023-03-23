@@ -8,12 +8,31 @@
     <div id="map" style="width:100%;height:250px;"></div>
   </div>
   <hr class="border border-primary border-1 opacity-75">
-  <section class="col-12 d-flex justify-content-center py-2 px-1">
-    <ul class="list-group list-group-flush">
 
-    </ul>
+
+  <section class="row d-flex justify-content-center p-3" id="nearestHospital_list">
+    <div class="card">
+      <div class="card-body pt-2">
+        <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">자세히</span>
+        <div class="d-flex justify-content-between align-items-center">
+          <a href="#" class="card-title h5 d-block text-darker">
+            두리동물 클리닉
+          </a>
+        </div>
+        <p class="card-description mb-1">
+          <span class="text-bold text-sm">거리 : 0.82km</span>
+        </p>
+        <p class="card-description mb-1">
+          <span class="text-bold text-sm">주소 : 광주 북구 일곡동 843-5</span>
+        </p>
+        <p class="card-description">
+          <span class="text-bold text-sm">도로명 주소 : 광주 북구 양일로305번길 8</span>
+        </p>
+      </div>
+    </div>
   </section>
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd70fd57d8ee6b2f63d1997fc16c9cf5&libraries=services,clusterer,drawing"></script>
+
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd70fd57d8ee6b2f63d1997fc16c9cf5&libraries=services,clusterer"></script>
   <script th:inline="javascript">
     /*<![CDATA[*/
 
@@ -28,7 +47,7 @@
       console.log('지오로케이션 안먹음')
     }
 
-    let markers = [];
+    var markers = [];
 
     let mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
@@ -41,10 +60,10 @@
     let map = new kakao.maps.Map(mapContainer, mapOption);
 
     // 마커 클러스터러를 생성합니다
-    let clusterer = new kakao.maps.MarkerClusterer({
+    var clusterer = new kakao.maps.MarkerClusterer({
       map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
       averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-      minLevel: 10 // 클러스터 할 최소 지도 레벨
+      minLevel: 9 // 클러스터 할 최소 지도 레벨
     });
 
     // 지도 타입 변경 컨트롤을 생성한다
@@ -73,42 +92,68 @@
       let position = [swLat, swLng, neLat, neLng, centerLat, centerLng];
       return position;
     }
-    function getData() {
+
+
+    function getNearestHospital() {
 
       let position = getBounds();
       fetch('/api/user/hospital/map?position='+position)
               .then(response => response.json())
               .then(data => {
 
-                const nearList = document.querySelector(".list-group-flush");
+                const nearList = document.querySelector("#nearestHospital_list");
                 nearList.innerHTML = ``;
-                const staticOption = document.createElement('li');
-                staticOption.innerHTML = `<li class="list-group-item py-2"><h5>내 주변 병원</h5></li>`;
+                const staticOption = document.createElement('div');
+                staticOption.innerHTML = `<div class="row pb-3 d-flex justify-content-center text-center">
+                                            <h5>내 주변 병원</h5>
+                                          </div>`;
                 nearList.appendChild(staticOption);
 
-                if(data.length > 0){
-                  for(let idx = 0; idx < 5; idx++) {
-                    const item = document.createElement('li');
-                    item.innerHTML = `<li class="list-group-item p-0 py-2">
-                                                <div class="d-flex justify-content-evenly align-items-center">
-                                                  <span class="text-primary text-md text-bolder">${data[idx].place_name}</span>
-                                                  <span class="text-xs">${data[idx].address_name}</span><span class="text-xs">${data[idx].distance}km</span>
-                                                  <a href=${data[idx].place_url} class="btn btn-primary btn-sm p-2 mt-2">자세히</a>
-                                                 <a href="tel:"${data[idx].phone} class="btn btn-outline-secondary btn-xs p-0 mt-2 text-center"><img
-                                                         src="/assets/img/phone-call.png"> </img>전화 </a>
-                                                </div>
-                                              </li>`;
-                    nearList.appendChild(item);
-                  }
-                }else {
-                  const item = document.createElement('li');
-                  item.innerHTML = `<li class="list-group-item p-0 py-2">
-                                                <div class="d-flex justify-content-evenly align-items-center">
-                                                  <h3>지도내에 병원이 없습니다!</h3>
-                                                </div>
-                                              </li>`;
+                for(let idx = 0; idx < data.length; idx++) {
+                  const item = document.createElement('div');
+
+
+
+                  item.innerHTML = `<div class="card my-2">
+      <div class="card-body mx-3">
+        <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">자세히</span>
+        <div class="d-flex justify-content-between align-items-center">
+          <a href=${data[idx].place_url} class="card-title h5 d-block text-darker">
+            ${data[idx].place_name}
+          </a>
+        </div>
+        <p class="card-description mb-1">
+          <span class="text-bold text-sm">거리 : ${data[idx].distance}km</span>
+        </p>
+        <p class="card-description mb-1">
+          <span class="text-bold text-sm">주소 : ${data[idx].address_name}</span>
+        </p>
+        <p class="card-description">
+          <span class="text-bold text-sm">도로명 주소 : ${data[idx].road_address_name}</span>
+        </p>
+      </div>
+    </div>`;
                   nearList.appendChild(item);
                 }
+                if(data.length < 1){
+                  const item = document.createElement('li');
+                  item.innerHTML = `<div class="card">
+      <div class="card-body pt-2">
+        <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">자세히</span>
+        <div class="d-flex justify-content-between align-items-center">
+         <h1>주변에 병원이 존재하지 않습니다!!</h1>
+      </div>
+    </div>`;
+                  nearList.appendChild(item);
+                }
+              });
+    }
+
+    function getData() {
+
+      fetch('/api/user/hospital/initMap')
+              .then(response => response.json())
+              .then(data => {
 
                 for (let i = 0; i < data.length; i++ ) {
                   // 지도에 마커를 생성하고 표시한다.
@@ -157,21 +202,23 @@
 
     // 다중 마커 생성
     document.addEventListener('DOMContentLoaded', () =>{
-      kakao.maps.load(getData());
+      getData();
+      getNearestHospital();
     });
 
     kakao.maps.event.addListener(map, 'zoom_changed', function() {
-      deleteClusterMarkers();
-      deleteMarkers();
-      kakao.maps.load(getData());
+      //deleteClusterMarkers();
+      //deleteMarkers();
+      kakao.maps.load(getNearestHospital());
     });
 
     kakao.maps.event.addListener(map, 'dragend', function () {
-      deleteClusterMarkers();
-      deleteMarkers();
-      kakao.maps.load(getData());
+      //deleteClusterMarkers();
+      //deleteMarkers();
+      kakao.maps.load(getNearestHospital());
     });
 
+    /*
     kakao.maps.event.addListener( clusterer, 'clustered', function( clusterer ) {
       clusterer.forEach(cluster => {
         let tempMarkers = cluster.getMarkers();
@@ -181,6 +228,7 @@
         cluster.getClusterMarker().getContent().innerText = temp;
       });
     });
+     */
 
     // Deletes all markers in the array by removing references to them.
     function deleteMarkers() {
@@ -189,7 +237,6 @@
       }
       markers = [];
     }
-
     function deleteClusterMarkers() {
       for(let sidx = 0; sidx < markers.length; sidx++){
         clusterer.removeMarker(markers[sidx]);

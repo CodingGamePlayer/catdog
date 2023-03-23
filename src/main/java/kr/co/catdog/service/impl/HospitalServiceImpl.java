@@ -37,8 +37,13 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
-    public List<HospitalDTO> getAll(HashMap<String, Double> locPosition) {
-        return hospitalMapper.getAll(locPosition).stream().map(hospitalVO -> modelMapper.map(hospitalVO, HospitalDTO.class)).collect(Collectors.toList());
+    public List<HospitalDTO> getAll() {
+        return hospitalMapper.getAll().stream().map(hospitalVO -> modelMapper.map(hospitalVO, HospitalDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<HospitalDTO> getNearestHospital(HashMap<String, Double> locPosition) {
+        return hospitalMapper.getNearestHospital(locPosition).stream().map(hospitalVO -> modelMapper.map(hospitalVO, HospitalDTO.class)).collect(Collectors.toList());
     }
 
 
