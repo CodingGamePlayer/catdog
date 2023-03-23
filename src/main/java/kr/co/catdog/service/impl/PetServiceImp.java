@@ -21,32 +21,22 @@ public class PetServiceImp implements PetService {
 
     @Override
     public PetDTO findById(String user_id) {
-        PetDTO petDTO = modelMapper.map(petMapper.findById(user_id), PetDTO.class);
+        PetDTO DTO = PetDTO.builder()
+                .user_id(user_id).build();
+        PetDTO petDTO = modelMapper.map(petMapper.findById(DTO), PetDTO.class);
         petDTO.setCategory1VOList(categoryMapper.selectCategory1());
         petDTO.setCategory2VOList(categoryMapper.selectCategory2());
         
         return petDTO;
     }
 
-//    @Override
-//    public int insert(String user_id) {
-//        int result = petMapper.insert(user_id);
-//
-//        return !(result > 0) ? 0 : 1;
-//    }
-
     @Override
     public int update(PetDTO petDTO) {
 
-        int result = petMapper.update(modelMapper.map(petDTO, PetVO.class));
+        int result = petMapper.update(petDTO);
 
         return !(result > 0) ? 0 : 1;
     }
 
-//    @Override
-//    public int delete(String user_id) {
-//        int result = petMapper.delete(user_id);
-//
-//        return !(result > 0) ? 0 : 1;
-//    }
+
 }
