@@ -8,10 +8,10 @@ import java.util.List;
 
 @Mapper
 public interface CartMapper {
-    List<CartVO> findById(CartVO cartVO);
-    int insert(CartVO cartVO);
-    int update(CartVO cartVO);
-    int delete(CartVO cartVO);
-    CartVO findById_No(CartVO cartVO);
-    CartVO findByNo(CartDTO cartDTO);
+    List<CartVO> findById(CartDTO cartDTO);
+    CartVO findById_No(CartDTO cartDTO);
+    int insert(CartDTO cartDTO);
+    int update(CartDTO cartDTO);
+    int delete(CartDTO cartDTO);
+
 }

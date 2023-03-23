@@ -21,11 +21,6 @@
         WHERE user_id = #{user_id}
     </select>
 
-<!--    <insert id="insert">-->
-<!--        INSERT INTO pet (user_id)-->
-<!--        VALUES (#{user_id})-->
-<!--    </insert>-->
-
     <update id="update">
         UPDATE pet
         SET category1_no=#{category1_no},
@@ -37,10 +32,5 @@
         WHERE user_id = #{user_id}
     </update>
 
-<!--    <delete id="delete">-->
-<!--        DELETE-->
-<!--        FROM pet-->
-<!--        WHERE user_id = #{user_id}-->
-<!--    </delete>-->
 
 </mapper>

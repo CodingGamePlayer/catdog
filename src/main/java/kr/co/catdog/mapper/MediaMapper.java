@@ -8,8 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 @Mapper
 public interface MediaMapper {
-    List<MediaVO> findById(ProductVO productVO);
+    List<MediaVO> findById(ProductDTO productDTO);
     int insert(ProductDTO productDTO);
-    int delete(ProductVO productVO);
+    int delete(ProductDTO productDTO);
 
 }
