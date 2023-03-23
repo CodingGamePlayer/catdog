@@ -1,7 +1,6 @@
 package kr.co.catdog.service.impl;
 
 import kr.co.catdog.domain.CartVO;
-import kr.co.catdog.domain.MediaVO;
 import kr.co.catdog.domain.ProductVO;
 import kr.co.catdog.dto.CartDTO;
 import kr.co.catdog.dto.ProductDTO;
@@ -15,14 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -55,12 +49,11 @@ public class ShopServiceImp implements ShopService {
     public ProductDTO findById(int product_no) {
 
         ProductVO productVO = productMapper.findById(product_no);
+        ProductDTO productDTO = modelMapper.map(productVO, ProductDTO.class);
 
-        ProductDTO DTO = modelMapper.map(productVO, ProductDTO.class);
-        DTO.setCategory1VOList(categoryMapper.selectCategory1());
-        DTO.setMediaVOList(mediaMapper.findById(product_no));
+        productDTO.setMediaVOList(mediaMapper.findById(product_no));
 
-        return DTO;
+        return productDTO;
     }
 
     @Override
@@ -90,13 +83,6 @@ public class ShopServiceImp implements ShopService {
     }
 
     @Override
-    public ProductDTO insertCategory() {
-        ProductDTO productDTO = ProductDTO.builder()
-                .category1VOList(categoryMapper.selectCategory1()).build();
-        return productDTO;
-    }
-
-    @Override
     public int update(ProductDTO productDTO) {
         int result = productMapper.update(productDTO);
         return !(result > 0) ? 0 : 1;
@@ -104,8 +90,7 @@ public class ShopServiceImp implements ShopService {
 
     @Override
     public int delete(int product_no) {
-        int result = productMapper.delete(ProductDTO.builder()
-                .product_no(product_no).build());
+        int result = productMapper.delete(product_no);
         return !(result > 0) ? 0 : 1;
     }
 //    End Product ------------------------------------------------------------------------
@@ -116,8 +101,7 @@ public class ShopServiceImp implements ShopService {
     @Override
     public List<CartDTO> findById_Cart(String user_id) {
 
-        List<CartVO> cartVOList = cartMapper.findById(CartDTO.builder()
-                .user_id(user_id).build());
+        List<CartVO> cartVOList = cartMapper.findById(user_id);
         List<CartDTO> cartDTOList = cartVOList.stream()
                 .map(cartVO -> modelMapper.map(cartVO, CartDTO.class))
                 .collect(Collectors.toList());
@@ -153,8 +137,7 @@ public class ShopServiceImp implements ShopService {
 
     @Override
     public int delete_Cart(int cart_no) {
-        int result = cartMapper.delete(CartDTO.builder()
-                .cart_no(cart_no).build());
+        int result = cartMapper.delete(cart_no);
 
         return !(result > 0) ? 0 : 1;
     }

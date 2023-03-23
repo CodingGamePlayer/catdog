@@ -29,7 +29,7 @@ public class AccountController {
     @PostMapping("/login")
     String signin(UserDTO userDTO, HttpServletRequest request) {
         UserDTO user = userService.findById(userDTO.getUser_id());
-//        id없을때 정보없다고알려줘
+//        id없거나 비밀번호다를때 알려줘
 
         if (user.getUser_pw().equals(userDTO.getUser_pw())) {
             HttpSession session = request.getSession();

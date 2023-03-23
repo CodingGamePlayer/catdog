@@ -15,7 +15,7 @@
               <p class="mb-0 text-sm">Pet info and options to manage it.</p>
             </div>
             <div class="card-body">
-              <form role="form text-left" th:action="@{/user/profile/edit-pet}" method="post">
+              <form role="form text-left" action="/user/profile/edit-pet" method="post">
                 <label>Name</label>
                 <div class="input-group mb-2">
                   <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name-addon" th:value="${pet.pet_name}" name="pet_name">
@@ -23,12 +23,12 @@
                 <label for="type1">category1</label>
                 <div class="input-group mb-2">
                   <select class="form-control" id="type1" name="category1_no">
-                    <th:block th:each=" petType : ${pet.category1VOList}">
-                      <th:block th:if="${pet.category1_no} == ${petType.category1_no}">
-                        <option th:text="${petType.category1_type}" th:value="${petType.category1_no}" selected></option>
+                    <th:block th:each=" category : ${category.category1VOList}">
+                      <th:block th:if="${pet.category1_no} == ${category.category1_no}">
+                        <option th:text="${category.category1_type}" th:value="${category.category1_no}" selected></option>
                       </th:block>
-                      <th:block th:unless="${pet.category1_no} == ${petType.category1_no}">
-                        <option th:text="${petType.category1_type}" th:value="${petType.category1_no}"></option>
+                      <th:block th:unless="${pet.category1_no} == ${category.category1_no}">
+                        <option th:text="${category.category1_type}" th:value="${category.category1_no}"></option>
                       </th:block>
                     </th:block>
                   </select>
@@ -36,12 +36,12 @@
                 <label for="type2">category2</label>
                 <div class="input-group mb-2">
                   <select class="form-control" id="type2" name="category2_no">
-                    <th:block th:each=" petType : ${pet.category2VOList}">
-                      <th:block th:if="${pet.category2_no} == ${petType.category2_no}">
-                        <option th:text="${petType.category2_type}" th:value="${petType.category2_no}" selected></option>
+                    <th:block th:each=" category : ${category.category2VOList}">
+                      <th:block th:if="${pet.category2_no} == ${category.category2_no}">
+                        <option th:text="${category.category2_type}" th:value="${category.category2_no}" selected></option>
                       </th:block>
-                      <th:block th:unless="${pet.category2_no} == ${petType.category2_no}">
-                        <option th:text="${petType.category2_type}" th:value="${petType.category2_no}"></option>
+                      <th:block th:unless="${pet.category2_no} == ${category.category2_no}">
+                        <option th:text="${category.category2_type}" th:value="${category.category2_no}"></option>
                       </th:block>
                     </th:block>
                   </select>

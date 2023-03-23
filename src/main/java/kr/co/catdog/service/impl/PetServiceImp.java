@@ -2,7 +2,6 @@ package kr.co.catdog.service.impl;
 
 import kr.co.catdog.domain.PetVO;
 import kr.co.catdog.dto.PetDTO;
-import kr.co.catdog.mapper.CategoryMapper;
 import kr.co.catdog.mapper.PetMapper;
 import kr.co.catdog.service.PetService;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +15,12 @@ import org.springframework.stereotype.Service;
 public class PetServiceImp implements PetService {
     private final ModelMapper modelMapper;
     private final PetMapper petMapper;
-    private final CategoryMapper categoryMapper;
 
     @Override
     public PetDTO findById(String user_id) {
-        PetVO petVO = petMapper.findById(user_id);
 
+        PetVO petVO = petMapper.findById(user_id);
         PetDTO petDTO = modelMapper.map(petVO, PetDTO.class);
-        petDTO.setCategory1VOList(categoryMapper.selectCategory1());
-        petDTO.setCategory2VOList(categoryMapper.selectCategory2());
         
         return petDTO;
     }

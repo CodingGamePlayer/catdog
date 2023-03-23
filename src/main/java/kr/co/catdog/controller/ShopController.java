@@ -2,6 +2,7 @@ package kr.co.catdog.controller;
 
 import kr.co.catdog.dto.CartDTO;
 import kr.co.catdog.dto.ProductDTO;
+import kr.co.catdog.service.CategoryService;
 import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/user/shop")
 public class ShopController {
     private final ShopService shopService;
+    private final CategoryService categoryService;
 
     @GetMapping("/list")
     String list(Model model) {
@@ -33,15 +35,13 @@ public class ShopController {
 
     @GetMapping("/detail/{product_no}")
     String detail(@PathVariable int product_no, Model model) {
-        log.info("여기"+String.valueOf(product_no));
         model.addAttribute("product", shopService.findById(product_no));
-        log.info("gkgkgk"+String.valueOf(shopService.findById(product_no)));
         return "user/shop/detail";
     }
 
     @GetMapping("/register")
     String registerForm(Model model) {
-        model.addAttribute("category",shopService.insertCategory());
+        model.addAttribute("category", categoryService.selectAll());
         return "user/shop/register";
     }
 
@@ -49,16 +49,14 @@ public class ShopController {
     String register(ProductDTO productDTO) {
         int result = shopService.insert(productDTO);
 
-        log.info(String.valueOf(result));
-
         return "redirect:/user/shop/list";
     }
 
     @GetMapping("/edit/{product_no}")
     String editForm(@PathVariable int product_no, Model model) {
-        ProductDTO DTO = shopService.findById(product_no);
 
-        model.addAttribute("product", DTO);
+        model.addAttribute("product", shopService.findById(product_no));
+        model.addAttribute("category", categoryService.selectAll());
 
         return "user/shop/edit";
     }
@@ -79,10 +77,9 @@ public class ShopController {
     }
 
 //    Start Cart ------------------------------------------------------------------------
-    @GetMapping("/cart")
-    String cartList(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String user_id = (String)session.getAttribute("session_id");
+    @GetMapping("/cart/{user_id}")
+    String cartList(@PathVariable String user_id, Model model) {
+
         model.addAttribute("cartList",shopService.findById_Cart(user_id));
 
         return "user/shop/cart";
@@ -90,10 +87,11 @@ public class ShopController {
     @PostMapping("/cart/register")
     String register_cart(CartDTO cartDTO, HttpServletRequest request){
         shopService.insert_Cart(cartDTO);
-        log.info("컨트롤러"+String.valueOf(cartDTO));
+
         HttpSession session = request.getSession();
         int cart = shopService.findById_Cart(cartDTO.getUser_id()).size();
         session.setAttribute("session_cart",cart);
+
         return "redirect:/user/shop/cart";
     }
     @GetMapping("/cart/delete/{cart_no}")
@@ -103,6 +101,7 @@ public class ShopController {
         HttpSession session = request.getSession();
         int cart = shopService.findById_Cart((String)session.getAttribute("session_id")).size();
         session.setAttribute("session_cart",cart);
+
         return "redirect:/user/shop/cart";
     }
 

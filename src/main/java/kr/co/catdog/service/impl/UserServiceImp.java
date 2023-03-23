@@ -8,25 +8,28 @@ import kr.co.catdog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserServiceImp implements UserService {
+    @Value("${kr.co.catdog.upload.path}")
+    private String upPath;
     private final UserMapper userMapper;
     private final ModelMapper modelMapper;
     private final PetMapper petMapper;
     @Override
     public UserDTO findById(String user_id) {
-        UserDTO userDTO = UserDTO.builder()
-                .user_id(user_id).build();
-        UserVO uservo = userMapper.findById(userDTO);
+        UserVO uservo = userMapper.findById(user_id);
         UserDTO dto = modelMapper.map(uservo, UserDTO.class);
-        log.info(String.valueOf(dto));
+
         return dto;
 
     }
@@ -35,22 +38,32 @@ public class UserServiceImp implements UserService {
     public int insert(UserDTO userDTO) {
         int result = userMapper.insert(userDTO);
         petMapper.insert(userDTO); //회원가입시 펫등록됨
+
         return !(result > 0) ? 0 : 1;
     }
 
     @Override
     public int update(UserDTO userDTO) {
+        String fileName = UUID.randomUUID().toString() + "_" + userDTO.getFile().getOriginalFilename();
+        String filePath = upPath + "\\" + fileName;
+        File dest = new File(filePath);
+
+        try {
+            userDTO.getFile().transferTo(dest);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        userDTO.setUser_image(fileName);
+
         int result = userMapper.update(userDTO);
-        log.info(String.valueOf(result));
 
         return !(result > 0) ? 0 : 1;
     }
 
     @Override
     public int delete(String user_id) {
-        UserDTO userDTO = UserDTO.builder()
-                .user_id(user_id).build();
-        int result = userMapper.delete(userDTO);
+        int result = userMapper.delete(user_id);
+
         return !(result > 0) ? 0 : 1;
     }
 }

@@ -198,7 +198,7 @@
                                 Cat Dog Forest
                             </a>
                             <div class="d-flex align-items-center">
-                                <a th:href="@{/user/shop/cart}">
+                                <a th:href="@{|/user/shop/cart/${session.session_id}|}">
                                 <button class="btn shadow-none position-relative m-0 p-0 pb-1 text-dark">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                                          class="bi bi-cart2" viewBox="0 0 16 16">
@@ -243,10 +243,10 @@
                                     </li>
                                     <li class="nav-item px-4">
                                         <span class="nav-link text-lg font-weight-bold">Profile</span>
-                                        <a th:href="@{/user/profile/edit-person}"><span
-                                                class="nav-link py-1">회원 정보 관리</span></a>
-                                        <a th:href="@{/user/profile/edit-pet}"><span
-                                                class="nav-link py-1">펫 정보 관리</span></a>
+                                        <a th:href="@{|/user/profile/edit-person/${session.session_id}|}">
+                                            <span class="nav-link py-1">회원 정보 관리</span></a>
+                                        <a th:href="@{|/user/profile/edit-pet/${session.session_id}|}">
+                                            <span class="nav-link py-1">펫 정보 관리</span></a>
                                     </li>
                                     <li class="nav-item px-4">
                                       <span class="nav-link">
