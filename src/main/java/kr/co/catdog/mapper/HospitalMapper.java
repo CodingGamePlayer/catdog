@@ -14,7 +14,8 @@ public interface HospitalMapper {
 
     int insert(GovermentHospitalDTO hospitalDTO);
 
-    List<HospitalVO> getAll(HashMap<String, Double> locPosition);
+    List<HospitalVO> getAll();
+    List<HospitalVO> getNearestHospital(HashMap<String, Double> locPosition);
     List<GovermentHospitalVO> getAllGovermentHospital();
 
     int insertSearchData(HospitalDTO kakaoHospitalDTO);
