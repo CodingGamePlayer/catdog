@@ -68,22 +68,20 @@ public class CommunityServiceImpl implements CommunityService {
 		log.info("update 다녀온 result : "+result);
 		if(!(result>0)) {
 			return 0;
-		}else {
-			if(communityDTO.getMedia_path()!=null) {
-				MediaVO media = MediaVO.builder()
-										.media_no(communityDTO.getMedia_no())
-										.media_path(communityDTO.getMedia_path())
-										.build();
-				int mResult = communityMapper.updateMedia(media);
-				log.info("updateMedia 다녀온 mResult : "+mResult);
-				
-				if(!(mResult>0)) {
-					return 0;
-				}
-			}
 		}
 		
+		if(communityDTO.getMedia_path()!=null) {
+			MediaVO media = MediaVO.builder()
+								.media_no(communityDTO.getMedia_no())
+								.media_path(communityDTO.getMedia_path())
+								.build();
+		int mResult = communityMapper.updateMedia(media);
+		log.info("updateMedia 다녀온 mResult : "+mResult);
+		
+		}
 		return 1;
+		
+		
 	}
 
 	@Override
