@@ -54,14 +54,11 @@ public class ShopServiceImp implements ShopService {
     @Override
     public ProductDTO findById(int product_no) {
 
+        ProductVO productVO = productMapper.findById(product_no);
 
-        ProductVO productVO = productMapper.findById(ProductDTO.builder()
-                .product_no(product_no).build());
-        if (productVO == null) {
-            return null;
-        }
         ProductDTO DTO = modelMapper.map(productVO, ProductDTO.class);
         DTO.setCategory1VOList(categoryMapper.selectCategory1());
+        DTO.setMediaVOList(mediaMapper.findById(product_no));
 
         return DTO;
     }
@@ -70,21 +67,23 @@ public class ShopServiceImp implements ShopService {
     public int insert(ProductDTO productDTO) {
 
         int result = productMapper.insert(productDTO);
-        log.info(String.valueOf("ggg" + String.valueOf(productDTO)));
 
         productDTO.getFiles().forEach(multipartFile -> {
-            String fileName = UUID.randomUUID().toString() + "_" + multipartFile.getOriginalFilename();
-            String filePath = upPath + "\\" + fileName;
-            File dest = new File(filePath);
-            try {
-                multipartFile.transferTo(dest);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+
+            if (!multipartFile.getOriginalFilename().equals("")) {
+
+                String fileName = UUID.randomUUID().toString() + "_" + multipartFile.getOriginalFilename();
+                String filePath = upPath + "\\" + fileName;
+                File dest = new File(filePath);
+                try {
+                    multipartFile.transferTo(dest);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                productDTO.setMedia_path(fileName);
+
+                mediaMapper.insert(productDTO);
             }
-            productDTO.setMedia_path(fileName);
-
-            mediaMapper.insert(productDTO);
-
         });
 
         return !(result > 0) ? 0 : 1;
@@ -119,16 +118,12 @@ public class ShopServiceImp implements ShopService {
 
         List<CartVO> cartVOList = cartMapper.findById(CartDTO.builder()
                 .user_id(user_id).build());
-        List<CartDTO> cartDTOList = cartVOList.stream().map(cartVO ->
-                modelMapper.map(cartVO, CartDTO.class)).collect(Collectors.toList());
+        List<CartDTO> cartDTOList = cartVOList.stream()
+                .map(cartVO -> modelMapper.map(cartVO, CartDTO.class))
+                .collect(Collectors.toList());
 
         cartDTOList.forEach(cartDTO -> {
-            ProductDTO productDTO = findById(cartDTO.getProduct_no());
-            if (productDTO == null) {
-                return;
-            }
-            cartDTO.setProduct_name(productDTO.getProduct_name());
-            cartDTO.setProduct_price(productDTO.getProduct_price());
+            cartDTO.setProductVO(productMapper.findById(cartDTO.getProduct_no()));
         });
         return cartDTOList;
     }
@@ -138,6 +133,7 @@ public class ShopServiceImp implements ShopService {
         CartVO cartVO = cartMapper.findById_No(cartDTO);
 
         if (cartVO != null) {
+            cartDTO.setCart_no(cartVO.getCart_no());
             cartDTO.setCart_quantity(cartVO.getCart_quantity() + cartDTO.getCart_quantity());
             int result = cartMapper.update(cartDTO);
 

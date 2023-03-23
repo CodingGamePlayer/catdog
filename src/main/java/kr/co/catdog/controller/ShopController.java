@@ -5,7 +5,6 @@ import kr.co.catdog.dto.ProductDTO;
 import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
+
 
 @Controller
 @Slf4j
@@ -38,6 +35,7 @@ public class ShopController {
     String detail(@PathVariable int product_no, Model model) {
         log.info("여기"+String.valueOf(product_no));
         model.addAttribute("product", shopService.findById(product_no));
+        log.info("gkgkgk"+String.valueOf(shopService.findById(product_no)));
         return "user/shop/detail";
     }
 
@@ -59,6 +57,7 @@ public class ShopController {
     @GetMapping("/edit/{product_no}")
     String editForm(@PathVariable int product_no, Model model) {
         ProductDTO DTO = shopService.findById(product_no);
+
         model.addAttribute("product", DTO);
 
         return "user/shop/edit";
@@ -91,7 +90,7 @@ public class ShopController {
     @PostMapping("/cart/register")
     String register_cart(CartDTO cartDTO, HttpServletRequest request){
         shopService.insert_Cart(cartDTO);
-
+        log.info("컨트롤러"+String.valueOf(cartDTO));
         HttpSession session = request.getSession();
         int cart = shopService.findById_Cart(cartDTO.getUser_id()).size();
         session.setAttribute("session_cart",cart);

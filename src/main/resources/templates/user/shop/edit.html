@@ -75,7 +75,7 @@
                   </div>
                   <div class="col-12">
                     <label>Stock</label>
-                    <input class="form-control" type="number" onfocus="focused(this)" onfocusout="defocused(this)" th:value="${product.product_stock}" name="product_stock">
+                    <input class="form-control" type="number" onfocus="focused(this)" onfocusout="defocused(this)" th:value="${product.product_stock}" name="product_stock" min="0">
                   </div>
                   <div class="col-12">
                     <label>Category</label>

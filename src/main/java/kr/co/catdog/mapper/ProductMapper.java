@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface ProductMapper {
     List<ProductVO> selectAll();
-    ProductVO findById(ProductDTO productDTO);
+    ProductVO findById(int product_no);
     int insert(ProductDTO productDTO);
     int update(ProductDTO productDTO);
     int delete(ProductDTO productDTO);

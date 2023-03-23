@@ -18,9 +18,9 @@
                                 <div class="col-12 text-center">
                                     <div class="my-gallery d-flex mt-4 pt-2 uploadResult" itemscope=""
                                          itemtype="http://schema.org/ImageGallery" data-pswp-uid="1">
-                                        <figure className="col-12" itemProp="associatedMedia" itemScope=""
+                                        <figure class="col-12" itemProp="associatedMedia" itemScope=""
                                                 itemType="http://schema.org/ImageObject">
-                                            <img className="w-75 min-height-100 max-height-100 border-radius-lg"
+                                            <img class="w-75 min-height-100 max-height-100 border-radius-lg"
                                                  src="/assets/img/new.png" itemProp="thumbnail" alt="Image description">
                                         </figure>
                                     </div>
@@ -57,7 +57,7 @@
                             <div class="col-12">
                                 <label>Stock</label>
                                 <input class="form-control" type="number" placeholder="Stock" onfocus="focused(this)"
-                                       onfocusout="defocused(this)" name="product_stock">
+                                       onfocusout="defocused(this)" name="product_stock" min="1">
                             </div>
                             <div class="col-12">
                                 <label>Category</label>
@@ -110,7 +110,7 @@
             console.log(img);
             if (img.length != 0) {
                 const str = `<figure class="col-3" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-                              <a href="${img}" itemprop="contentUrl" data-size="500x600">
+                              <a href="${img}" itemprop="contentUrl" data-size="500x600" target="_blank">
                                 <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
                                      src="${img}" itemprop="thumbnail" alt="Image description">
                               </a>
@@ -124,9 +124,9 @@
         }
 
         function fileReset() {
-            const str = `<figure className="col-12" itemProp="associatedMedia" itemScope=""
+            const str = `<figure class="col-12" itemProp="associatedMedia" itemScope=""
                                   itemType="http://schema.org/ImageObject">
-                            <img className="w-75 min-height-100 max-height-100 border-radius-lg"
+                            <img class="w-75 min-height-100 max-height-100 border-radius-lg"
                                  src="/assets/img/new.png"
                                  itemProp="thumbnail" alt="Image description">
                          </figure>`
