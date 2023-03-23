@@ -11,7 +11,11 @@
     </resultMap>
 
     <select id="findById" resultMap="cartMap">
-        SELECT * FROM cart WHERE user_id = #{user_id}
+        SELECT * FROM cart WHERE user_id = #{user_id} ORDER BY cart_no DESC
+    </select>
+
+    <select id="findById_No" resultMap="cartMap">
+        SELECT * FROM cart WHERE user_id = #{user_id} AND product_no = #{product_no} LIMIT 1;
     </select>
 
     <insert id="insert">
@@ -19,11 +23,13 @@
     </insert>
 
     <update id="update">
-        UPDATE cart SET cart_quantity = #{cart_quantity} WHERE user_id = #{user_id} AND product_no = #{product_no}
+        UPDATE cart SET cart_quantity = #{cart_quantity} WHERE cart_no = #{cart_no}
     </update>
 
     <delete id="delete">
-        DELETE FROM cart WHERE user_id = #{user_id} AND product_no = #{product_no}
+        DELETE FROM cart WHERE cart_no = #{cart_no}
     </delete>
+
+
 
 </mapper>
