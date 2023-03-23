@@ -15,4 +15,5 @@ public interface ReplyService {
 	
 	int replyDelete(int reply_no);
 	
+	List<ReplyVO> myReply(String user_id);
 }

@@ -2,6 +2,7 @@ package kr.co.catdog.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-@RequestMapping("user/community")
+@RequestMapping("/user/community")
 public class CommunityController {
 	
 	@Value("${kr.co.catdog.upload.path}")
@@ -31,6 +32,7 @@ public class CommunityController {
 	@Autowired
 	private CommunityService communityservice;
 	
+//	글 모든 리스트 출력
 	@GetMapping("list")
 	ModelAndView list(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -46,14 +48,14 @@ public class CommunityController {
 		mav.setViewName("/user/community/list-community");
 		return mav;
 	}
-	
+//	
 	@GetMapping("detail")
 	ModelAndView detail() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/user/community/detail");
 		return mav;
 	}
-	//
+//	글 등록 화면으로 이동
 	@GetMapping("register")
 	ModelAndView register(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -68,7 +70,7 @@ public class CommunityController {
 		}
 		return mav;
 	}
-	
+//	글 등록 파일 업로드
 	@PostMapping("register")
 	ModelAndView register(CommunityDTO communityDTO) throws IllegalStateException, IOException {
 		ModelAndView mav = new ModelAndView();
@@ -90,7 +92,7 @@ public class CommunityController {
 		
 		return mav;
 	}
-	
+//	글 수정 화면 이동
 	@GetMapping("update")
 	ModelAndView updateForm(CommunityDTO communityDTO) {
 		ModelAndView mav = new ModelAndView();
@@ -100,7 +102,7 @@ public class CommunityController {
 		
 		return mav;
 	}
-	
+//	글 수정하기
 	@PostMapping("update")
 	ModelAndView update(CommunityDTO communityDTO) throws IllegalStateException, IOException {
 		ModelAndView mav = new ModelAndView();
@@ -123,7 +125,7 @@ public class CommunityController {
 		}
 		return mav;
 	}
-	
+//	글 삭제
 	@GetMapping("delete")
 	ModelAndView delete(CommunityDTO communityDTO) {
 		ModelAndView mav = new ModelAndView();
@@ -131,6 +133,25 @@ public class CommunityController {
 		mav.setViewName("redirect:list");
 		return mav;
 		
+	}
+//	내가 쓴글 불러오기
+	@GetMapping("mycommunity")
+	ModelAndView myCommunity(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		String user_id = (String)session.getAttribute("session_id");
+		if(user_id == null) {
+			mav.setViewName("/sign-in");
+		}
+		CommunityDTO communityDTO = CommunityDTO.builder()
+												.user_id(user_id)
+												.build();
+		List<CommunityVO> communityVO = communityservice.myCommunity(communityDTO);
+		log.info("db다녀오 리스트 : "+communityVO);
+		mav.addObject("communityVOs", communityservice.myCommunity(communityDTO));
+		mav.addObject("user_id", user_id);
+		mav.setViewName("/user/community/list-community");
+		return mav;
 	}
 
 }
