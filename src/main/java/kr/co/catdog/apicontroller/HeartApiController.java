@@ -10,26 +10,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.catdog.domain.LikeVO;
-import kr.co.catdog.service.LikeService;
-import lombok.Getter;
+import kr.co.catdog.domain.HeartVO;
+import kr.co.catdog.service.HeartService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-public class LikeApiController {
+public class HeartApiController {
 	
 	@Autowired
-	private LikeService likeService;
+	private HeartService heartService;
 	
 //	좋아요 체크 => 체크해제
 	@PutMapping("/api/user/community/like")
-	public ResponseEntity<LikeVO> likeFalse(@RequestBody LikeVO likeVO){
-		log.info("controller로 넘어온 좋아요 정보 : "+likeVO);
-		int result = likeService.likeUpdate(likeVO);
+	public ResponseEntity<HeartVO> likeFalse(@RequestBody HeartVO heartVO){
+		log.info("controller로 넘어온 좋아요 정보 : "+ heartVO);
+		int result = heartService.heartUpdate(heartVO);
 		
 		if(!(result>0)) {
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).build();
@@ -38,17 +37,17 @@ public class LikeApiController {
 	@GetMapping("/api/user/community/like")
 	public int getLikeCnt(@RequestParam("community_no") int community_no) {
 		
-		return likeService.getLikeCnt(community_no);
+		return heartService.getHeartCnt(community_no);
 	}
 
 //	좋아요 체크해제 => 체크
 	@PostMapping("/api/user/community/like")
-	public ResponseEntity<LikeVO> likeDiscrimination(@RequestBody LikeVO likeVO){
+	public ResponseEntity<HeartVO> likeDiscrimination(@RequestBody HeartVO heartVO){
 		
-		int result = likeService.likeDiscrimination(likeVO);
+		int result = heartService.heartDiscrimination(heartVO);
 		
 		if(!(result>0)) {
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).build();

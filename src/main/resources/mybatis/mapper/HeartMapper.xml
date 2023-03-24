@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.catdog.mapper.HeartMapper">
+
+    <resultMap id="HeartMap" type="HeartVO">
+    	<result property="heart_no" column="heart_no"/>
+        <result property="community_no" column="community_no"/>
+        <result property="user_id" column="user_id"/>
+        <result property="heart_boolean" column="heart_boolean"/>
+    </resultMap>
+    
+    <update id="heartUpdate" parameterType="HeartVO">
+    	UPDATE heart SET heart_boolean = #{heart_boolean}
+    	WHERE community_no = #{community_no} AND user_id = #{user_id}
+    </update>
+    
+    <select id="getHeartCnt" parameterType="HeartVO" resultType="int">
+    	SELECT COUNT(*) FROM heart WHERE community_no = #{community_no}
+    	AND heart_boolean = true
+    </select>
+    
+    <select id="getInfo" parameterType="HeartVO" resultMap="HeartMap">
+    	SELECT * FROM heart WHERE community_no = #{community_no}
+    	AND user_id = #{user_id}
+    </select>
+    
+    <insert id="heartRegister" parameterType="HeartVO">
+    	INSERT INTO heart(community_no, user_id, heart_boolean)
+    	VALUES(#{community_no}, #{user_id}, #{heart_boolean})
+    </insert>
+   
+</mapper>
