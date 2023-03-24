@@ -7,13 +7,13 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
 
-    UserVO findById(UserDTO userDTO);
+    UserVO findById(String user_id);
 
     int insert(UserDTO userDTO);
 
     int update(UserDTO userDTO);
 
-    int delete(UserDTO userDTO);
+    int delete(String user_id);
 
 
 }

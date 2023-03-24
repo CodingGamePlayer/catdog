@@ -3,7 +3,6 @@ package kr.co.catdog.domain;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

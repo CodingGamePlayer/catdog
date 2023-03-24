@@ -1,5 +1,6 @@
 package kr.co.catdog.dto;
 
+import kr.co.catdog.domain.ProductVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,5 @@ public class CartDTO {
     private int product_no;
     private int cart_quantity;
 
-    private String product_name;
-    private int product_price;
+    private ProductVO productVO;
 }

@@ -15,8 +15,9 @@
               <div>
                 <th:block th:if="${product.user_id == session.session_id}">
                   <a th:href="@{|/user/shop/edit/${product.product_no}|}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil me-3" viewBox="0 0 16 16">
-                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square me-3" viewBox="0 0 16 16">
+                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                     </svg>
                   </a>
                   <a th:href="@{|/user/shop/delete/${product.product_no}|}">
@@ -29,63 +30,49 @@
             </div>
             <div class="row">
               <div class="col-12 text-center">
-                <img class="w-100 border-radius-lg shadow-lg mx-auto"
-                     src="https://images.unsplash.com/photo-1616627781431-23b776aad6b2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1884&amp;q=80"
-                     alt="chair">
-                <div class="my-gallery d-flex mt-4 pt-2" itemscope="" itemtype="http://schema.org/ImageGallery"
-                     data-pswp-uid="1">
-                  <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-                    <a href="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-pink.jpg"
-                       itemprop="contentUrl" data-size="500x600">
-                      <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
-                           src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-pink.jpg"
-                           alt="Image description">
+                <div class="imgView">
+                  <th:block th:if="${product.mediaVOList == null}">
+                    <a href="#" itemprop="contentUrl" data-size="500x600" target="_blank">
+                      <img class="w-100 border-radius-lg shadow-lg mx-auto " src="/assets/img/df.png" alt="">
                     </a>
-                  </figure>
-                  <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-                    <a href="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/black-chair.jpg"
-                       itemprop="contentUrl" data-size="500x600">
-                      <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
-                           src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/black-chair.jpg"
-                           itemprop="thumbnail" alt="Image description">
-                    </a>
-                  </figure>
-                  <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-                    <a href="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-steel.jpg"
-                       itemprop="contentUrl" data-size="500x600">
-                      <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
-                           src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-steel.jpg"
-                           itemprop="thumbnail" alt="Image description">
-                    </a>
-                  </figure>
-                  <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-                    <a href="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-wood.jpg"
-                       itemprop="contentUrl" data-size="500x600">
-                      <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
-                           src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/chair-wood.jpg"
-                           itemprop="thumbnail" alt="Image description">
-                    </a>
-                  </figure>
+                  </th:block>
+                </div>
+                <div class="my-gallery d-flex mt-4 pt-2" itemscope="">
+                  <th:block th:each="img : ${product.mediaVOList}">
+                    <figure class="col-3" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+                      <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow imgView-s"
+                           th:src="@{|/testimg/${img.media_path}|}" alt="Image description" onclick="imgView(this.src)">
+                    </figure>
+                  </th:block>
                 </div>
               </div>
               <div class="col-12 mx-auto px-4">
                 <form th:action="@{/user/shop/cart/register}" method="post">
                   <h3 class="mt-lg-0 mt-4" th:text="${product.product_name}"></h3>
-                  <h5 th:text="|₩ ${product.product_price}|"></h5>
+                  <th:block th:if="${product.product_stock != 0}">
+                    <h5 th:text="|₩ ${product.product_price}|"></h5>
+                  </th:block>
+                  <th:block th:unless="${product.product_stock != 0}">
+                    <h5 th:text="'SOLD OUT'"></h5>
+                  </th:block>
                   <label class="mt-4">Description</label>
                   <ul class="text-sm">
                     <li th:text="${product.product_content}"></li>
                   </ul>
                   <label>Quantity</label>
                   <li class="nav-link dropdown pb-2 px-3">
-                    <input class="form-control form-control-sm" type="number" onfocus="focused(this)" onfocusout="defocused(this)" th:value="1" name="cart_quantity">
+                    <input class="form-control form-control-sm" type="number" onfocus="focused(this)" onfocusout="defocused(this)" value="1" name="cart_quantity" min="0">
                   </li>
                   <input type="hidden" th:value="${session.session_id}" name="user_id">
                   <input type="hidden" th:value="${product.product_no}" name="product_no">
                   <div class="row mt-2">
                     <div class="text-center">
-                      <button type="submit" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0">ADD TO
-                        CART</button>
+                      <th:block th:if="${product.product_stock != 0}">
+                        <button type="submit" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0">ADD TO CART</button>
+                      </th:block>
+                      <th:block th:unless="${product.product_stock != 0}">
+                        <button type="" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0" disabled>ADD TO CART</button>
+                      </th:block>
                     </div>
                   </div>
                 </form>
@@ -142,6 +129,26 @@
           </div>
         </div>
 
+        <script th:inline="javascript">
+          /*<![CDATA[*/
+          setTimeout(
+                  document.addEventListener("DOMContentLoaded", function () {
+                    document.querySelector('.imgView-s').click()
+                  })
+                  , 2000);
+
+          function imgView(url) {
+            console.log(url);
+            const str = `<a href="${url}" itemprop="contentUrl" data-size="500x600" target="_blank">
+                          <img class="w-100 border-radius-lg shadow-lg mx-auto"
+                               src="${url}" alt="">
+                        </a>`
+
+            document.querySelector('.imgView').innerHTML = str;
+
+          }
+          /*]]>*/
+        </script>
       </div>
       <!-- End Content -->
 
