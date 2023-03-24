@@ -20,5 +20,7 @@ public interface CommunityService {
 	int delete(CommunityDTO communityDTO);
 	
 	List<CommunityVO> myCommunity(CommunityDTO communityDTO);
+	
+	List<CommunityVO> popularPosts(CommunityDTO communityDTO);
 
 }

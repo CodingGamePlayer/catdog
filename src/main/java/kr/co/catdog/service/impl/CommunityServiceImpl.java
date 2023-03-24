@@ -70,7 +70,7 @@ public class CommunityServiceImpl implements CommunityService {
 			return 0;
 		}
 		
-		if(communityDTO.getMedia_path()!=null) {
+		if(!communityDTO.getFile().isEmpty()) {
 			MediaVO media = MediaVO.builder()
 								.media_no(communityDTO.getMedia_no())
 								.media_path(communityDTO.getMedia_path())
@@ -108,6 +108,17 @@ public class CommunityServiceImpl implements CommunityService {
 		
 		
 		return communityMapper.myCommunity(communityVO);
+	}
+
+	@Override
+	public List<CommunityVO> popularPosts(CommunityDTO communityDTO) {
+		
+		CommunityVO communityVO = CommunityVO.builder()
+											.user_id(communityDTO.getUser_id())
+											.build();
+		
+		
+		return communityMapper.popularPosts(communityVO);
 	}
 
 
