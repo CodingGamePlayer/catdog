@@ -13,53 +13,45 @@
             <div class="card card-profile card-plain">
             <div class="card-body text-center bg-white shadow border-radius-lg m-4 p-1 my-2">
               <div class="col-12 d-flex justify-content-center align-items-start p-2 my-1">
-                <th:block th:if="${cart.productVO.product_stock != 0}">
-                  <div class="col-1 d-flex justify-content-center form-check form-check-info text-left">
-                    <input class="form-check-input" type="checkbox" th:value="${cart.productVO.product_price * cart.cart_quantity}" name="checkedProduct" checked th:onclick="price()">
-                  </div>
-                  <div class="col-4">
-                    <img class="img border-radius-lg max-width-100 w-100" src="/assets/img/bruce-mars.jpg" alt="bruce">
-                  </div>
-                  <div class="col-7 pt-2 p-1">
-                  <div class="d-flex justify-content-between">
-                    <a th:href="@{|/user/shop/detail/${cart.productVO.product_no}|}">
-                      <h6 class="" th:text="${cart.productVO.product_name}"></h6>
-                    </a>
-                    <a th:href="@{|/user/shop/cart/delete/${cart.cart_no}|}">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
-                                     class="bi bi-trash3 mb-1" viewBox="0 0 16 16">
-                      <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" /></svg>
-                    </a>
-                  </div>
-                  <div class=" d-flex align-items-center">
-                    <a href="#" th:onclick="quantity('minus',[[${cart.cart_no}]],[[${cart.cart_quantity}]])">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
-                      </svg></a>
-                    <div class="mx-2">
-                      <input type="text text-align-center" class="form-control" aria-label="Sizing example input"
-                             aria-describedby="inputGroup-sizing-sm" th:value="${cart.cart_quantity}" style="width: 50px !important; height: 30px !important;">
-                    </div>
-                    <a href="#" th:onclick="quantity('plus',[[${cart.cart_no}]],[[${cart.cart_quantity}]])">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                      </svg></a>
-                  </div>
-                  <div class="d-flex justify-content-end font-weight-bolder pe-1">
-                    <span th:text="|₩ ${cart.productVO.product_price * cart.cart_quantity}|"></span>
-                  </div>
+                <div class="col-1 d-flex justify-content-center form-check form-check-info text-left">
+                  <input class="form-check-input" type="checkbox" name="checkedProduct" disabled>
                 </div>
-                </th:block>
-                <th:block th:unless="${cart.productVO.product_stock != 0}">
-                  <div class="col-1 d-flex justify-content-center form-check form-check-info text-left">
-                    <input class="form-check-input" type="checkbox" name="checkedProduct" disabled>
-                  </div>
-                  <div class="col-4">
-                    <img class="img border-radius-lg max-width-100 w-100" src="/assets/img/bruce-mars.jpg" alt="bruce">
-                  </div>
-                  <div class="col-7 pt-2 p-1">
+                <div class="col-4">
+                  <img class="img border-radius-lg max-width-100 w-100" src="/assets/img/bruce-mars.jpg" alt="bruce">
+                </div>
+                <div class="col-7 pt-2 p-1">
+                  <th:block th:if="${cart.productVO.product_stock != 0}">
+                    <div class="d-flex justify-content-between">
+                      <a th:href="@{|/user/shop/detail/${cart.productVO.product_no}|}">
+                        <h6 class="" th:text="${cart.productVO.product_name}"></h6>
+                      </a>
+                      <a th:href="@{|/user/shop/cart/delete/${cart.cart_no}|}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
+                             class="bi bi-trash3 mb-1" viewBox="0 0 16 16">
+                          <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" /></svg>
+                      </a>
+                    </div>
+                    <div class=" d-flex align-items-center">
+                      <a href="#" th:onclick="quantity('minus',[[${cart.cart_no}]],[[${cart.cart_quantity}]])">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                          <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                        </svg></a>
+                      <div class="mx-2">
+                        <input type="text text-align-center" class="form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-sm" th:value="${cart.cart_quantity}" style="width: 50px !important; height: 30px !important;">
+                      </div>
+                      <a href="#" th:onclick="quantity('plus',[[${cart.cart_no}]],[[${cart.cart_quantity}]])">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                        </svg></a>
+                    </div>
+                    <div class="d-flex justify-content-end font-weight-bolder pe-1">
+                      <span th:text="|₩ ${cart.productVO.product_price * cart.cart_quantity}|"></span>
+                    </div>
+                  </th:block>
+                  <th:block th:unless="${cart.productVO.product_stock != 0}">
                     <div class="d-flex justify-content-between">
                       <h6 class="" th:text="${cart.productVO.product_name}"></h6>
                       <a th:href="@{|/user/shop/cart/delete/${cart.cart_no}|}">
@@ -85,8 +77,8 @@
                     <div class="d-flex justify-content-end font-weight-bolder pe-1">
                       <span th:text="'품절'"></span>
                     </div>
-                  </div>
-                </th:block>
+                  </th:block>
+                </div>
               </div>
             </div>
           </div>
@@ -113,6 +105,7 @@
             </div>
           </div>
         </div>
+
         <script>
 
           document.addEventListener("DOMContentLoaded",function(){
