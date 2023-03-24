@@ -14,7 +14,7 @@ public class CommunityVO {
 	private int community_no;
 	private String user_id;
 	private int category_no;
-	private int category_type;
+	private String category_type;
 	private String community_title;
 	private String community_content;
 	private String community_regdate;
@@ -27,7 +27,7 @@ public class CommunityVO {
 	private String reply_content;
 	private String reply_regdate;
 	private int reply_count;
-	private int like_count;
-	private boolean like_boolean;
+	private int heart_count;
+	private boolean heart_boolean;
 
 }
