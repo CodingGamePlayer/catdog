@@ -31,13 +31,11 @@
             <div class="row">
               <div class="col-12 text-center">
                 <div class="imgView">
-                  <th:block th:if="${product.mediaVOList != null}">
-
-
+                  <th:block th:if="${product.mediaVOList == null}">
+                    <a href="#" itemprop="contentUrl" data-size="500x600" target="_blank">
+                      <img class="w-100 border-radius-lg shadow-lg mx-auto " src="/assets/img/df.png" alt="">
+                    </a>
                   </th:block>
-                  <a href="#" itemprop="contentUrl" data-size="500x600" target="_blank">
-                    <img class="w-100 border-radius-lg shadow-lg mx-auto " src="" alt="">
-                  </a>
                 </div>
                 <div class="my-gallery d-flex mt-4 pt-2" itemscope="">
                   <th:block th:each="img : ${product.mediaVOList}">
@@ -133,17 +131,11 @@
 
         <script th:inline="javascript">
           /*<![CDATA[*/
-          document.addEventListener("DOMContentLoaded",function() {
-           const length = [[${product.mediaVOList}]].length;
-           const media_path = '';
-           console.log(img);
-            // if (length != 0) {
-            //   [[${product.mediaVOList}]].forEach( mediaVO =>
-            //           media_path = mediaVO.media_path;
-            //   )
-            // }
-          });
-
+          setTimeout(
+                  document.addEventListener("DOMContentLoaded", function () {
+                    document.querySelector('.imgView-s').click()
+                  })
+                  , 2000);
 
           function imgView(url) {
             console.log(url);
