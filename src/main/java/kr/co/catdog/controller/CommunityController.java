@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.catdog.domain.CommunityVO;
@@ -80,7 +81,6 @@ public class CommunityController {
 		File dest = new File(filePath);
 		communityDTO.getFile().transferTo(dest);
 		communityDTO.setMedia_path(fileName);
-		log.info("communityDTO : "+communityDTO);
 		int result = communityservice.register(communityDTO);
 		if(!(result>0)) {
 			mav.addObject("msg", "글쓰기 실패!!");
@@ -94,9 +94,10 @@ public class CommunityController {
 	}
 //	글 수정 화면 이동
 	@GetMapping("update")
-	ModelAndView updateForm(CommunityDTO communityDTO) {
+	ModelAndView updateForm(CommunityDTO communityDTO, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		
+		String referer = request.getHeader("Referer");
+		mav.addObject("referer", referer);
 		mav.addObject("communityDTO", communityservice.findByCommunity(communityDTO));
 		mav.setViewName("/user/community/updateForm");
 		
@@ -104,10 +105,10 @@ public class CommunityController {
 	}
 //	글 수정하기
 	@PostMapping("update")
-	ModelAndView update(CommunityDTO communityDTO) throws IllegalStateException, IOException {
+	ModelAndView update(CommunityDTO communityDTO, @RequestParam("referer") String referer) throws IllegalStateException, IOException {
 		ModelAndView mav = new ModelAndView();
-		log.info("업데이트 DTO"+communityDTO);
-		if(communityDTO.getFile() != null) {
+		
+		if(!communityDTO.getFile().isEmpty()) {
 			UUID uuid = UUID.randomUUID();
 			String fileName = uuid.toString()+communityDTO.getFile().getOriginalFilename();
 			String filePath = upPath + "\\" + fileName;
@@ -115,22 +116,24 @@ public class CommunityController {
 			communityDTO.getFile().transferTo(dest);
 			communityDTO.setMedia_path(fileName);
 			communityservice.update(communityDTO);
-			mav.setViewName("redirect:list");
-			log.info("filename : "+fileName);
-			log.info("communityDTO.path : "+communityDTO.getMedia_path());
+			mav.setViewName("redirect:"+referer);
+			log.info("1 실행 됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		}else {
 			communityservice.update(communityDTO);
-			mav.setViewName("redirect:list");
+			mav.setViewName("redirect:"+referer);
+			log.info("2 실행 됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			
 		}
 		return mav;
 	}
 //	글 삭제
 	@GetMapping("delete")
-	ModelAndView delete(CommunityDTO communityDTO) {
+	ModelAndView delete(CommunityDTO communityDTO, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		communityservice.delete(communityDTO);
-		mav.setViewName("redirect:list");
+		// 이전 페이지의 url을 가져오는 작업!!
+		String referer = request.getHeader("Referer");
+		mav.setViewName("redirect:"+referer);
 		return mav;
 		
 	}
@@ -149,6 +152,19 @@ public class CommunityController {
 		List<CommunityVO> communityVO = communityservice.myCommunity(communityDTO);
 		log.info("db다녀오 리스트 : "+communityVO);
 		mav.addObject("communityVOs", communityservice.myCommunity(communityDTO));
+		mav.addObject("user_id", user_id);
+		mav.setViewName("/user/community/list-community");
+		return mav;
+	}
+	
+	@GetMapping("popularposts")
+	ModelAndView popularPosts(CommunityDTO communityDTO, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		String user_id = (String) session.getAttribute("session_id");
+		log.info("인기글 가는 유저 아이디"+user_id);
+		communityDTO.setUser_id(user_id);
+		mav.addObject("communityVOs", communityservice.popularPosts(communityDTO));
 		mav.addObject("user_id", user_id);
 		mav.setViewName("/user/community/list-community");
 		return mav;
