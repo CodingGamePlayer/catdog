@@ -9,7 +9,7 @@
       <!-- Content -->
       <div layout:fragment="content">
         <div class="row mx-2">
-          <form th:action="@{/user/shop/edit}" method="post">
+          <form action="/user/shop/edit" method="post">
           <div class="col-12">
             <div class="card h-100">
               <div class="card-body">
@@ -75,12 +75,12 @@
                   </div>
                   <div class="col-12">
                     <label>Stock</label>
-                    <input class="form-control" type="number" onfocus="focused(this)" onfocusout="defocused(this)" th:value="${product.product_stock}" name="product_stock">
+                    <input class="form-control" type="number" onfocus="focused(this)" onfocusout="defocused(this)" th:value="${product.product_stock}" name="product_stock" min="0">
                   </div>
                   <div class="col-12">
                     <label>Category</label>
                     <select class="form-control" id="Category1" name="category1_no">
-                      <th:block th:each=" category : ${product.category1VOList}">
+                      <th:block th:each=" category : ${category.category1VOList}">
                         <th:block th:if="${product.category1_no} == ${category.category1_no}">
                           <option th:text="${category.category1_type}" th:value="${category.category1_no}" selected></option>
                         </th:block>

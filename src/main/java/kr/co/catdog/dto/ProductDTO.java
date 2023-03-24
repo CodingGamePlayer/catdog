@@ -1,6 +1,5 @@
 package kr.co.catdog.dto;
 
-import kr.co.catdog.domain.Category1VO;
 import kr.co.catdog.domain.MediaVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,9 +24,7 @@ public class ProductDTO {
     private int product_price;
     private LocalDate product_regdate;
 
-    private List<Category1VO> category1VOList;
-
-    private List<MediaVO> mediaVOList;
     private String media_path;
     private List<MultipartFile> files;
+    private List<MediaVO> mediaVOList;
 }

@@ -2,11 +2,13 @@ package kr.co.catdog.mapper;
 
 import kr.co.catdog.domain.PetVO;
 import kr.co.catdog.dto.PetDTO;
+import kr.co.catdog.dto.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface PetMapper {
-    PetVO findById(PetDTO petDTO);
+    PetVO findById(String user_id);
+    int insert(UserDTO userDTO);
     int update(PetDTO petDTO);
 
 }

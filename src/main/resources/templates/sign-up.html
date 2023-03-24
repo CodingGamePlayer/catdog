@@ -15,7 +15,7 @@
               <p class="mb-0">Enter your email and password to register</p>
             </div>
             <div class="card-body pb-3">
-              <form role="form text-left" th:action="@{/signup}" method="post">
+              <form role="form text-left" action="/signup" method="post">
                 <label>Id</label>
                 <div class="input-group mb-3">
                   <input type="email" class="form-control" placeholder="Email" aria-label="Id"
@@ -44,7 +44,7 @@
             <div class="card-footer text-center pt-0 px-sm-4 px-1">
               <p class="mb-4 mx-auto">
                 Already have an account?
-                <a th:href="@{/login}" class="jh-pink-title text-gradient font-weight-bold">Sign in</a>
+                <a href="/login" class="jh-pink-title text-gradient font-weight-bold">Sign in</a>
               </p>
             </div>
           </div>
