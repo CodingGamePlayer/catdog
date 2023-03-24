@@ -62,6 +62,8 @@
                 <div class="col-md-12">
                   <input type="hidden" th:value="${communityDTO.community_no}" name="community_no">
                   <input type="hidden" th:value="${communityDTO.media_no}" name="media_no">
+                  <!-- referer 수정폼으로 오기 전의 url 정보를 갖고 있다 -->
+                  <input type="hidden" th:value="${referer}" name="referer">
                   <button type="submit" class="btn btn-pink w-100">수정</button>
                 </div>
               </div>
