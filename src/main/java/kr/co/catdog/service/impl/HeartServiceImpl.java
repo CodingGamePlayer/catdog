@@ -3,32 +3,32 @@ package kr.co.catdog.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.catdog.domain.LikeVO;
-import kr.co.catdog.mapper.LikeMapper;
-import kr.co.catdog.service.LikeService;
+import kr.co.catdog.domain.HeartVO;
+import kr.co.catdog.mapper.HeartMapper;
+import kr.co.catdog.service.HeartService;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class LikeServiceImpl implements LikeService {
+public class HeartServiceImpl implements HeartService {
 	
 	@Autowired
-	private LikeMapper likeMapper;
+	private HeartMapper heartMapper;
 	
 	@Override
-	public int likeUpdate(LikeVO likeVO) {
+	public int heartUpdate(HeartVO heartVO) {
 		
 		
-		return likeMapper.likeUpdate(likeVO);
+		return heartMapper.heartUpdate(heartVO);
 	}
 
 	@Override
-	public int getLikeCnt(int Community_no) {
+	public int getHeartCnt(int Community_no) {
 		
-		LikeVO likeVO = LikeVO.builder()
+		HeartVO heartVO = HeartVO.builder()
 							.community_no(Community_no)
 							.build();
-		return likeMapper.getLikeCnt(likeVO);
+		return heartMapper.getHeartCnt(heartVO);
 	}
 
 	
@@ -36,14 +36,14 @@ public class LikeServiceImpl implements LikeService {
 //	남아 있는 정보가 있다면 likeUpdate로 like_boolean값 true로 변경
 //	없다면 likeRegister로 새로운 좋아요 정보 등록
 	@Override
-	public int likeDiscrimination(LikeVO likeVO) {
-		if(likeMapper.getInfo(likeVO) == null) {
+	public int heartDiscrimination(HeartVO heartVO) {
+		if(heartMapper.getInfo(heartVO) == null) {
 		
-			return likeMapper.likeRegister(likeVO);
+			return heartMapper.heartRegister(heartVO);
 		
 		}else {
 			
-			return likeMapper.likeUpdate(likeVO);
+			return heartMapper.heartUpdate(heartVO);
 		}
 	}
 	

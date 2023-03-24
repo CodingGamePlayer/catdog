@@ -26,9 +26,9 @@
               <div class="form-group">
                 <label for="exampleFormControlSelect1">반려동물 종류</label>
                 <select class="form-control" id="exampleFormControlSelect1" name="category_type">
-                  <option th:attr="selected=${communityDTO.category_type == 1} ? 'true': 'false'" th:value="1">개
+                  <option th:attr="selected=${communityDTO.category_type == '강아지'} ? 'true': 'false'" th:value="강아지">강아지
                   </option>
-                  <option th:attr="selected=${communityDTO.category_type == 2} ? 'true': 'false'" th:value="2">고양이
+                  <option th:attr="selected=${communityDTO.category_type == '고양이'} ? 'true': 'false'" th:value="고양이">고양이
                   </option>
                 </select>
               </div>

@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LikeVO {
+public class HeartVO {
 	
-	private int like_no;
+	private int heart_no;
 	private int community_no;
 	private String user_id;
-	private boolean like_boolean;
+	private boolean heart_boolean;
 
 }

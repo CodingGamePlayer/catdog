@@ -9,7 +9,6 @@
         <result property="community_no" column="community_no"/>
         <result property="user_id" column="user_id"/>
         <result property="category_no" column="category_no"/>
-        <result property="community_title" column="community_title"/>
         <result property="community_content" column="community_content"/>
         <result property="community_regdate" column="community_regdate"/>
         <result property="community_editdate" column="community_editdate"/>
@@ -20,13 +19,13 @@
         <result property="reply_content" column="reply_content"/>
         <result property="reply_regdate" column="reply_regdate"/>
         <result property="reply_count" column="reply_count"/>
-        <result property="like_count" column="like_count"/>
-        <result property="like_boolean" column="like_boolean"/>
+        <result property="heart_count" column="heart_count"/>
+        <result property="heart_boolean" column="heart_boolean"/>
     </resultMap>
     
     <insert id="register" parameterType="CommunityDTO" useGeneratedKeys="true" keyProperty="community_no">
-    	INSERT INTO community(user_id, category_no, community_title, community_content, community_regdate)
-    	VALUES (#{user_id}, #{category_no}, "하이", #{community_content}, now())
+    	INSERT INTO community(user_id, category_no, community_content, community_regdate)
+    	VALUES (#{user_id}, (SELECT category1_no FROM category1 WHERE category1_type = #{category_type}), #{community_content}, now())
     </insert>
     
     <insert id="registerMedia" parameterType="CommunityDTO">
@@ -45,9 +44,9 @@
     <select id="selectAll" parameterType="CommunityVO" resultMap="CommunityMap">
     	SELECT community.*, media.media_type, media_path,
     	(SELECT COUNT(*) FROM reply WHERE reply.community_no = community.community_no) AS reply_count,
-    	(SELECT COUNT(*) from catdog.like WHERE community.community_no = catdog.like.community_no AND catdog.like.like_boolean = true ) AS like_count,
-    	(SELECT catdog.like.like_boolean FROM catdog.like WHERE community.community_no = catdog.like.community_no AND 
-    	catdog.like.user_id = #{user_id}) AS like_boolean FROM community 
+    	(SELECT COUNT(*) from heart WHERE community.community_no = heart.community_no AND heart.heart_boolean = true ) AS heart_count,
+    	(SELECT heart.heart_boolean FROM heart WHERE community.community_no = catdog.heart.community_no AND
+			heart.user_id = #{user_id}) AS heart_boolean FROM community
     	LEFT JOIN media ON community.community_no = media.community_no
     	ORDER BY community.community_no DESC
     </select>
@@ -76,9 +75,9 @@
     <select id="myCommunity" parameterType="CommunityVO" resultMap="CommunityMap">
     	SELECT community.*, media.media_type, media_path,
     	(SELECT COUNT(*) FROM reply WHERE reply.community_no = community.community_no) AS reply_count,
-    	(SELECT COUNT(*) from catdog.like WHERE community.community_no = catdog.like.community_no AND catdog.like.like_boolean = true ) AS like_count,
-    	(SELECT catdog.like.like_boolean FROM catdog.like WHERE community.community_no = catdog.like.community_no AND 
-    	catdog.like.user_id = #{user_id}) AS like_boolean FROM community 
+    	(SELECT COUNT(*) from heart WHERE community.community_no = heart.community_no AND heart.heart_boolean = true ) AS heart_count,
+    	(SELECT heart.heart_boolean FROM heart WHERE community.community_no = heart.community_no AND
+		heart.user_id = #{user_id}) AS heart_boolean FROM community
     	LEFT JOIN media ON community.community_no = media.community_no
     	WHERE community.user_id = #{user_id}
     	ORDER BY community.community_no DESC
@@ -87,11 +86,11 @@
     <select id="popularPosts" parameterType="CommunityVO" resultMap="CommunityMap">
     	SELECT community.*, media.media_type, media_path,
     	(SELECT COUNT(*) FROM reply WHERE reply.community_no = community.community_no) AS reply_count,
-    	(SELECT COUNT(*) from catdog.like WHERE community.community_no = catdog.like.community_no AND catdog.like.like_boolean = true ) AS like_count,
-    	(SELECT catdog.like.like_boolean FROM catdog.like WHERE community.community_no = catdog.like.community_no AND 
-    	catdog.like.user_id = #{user_id}) AS like_boolean FROM community 
+    	(SELECT COUNT(*) from heart WHERE community.community_no = heart.community_no AND heart.heart_boolean = true ) AS heart_count,
+    	(SELECT heart.heart_boolean FROM heart WHERE community.community_no = heart.community_no AND
+    	heart.user_id = #{user_id}) AS heart_boolean FROM community
     	LEFT JOIN media ON community.community_no = media.community_no
-    	ORDER BY like_count DESC, community.community_regdate DESC
+    	ORDER BY heart_count DESC, community.community_regdate DESC
     </select>
 
 

@@ -24,8 +24,8 @@
 		            <div class="form-group">
 					    <label for="exampleFormControlSelect1">반려동물 종류</label>
 					    <select class="form-control" id="exampleFormControlSelect1" name="category_type">
-					      <option th:value="1">개</option>
-					      <option th:value="2">고양이</option>
+					      <option th:value="강아지">강아지</option>
+					      <option th:value="고양이">고양이</option>
 					    </select>
 					</div>
 					<div class="row">
@@ -40,15 +40,15 @@
 						</div>
 					</div>
 		            <div class="upload mb-4" style="display: none;" >
-					  <label for="formFile" class="form-label">사진첨부</label>
+					  <label for="fileInput" class="form-label">사진첨부</label>
 					  <input class="form-control form-control-sm mb-4" type="file" id="fileInput" name="file">
 					  <div class="d-flex justify-content-sm-center">
 					  <img class="img-fluid border-radius-lg shadow-lg " id="previewImage" src="" alt="Preview Image" style="display : none;">
 					  </div>
 					</div>
 		            <div class="path mb-4"  style="display:none;">
-					  <label for="formUrl" class="form-label">영상경로</label>
-					  <input class="form-control mb-4" type="text" name="media_path">
+					  <label for="media_path" class="form-label">영상경로</label>
+					  <input class="form-control mb-4" type="text" id="media_path" name="media_path">
 		            </div>
 		            <div class="form-group mb-4">
 		              <label>Your message</label>
