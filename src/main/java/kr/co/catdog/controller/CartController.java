@@ -17,18 +17,18 @@ import javax.servlet.http.HttpSession;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/user/shop")
+@RequestMapping("/user/shop/cart")
 public class CartController {
     private final CartService cartService;
 
-    @GetMapping("/cart/{user_id}")
+    @GetMapping("/{user_id}")
     String cartList(@PathVariable String user_id, Model model) {
 
         model.addAttribute("cartList",cartService.findById(user_id));
 
         return "user/shop/cart";
     }
-    @PostMapping("/cart/register")
+    @PostMapping("/register")
     String register_cart(CartDTO cartDTO, HttpServletRequest request){
         cartService.insert(cartDTO);
 
@@ -38,7 +38,7 @@ public class CartController {
 
         return "redirect:/user/shop/cart/"+session.getAttribute("session_id");
     }
-    @GetMapping("/cart/delete/{cart_no}")
+    @GetMapping("/delete/{cart_no}")
     String delete_cart(@PathVariable int cart_no, HttpServletRequest request){
         cartService.delete(cart_no);
 
