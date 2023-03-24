@@ -7,16 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("user/hospital")
-public class HospitalController {
-
-    @Value("${kakao.map.api.frontkey}")
-    private String apiKey;
+@RequestMapping("user/naming")
+public class NamingController {
 
 
-    @GetMapping("/search")
-    public String HospitalMap(Model model) {
-        model.addAttribute("appKey", apiKey);
-        return "user/hospital/map";
+
+
+    @GetMapping("/place")
+    public String NamingPlace(Model model) {
+        return "user/naming/petname";
     }
 }
