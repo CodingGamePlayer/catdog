@@ -56,7 +56,12 @@
                     <p class="text-sm mb-1" th:text="${product.product_name}"></p>
                     <div class="row justify-content-center text-center">
                       <div class="col-12 mx-auto">
-                        <h5 class="jh-pink-title mb-0 text-sm" th:text="|₩ ${product.product_price}|"></h5>
+                        <th:block th:if="${product.product_stock != 0}">
+                          <h5 class="jh-pink-title mb-0 text-sm" th:text="|₩ ${product.product_price}|"></h5>
+                        </th:block>
+                        <th:block th:unless="${product.product_stock != 0}">
+                          <h5 class="jh-pink-title mb-0 text-sm" th:text="'SOLD OUT'"></h5>
+                        </th:block>
                       </div>
                     </div>
                   </div>

@@ -51,11 +51,9 @@ public class UserController {
 
     @GetMapping("/edit-pet/{user_id}")
     String editPetForm(@PathVariable String user_id, Model model) {
-        CategoryDTO categoryDTO = categoryService.selectAll();
-        PetDTO pet = petService.findById(user_id);
 
-        model.addAttribute("category", categoryDTO);
-        model.addAttribute("pet", pet);
+        model.addAttribute("category", categoryService.selectAll());
+        model.addAttribute("pet", petService.findById(user_id));
 
         return "user/profile/edit-pet";
     }
