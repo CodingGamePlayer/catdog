@@ -1,7 +1,6 @@
 package kr.co.catdog.controller;
 
 import kr.co.catdog.dto.UserDTO;
-import kr.co.catdog.service.CartService;
 import kr.co.catdog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,26 +16,16 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class AccountController {
     private final UserService userService;
-    private final CartService cartService;
 
     @GetMapping("/login")
-    String signinForm() {
+    String loginForm() {
         return "sign-in";
     }
 
     @PostMapping("/login")
-    String signin(UserDTO userDTO, HttpServletRequest request) {
-        UserDTO user = userService.findById(userDTO.getUser_id());
+    String login(UserDTO userDTO, HttpServletRequest request) {
+        userService.login(userDTO, request);
 //        id없거나 비밀번호다를때 알려줘
-
-        if (user.getUser_pw().equals(userDTO.getUser_pw())) {
-            HttpSession session = request.getSession();
-            session.setAttribute("session_id", user.getUser_id());
-            session.setAttribute("session_name",user.getUser_name());
-            session.setAttribute("session_img",user.getUser_image());
-            int cart = cartService.findById(user.getUser_id()).size();
-            session.setAttribute("session_cart",cart);
-        }
         return "redirect:/";
     }
 
@@ -44,7 +33,7 @@ public class AccountController {
     String logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
-        if(session!=null){
+        if (session != null) {
             session.invalidate();
         }
 

@@ -14,6 +14,10 @@
         <result property="user_matchinguse" column="user_matchinguse"/>
     </resultMap>
 
+    <select id="login" resultMap="userMap">
+        SELECT * FROM user WHERE user_id = #{user_id} AND user_pw = #{user_pw}
+    </select>
+
     <select id="findById" resultMap="userMap">
         SELECT * FROM user WHERE user_id = #{user_id}
     </select>

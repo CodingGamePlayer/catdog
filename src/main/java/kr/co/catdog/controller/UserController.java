@@ -1,6 +1,5 @@
 package kr.co.catdog.controller;
 
-import kr.co.catdog.dto.CategoryDTO;
 import kr.co.catdog.dto.PetDTO;
 import kr.co.catdog.dto.UserDTO;
 import kr.co.catdog.service.CategoryService;
@@ -31,8 +30,7 @@ public class UserController {
     @GetMapping("/edit-person/{user_id}")
     String editPersonForm(@PathVariable String user_id, Model model) {
 
-        UserDTO user = userService.findById(user_id);
-        model.addAttribute("user", user);
+        model.addAttribute("user", userService.findById(user_id));
 
         return "user/profile/edit-person";
     }
