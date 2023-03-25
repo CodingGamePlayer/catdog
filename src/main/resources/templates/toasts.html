@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko" itemscope itemtype="http://schema.org/WebPage"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout.html}">
+
+
+
+      <!-- Content -->
+      <div layout:fragment="content">
+        <div class="container mt-3">
+          <button type="button" class="btn btn-primary" id="hz">Toast 열기</button>
+          <div class="toast">
+            <div class="toast-header">
+              <strong class="me-auto">Toast 제목 (예: 홈짱닷컴)</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+              <p>Toast 내용 (예: Homzzang.com)</p>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div class="position-fixed bottom-1 end-1" style="z-index: 1050;">
+          <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="successToast"
+               aria-atomic="true">
+            <div class="toast-header border-0">
+              <i class="ni ni-check-bold text-success me-2"></i>
+
+              <span class="me-auto font-weight-bold">Success</span>
+              <small class="text-body">11 mins ago</small>
+              <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"
+                 aria-hidden="true"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body">
+              Hello, world! This is a notification message.
+            </div>
+          </div>
+          <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="successToast2"
+               aria-atomic="true">
+            <div class="toast-header border-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle font-weight-bolder text-success me-2" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+              </svg>
+              <span class="me-auto font-weight-bold">Success</span>
+              <small class="text-body">11 mins ago</small>
+              <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"
+                 aria-hidden="true"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body">
+              Hello, world! This is a notification message.
+            </div>
+          </div>
+          <div class="toast fade hide p-2 mt-2 jh-bg-pink" role="alert" aria-live="assertive" id="infoToast"
+               aria-atomic="true">
+            <div class="toast-header bg-transparent border-0 ">
+              <i class="ni ni-bell-55 text-white me-2"></i>
+              <span class="me-auto text-white font-weight-bold">Infomation</span>
+              <small class="text-white">11 mins ago</small>
+              <i class="fas fa-times text-md text-white ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"
+                 aria-hidden="true"></i>
+            </div>
+            <hr class="horizontal light m-0">
+            <div class="toast-body text-white">
+              Hello, world! This is a notification message.
+            </div>
+          </div>
+          <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="infoToast2"
+               aria-atomic="true">
+            <div class="toast-header bg-transparent border-0 ">
+              <i class="ni ni-bell-55 jh-pink me-2"></i>
+              <span class="me-auto jh-pink font-weight-bold">Infomation</span>
+              <small class="text-body">11 mins ago</small>
+              <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"
+                 aria-hidden="true"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body">
+              Hello, world! This is a notification message.
+            </div>
+          </div>
+          <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="cartToast"
+               aria-atomic="true">
+            <div class="toast-header bg-transparent border-0 ">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-cart-check-fill jh-pink me-2" viewBox="0 0 16 16">
+                <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+              </svg>
+              <span class="me-auto jh-pink font-weight-bold">Cart</span>
+              <small class="text-body">11 mins ago</small>
+              <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"
+                 aria-hidden="true"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body d-flex align-items-center justify-content-between">
+              <span class="">장바구니로 이동하시겠습니까?</span>
+              <a href="">
+                <button class="btn btn-outline-pink btn-sm p-1 px-3 mb-0 text-xxs">OK</button>
+              </a>
+            </div>
+          </div>
+          <div class="toast fade p-2 mt-2 bg-white hide" role="alert" aria-live="assertive" id="deleteToast"
+               aria-atomic="true">
+            <div class="toast-header border-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill text-warning me-2" viewBox="0 0 16 16">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+              </svg>
+              <span class="me-auto font-weight-bold">Delete</span>
+              <small class="text-body">11 mins ago</small>
+              <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"
+                 aria-hidden="true"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body d-flex align-items-center justify-content-between">
+              <span class="">정말 삭제하시겠습니까?</span>
+              <a href="">
+                <button class="btn btn-light btn-sm p-1 px-3 mb-0 text-xxs">OK</button>
+              </a>
+            </div>
+          </div>
+          <div class="toast fade p-2 mt-2 bg-white hide" role="alert" aria-live="assertive" id="warningToast"
+               aria-atomic="true">
+            <div class="toast-header border-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill text-warning me-2" viewBox="0 0 16 16">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+              </svg>
+              <span class="me-auto font-weight-bold">Warning</span>
+              <small class="text-body">11 mins ago</small>
+              <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"
+                 aria-hidden="true"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body">
+              Hello, world! This is a notification message.
+            </div>
+          </div>
+          <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="errorToast"
+               aria-atomic="true">
+            <div class="toast-header border-0">
+              <i class="ni ni-notification-70 text-danger me-2"></i>
+              <span class="me-auto text-gradient text-danger font-weight-bold">Error</span>
+              <small class="text-body">11 mins ago</small>
+              <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"
+                 aria-hidden="true"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body">
+              Hello, world! This is a notification message.
+            </div>
+          </div>
+          <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="failToast"
+               aria-atomic="true">
+            <div class="toast-header border-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill text-danger me-2" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+              </svg>
+              <span class="me-auto text-gradient text-danger font-weight-bold">Fail</span>
+              <small class="text-body">11 mins ago</small>
+              <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"
+                 aria-hidden="true"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body">
+              Hello, world! This is a notification message.
+            </div>
+          </div>
+        </div>
+
+        <script>
+
+          document.getElementById("hz").onclick = function () {
+
+            var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+
+            var toastList = toastElList.map(function (toastEl) {
+
+              return new bootstrap.Toast(toastEl)
+
+            })
+
+            toastList.forEach(toast => toast.show())
+
+          }
+
+        </script>
+
+
+      </div>
+      <!-- End Content -->
+
+
+</html>
