@@ -309,14 +309,16 @@
         </div>
         <!-- 글쓰기 버튼 Start -->
         <th:block th:if="${msg == 'cnBtn'}">
-            <a class="btn  rounded-circle jh-pink"
-               style=" position:sticky; z-index:10; bottom:100px; left:310px;" th:onclick="regCommunity()">
+            <a class="btn avatar avatar-md rounded-circle jh-pink-title shadow-lg p-0 m-0 btn-hover" style="position:sticky; z-index:10; bottom:80px; left:340px;"
+               th:onclick="regCommunity()">
                 <i class="fa fa-pencil" aria-hidden="true" style="font-size: 18px;"></i>
             </a>
         </th:block>
         <th:block th:if="${msg == 'productRegisterBtn'}">
-            <a class="btn rounded-circle btn-outline-primary"
-               style=" position:sticky; z-index:10; bottom:100px; left:310px;" th:onclick="productRegisterBtn()">글쓰기</a>
+            <a class="btn avatar avatar-md rounded-circle jh-pink-title shadow-lg p-0 m-0 btn-hover" style="position:sticky; z-index:10; bottom:80px; left:340px;"
+               th:onclick="productRegisterBtn()">
+                <i class="fa fa-pencil" aria-hidden="true" style="font-size: 18px;"></i>
+            </a>
         </th:block>
         <!-- 글쓰기 버튼 End -->
         <!-- Bottom bar -->

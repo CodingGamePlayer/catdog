@@ -22,6 +22,10 @@
         SELECT * FROM user WHERE user_id = #{user_id}
     </select>
 
+    <select id="imgFindById" resultMap="userMap">
+        SELECT user_image FROM user WHERE user_id = #{user_id}
+    </select>
+
     <insert id="insert">
         INSERT INTO user (user_id, user_pw, user_name, user_phoneNumber, user_image, user_matchinguse)
         VALUES (#{user_id}, #{user_pw}, #{user_name}, #{user_phoneNumber}, #{user_image}, #{user_matchinguse})

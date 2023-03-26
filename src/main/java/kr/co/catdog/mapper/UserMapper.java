@@ -9,7 +9,7 @@ public interface UserMapper {
     UserVO login(UserDTO userDTO);
 
     UserVO findById(String user_id);
-
+    UserVO imgFindById(String user_id);
     int insert(UserDTO userDTO);
 
     int update(UserDTO userDTO);

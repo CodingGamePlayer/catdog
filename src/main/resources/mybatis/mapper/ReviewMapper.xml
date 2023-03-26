@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.catdog.mapper.ReviewMapper">
+    <resultMap id="reviewMap" type="ReviewVO">
+        <result property="review_no" column="review_no"></result>
+        <result property="user_id" column="user_id"></result>
+        <result property="product_no" column="product_no"></result>
+        <result property="review_regdate" column="review_regdate"></result>
+        <result property="review_content" column="review_content"></result>
+    </resultMap>
+
+    <select id="selectAll" resultMap="reviewMap">
+        SELECT * FROM review WHERE product_no = #{product_no}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO review (user_id, product_no, review_content)
+        VALUES (user_id = #{user_id}, product_no = #{product_no}, review_content = #{review_content})
+    </insert>
+
+    <delete id="delete">
+        DELETE
+        FROM review
+        WHERE review_no = #{review_no}
+    </delete>
+</mapper>

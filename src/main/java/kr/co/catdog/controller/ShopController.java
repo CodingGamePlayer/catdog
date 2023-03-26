@@ -2,6 +2,7 @@ package kr.co.catdog.controller;
 
 import kr.co.catdog.dto.ProductDTO;
 import kr.co.catdog.service.CategoryService;
+import kr.co.catdog.service.ReviewService;
 import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ShopController {
     private final ShopService shopService;
     private final CategoryService categoryService;
+    private final ReviewService reviewService;
 
     @GetMapping("/list")
     String list(Model model) {
@@ -33,6 +35,7 @@ public class ShopController {
     @GetMapping("/detail/{product_no}")
     String detail(@PathVariable int product_no, Model model) {
         model.addAttribute("product", shopService.findById(product_no));
+        model.addAttribute("review", reviewService.selectAll(product_no));
         return "user/shop/detail";
     }
 
