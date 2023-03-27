@@ -36,5 +36,25 @@
         WHERE user_id = #{user_id}
     </update>
 
+    <select id="list" resultMap="petMap">
+        SELECT *
+        FROM pet
+        <include refid="searchMatching"/>
+
+    </select>
+
+    <sql id="searchMatching">
+        <where>
+
+            category1_no = #{category1_no}
+
+            <if test="category2_no !=0">
+                AND category2_no = #{category2_no}
+            </if>
+            <if test="ageFirst !=0 AND ageSecond !=0">
+                AND pet_age BETWEEN #{ageFirst} AND #{ageSecond}
+            </if>
+        </where>
+    </sql>
 
 </mapper>

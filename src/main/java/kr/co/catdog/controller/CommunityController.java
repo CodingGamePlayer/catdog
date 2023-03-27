@@ -107,7 +107,7 @@ public class CommunityController {
 	@PostMapping("update")
 	ModelAndView update(CommunityDTO communityDTO, @RequestParam("referer") String referer) throws IllegalStateException, IOException {
 		ModelAndView mav = new ModelAndView();
-		
+		log.info("수정 dTO : "+communityDTO);
 		if(!communityDTO.getFile().isEmpty()) {
 			UUID uuid = UUID.randomUUID();
 			String fileName = uuid.toString()+communityDTO.getFile().getOriginalFilename();
