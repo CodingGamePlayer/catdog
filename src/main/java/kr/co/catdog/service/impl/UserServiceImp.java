@@ -2,6 +2,7 @@ package kr.co.catdog.service.impl;
 
 import kr.co.catdog.domain.UserVO;
 import kr.co.catdog.dto.UserDTO;
+import kr.co.catdog.mapper.CartMapper;
 import kr.co.catdog.mapper.PetMapper;
 import kr.co.catdog.mapper.UserMapper;
 import kr.co.catdog.service.UserService;
@@ -11,6 +12,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
@@ -25,6 +28,21 @@ public class UserServiceImp implements UserService {
     private final UserMapper userMapper;
     private final ModelMapper modelMapper;
     private final PetMapper petMapper;
+    private final CartMapper cartMapper;
+
+    @Override
+    public void login(UserDTO userDTO, HttpServletRequest request) {
+        UserVO uservo = userMapper.login(userDTO);
+
+        HttpSession session = request.getSession();
+        session.setAttribute("session_id", uservo.getUser_id());
+        session.setAttribute("session_name", uservo.getUser_name());
+        session.setAttribute("session_img", uservo.getUser_image());
+        int cart = cartMapper.findById(uservo.getUser_id()).size();
+        session.setAttribute("session_cart", cart);
+
+    }
+
     @Override
     public UserDTO findById(String user_id) {
         UserVO uservo = userMapper.findById(user_id);
