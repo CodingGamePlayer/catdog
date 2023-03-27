@@ -26737,4 +26737,9 @@ pre[class*="language-"] {
   --bs-btn-disabled-border-color: #FFABC7;
 }
 
+.btn.btn-hover{
+  --bs-btn-border-color: #FFABC7;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: RGBA(244, 237, 237, var(--bs-bg-opacity, 1)) !important;
+}
 /*# sourceMappingURL=kit-free.css.map */

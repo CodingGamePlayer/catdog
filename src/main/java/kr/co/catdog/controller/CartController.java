@@ -22,14 +22,14 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping("/{user_id}")
-    String cartList(@PathVariable String user_id, Model model) {
+    String list(@PathVariable String user_id, Model model) {
 
         model.addAttribute("cartList",cartService.findById(user_id));
 
         return "user/shop/cart";
     }
     @PostMapping("/register")
-    String register_cart(CartDTO cartDTO, HttpServletRequest request){
+    String register(CartDTO cartDTO, HttpServletRequest request){
         cartService.insert(cartDTO);
 
         HttpSession session = request.getSession();
@@ -39,7 +39,7 @@ public class CartController {
         return "redirect:/user/shop/cart/"+session.getAttribute("session_id");
     }
     @GetMapping("/delete/{cart_no}")
-    String delete_cart(@PathVariable int cart_no, HttpServletRequest request){
+    String delete(@PathVariable int cart_no, HttpServletRequest request){
         cartService.delete(cart_no);
 
         HttpSession session = request.getSession();
