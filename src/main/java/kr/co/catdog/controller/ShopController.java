@@ -26,7 +26,7 @@ public class ShopController {
 
     @GetMapping("/list")
     String list(Model model) {
-        model.addAttribute("msg", "productRegisterBtn");
+        model.addAttribute("registerMsg", "shop");
         model.addAttribute("productList",shopService.selectAll());
 
         return "user/shop/list";
