@@ -1,9 +1,12 @@
 package kr.co.catdog.service.impl;
 
 import kr.co.catdog.domain.ProductVO;
+import kr.co.catdog.domain.ReviewVO;
 import kr.co.catdog.dto.ProductDTO;
+import kr.co.catdog.dto.ReviewDTO;
 import kr.co.catdog.mapper.MediaMapper;
 import kr.co.catdog.mapper.ProductMapper;
+import kr.co.catdog.mapper.ReviewMapper;
 import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +28,7 @@ public class ShopServiceImp implements ShopService {
     private final ModelMapper modelMapper;
     private final ProductMapper productMapper;
     private final MediaMapper mediaMapper;
+    private final ReviewMapper reviewMapper;
     @Value("${kr.co.catdog.upload.path}")
     private String upPath;
 
@@ -36,6 +40,14 @@ public class ShopServiceImp implements ShopService {
                 .collect(Collectors.toList());
 
         return productDTOList;
+    }
+
+    public List<ProductDTO> orderByReviewCount(){
+        List<ReviewVO> reviewVOList = reviewMapper.orderByReviewCount();
+//        reviewVOList.stream()
+//                .map(reviewVO -> {productMapper.findById(reviewVO.getProduct_no())})
+//                .collect(Collectors.toList());
+
     }
 
     @Override

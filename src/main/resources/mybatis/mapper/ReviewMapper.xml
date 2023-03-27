@@ -8,16 +8,17 @@
         <result property="user_id" column="user_id"></result>
         <result property="product_no" column="product_no"></result>
         <result property="review_regdate" column="review_regdate"></result>
+        <result property="review_score" column="review_score"></result>
         <result property="review_content" column="review_content"></result>
     </resultMap>
 
     <select id="selectAll" resultMap="reviewMap">
-        SELECT * FROM review WHERE product_no = #{product_no}
+        SELECT * FROM review WHERE product_no = #{product_no} ORDER BY review_no DESC
     </select>
 
     <insert id="insert">
-        INSERT INTO review (user_id, product_no, review_content)
-        VALUES (user_id = #{user_id}, product_no = #{product_no}, review_content = #{review_content})
+        INSERT INTO review (user_id, product_no, review_score, review_content)
+        VALUES (#{user_id}, #{product_no}, #{review_score}, #{review_content})
     </insert>
 
     <delete id="delete">
@@ -25,4 +26,8 @@
         FROM review
         WHERE review_no = #{review_no}
     </delete>
+
+    <select id="orderByReviewCount">
+        select product_no, count(review_no) as count from review group by product_no order by count desc;
+    </select>
 </mapper>

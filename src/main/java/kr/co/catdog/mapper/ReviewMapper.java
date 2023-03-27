@@ -12,5 +12,7 @@ public interface ReviewMapper {
 
     int insert(ReviewDTO reviewDTO);
 
-    int delete();
+    int delete(int review_no);
+
+    List<ReviewVO> orderByReviewCount();
 }

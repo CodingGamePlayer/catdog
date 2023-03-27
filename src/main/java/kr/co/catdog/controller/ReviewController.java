@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("/user/shop/detail")
 public class ReviewController {
-    private ReviewService reviewService;
+    private final ReviewService reviewService;
 
     @PostMapping("/register")
     String register(ReviewDTO reviewDTO) {
@@ -24,6 +24,7 @@ public class ReviewController {
     @GetMapping("/{product_no}/delete/{review_no}")
     String delete(@PathVariable("product_no") int product_no, @PathVariable("review_no") int review_no) {
         int result = reviewService.delete(review_no);
+
         return "redirect:/user/shop/detail/" + product_no;
     }
 }
