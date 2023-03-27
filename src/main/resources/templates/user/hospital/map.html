@@ -11,6 +11,7 @@
 
 
   <section class="row d-flex justify-content-center p-3" id="nearestHospital_list">
+    <!--
     <div class="card">
       <div class="card-body pt-2">
         <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">자세히</span>
@@ -30,6 +31,7 @@
         </p>
       </div>
     </div>
+    -->
   </section>
 
 
@@ -140,12 +142,11 @@
                   nearList.appendChild(item);
                 }
                 if(data.length < 1){
-                  const item = document.createElement('li');
+                  const item = document.createElement('div');
                   item.innerHTML = `<div class="card">
       <div class="card-body pt-2">
-        <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">자세히</span>
         <div class="d-flex justify-content-between align-items-center">
-         <h1>주변에 병원이 존재하지 않습니다!!</h1>
+         <h5>주변에 병원이 존재하지 않습니다!!</h5>
       </div>
     </div>`;
                   nearList.appendChild(item);
