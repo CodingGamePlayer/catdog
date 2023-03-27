@@ -43,7 +43,7 @@ public class CommunityController {
 		CommunityVO communityVO = CommunityVO.builder()
 											.user_id(user_id)
 											.build();
-		mav.addObject("msg", "cnBtn");
+		mav.addObject("registerMsg", "community");
 		mav.addObject("communityVOs", communityservice.selectAll(communityVO));
 		mav.addObject("user_id", user_id);
 		mav.setViewName("/user/community/list-community");
