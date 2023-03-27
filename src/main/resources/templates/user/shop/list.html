@@ -10,12 +10,14 @@
       <div layout:fragment="content">
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
+            <th:block th:each="score : ${productScoreList}">
             <div class="carousel-item">
-              <div class="page-header min-vh-25 m-3 border-radius-xl"
-                   style="background-image: url('https://images.unsplash.com/photo-1537511446984-935f663eb1f4?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80');">
+              <div class="page-header min-vh-25 m-3 border-radius-xl">
+                <img th:src="@{|/testimg/${score.mediaVOList.media_path}|}">
                 <span class="mask"></span>
               </div>
             </div>
+            </th:block>
             <div class="carousel-item">
               <div class="page-header min-vh-25 m-3 border-radius-xl"
                    style="background-image: url('https://images.unsplash.com/photo-1537511446984-935f663eb1f4?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80');">

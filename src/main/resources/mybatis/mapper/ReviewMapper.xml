@@ -13,7 +13,10 @@
     </resultMap>
 
     <select id="selectAll" resultMap="reviewMap">
-        SELECT * FROM review WHERE product_no = #{product_no} ORDER BY review_no DESC
+        SELECT *
+        FROM review
+        WHERE product_no = #{product_no}
+        ORDER BY review_no DESC
     </select>
 
     <insert id="insert">
@@ -27,7 +30,18 @@
         WHERE review_no = #{review_no}
     </delete>
 
-    <select id="orderByReviewCount">
-        select product_no, count(review_no) as count from review group by product_no order by count desc;
+    <select id="orderByReviewCount" resultMap="reviewMap">
+        SELECT product_no, count(review_no) AS count
+        FROM review
+        GROUP BY product_no
+        ORDER BY count DESC, product_no DESC;
+    </select>
+
+    <select id="orderByReviewScore" resultMap="reviewMap">
+        SELECT product_no, avg(review_score) AS avg
+        FROM catdog.review
+        GROUP BY product_no
+        ORDER BY avg DESC, product_no DESC
+        LIMIT 5
     </select>
 </mapper>

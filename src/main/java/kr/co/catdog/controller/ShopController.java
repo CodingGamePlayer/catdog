@@ -25,7 +25,9 @@ public class ShopController {
     @GetMapping("/list")
     String list(Model model) {
         model.addAttribute("registerMsg", "shop");
-        model.addAttribute("productList",shopService.selectAll());
+        model.addAttribute("productList",shopService.orderByReviewCount());
+        model.addAttribute("productScoreList",shopService.orderByReviewScore());
+
 
         return "user/shop/list";
     }

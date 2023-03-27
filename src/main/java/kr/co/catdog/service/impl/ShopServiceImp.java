@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,19 +37,37 @@ public class ShopServiceImp implements ShopService {
     @Override
     public List<ProductDTO> selectAll() {
         List<ProductVO> productVOList = productMapper.selectAll();
-        List<ProductDTO> productDTOList = productVOList.stream().map(productVO ->
-                modelMapper.map(productVO, ProductDTO.class))
+        List<ProductDTO> productDTOList = productVOList.stream()
+                .map(productVO -> modelMapper.map(productVO, ProductDTO.class))
                 .collect(Collectors.toList());
 
         return productDTOList;
     }
 
-    public List<ProductDTO> orderByReviewCount(){
+    @Override
+    public List<ProductDTO> orderByReviewCount() {
         List<ReviewVO> reviewVOList = reviewMapper.orderByReviewCount();
-//        reviewVOList.stream()
-//                .map(reviewVO -> {productMapper.findById(reviewVO.getProduct_no())})
-//                .collect(Collectors.toList());
 
+        List<ProductDTO> productDTOList = reviewVOList.stream()
+                .map(reviewVO -> findById(reviewVO.getProduct_no()))
+                .collect(Collectors.toList());
+
+//        selectAll().stream()
+//                .map(productDTO ->
+//                    reviewMapper.selectAll(productDTO.getProduct_no()).size())
+//                .sorted(Comparator.comparing().reversed())
+//                .collect(Collectors.toList());
+        return productDTOList;
+    }
+
+    @Override
+    public List<ProductDTO> orderByReviewScore() {
+        List<ReviewVO> reviewVOList = reviewMapper.orderByReviewScore();
+
+        List<ProductDTO> productDTOList = reviewVOList.stream()
+                .map(reviewVO -> findById(reviewVO.getProduct_no()))
+                .collect(Collectors.toList());
+        return productDTOList;
     }
 
     @Override

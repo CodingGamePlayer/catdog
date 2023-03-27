@@ -24,8 +24,6 @@ public class ReviewServiceImp implements ReviewService {
     @Override
     public List<ReviewDTO> selectAll(int product_no) {
         List<ReviewVO> reviewVOList = reviewMapper.selectAll(product_no);
-        System.out.println("reviewVOList = " + reviewVOList);
-        reviewVOList.forEach(reviewVO -> log.info(String.valueOf(reviewVO)));
         if (!reviewVOList.isEmpty()) {
             List<ReviewDTO> reviewDTOList = reviewVOList.stream()
                     .map(reviewVO -> modelMapper.map(reviewVO, ReviewDTO.class))
