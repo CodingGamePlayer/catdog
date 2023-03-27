@@ -52,5 +52,10 @@ public class AccountController {
         return "redirect:/login";
     }
 
+    @GetMapping("/g")
+    String g(){
+        return "toasts";
+    }
+
 
 }
