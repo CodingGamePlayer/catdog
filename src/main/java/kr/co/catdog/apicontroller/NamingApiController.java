@@ -1,42 +1,38 @@
 package kr.co.catdog.apicontroller;
 
 import kr.co.catdog.dto.ChatGptResponseDto;
-import kr.co.catdog.dto.HospitalDTO;
-import kr.co.catdog.dto.QuestionRequestDto;
+import kr.co.catdog.dto.PetDTO;
 import kr.co.catdog.service.ChatGptService;
-import kr.co.catdog.service.HospitalService;
-import kr.co.catdog.service.NamingService;
+import kr.co.catdog.service.PetService;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @RestController
 @Slf4j
 public class NamingApiController {
-    private NamingService namingService;
+
     private ChatGptService chatGptService;
+    private PetService petService;
 
     @PostMapping("/api/user/naming/mypetName")
-    public ChatGptResponseDto sendQuestion(@RequestBody QuestionRequestDto requestDto) {
-        log.info(chatGptService.askQuestion(requestDto)+"");
-        return chatGptService.askQuestion(requestDto);
+    public ChatGptResponseDto sendQuestion(@RequestBody String param) {
+        return chatGptService.askQuestion(chatGptService.makePrompt(param));
     }
 
-    public NamingApiController(NamingService namingService, ChatGptService chatGptService) {
-        this.namingService = namingService;
+    @PutMapping("/api/user/naming/updatePetname/{id}")
+    public int updateMypetName(@PathVariable("id") String id, @RequestBody Map<String, Object> petData) {
+        PetDTO petDTO = petService.findById(id);
+        petDTO.setPet_name((String)petData.get("petName"));
+        return petService.update(petDTO);
+    }
+
+    @Autowired
+    public NamingApiController(ChatGptService chatGptService, PetService petService) {
         this.chatGptService = chatGptService;
+        this.petService = petService;
     }
 }
