@@ -87,7 +87,7 @@
                 <div class="flex-grow-1 ms-3">
                   <div class="d-flex justify-content-between align-items-center mb-2">
                     <h6 class="h6 my-0" th:text="${review.user_id}">Jessica Stones</h6>
-                    <a th:href="@{|/user/shop/detail/${product.product_no}/delete/${review.review_no}|}"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
+                    <a th:href="@{|/user/shop/detail/${review.product_no}/delete/${review.review_no}|}"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
                                      class="bi bi-trash3 me-2" viewBox="0 0 16 16">
                       <path
                               d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
@@ -98,32 +98,25 @@
                 </div>
               </div>
               </th:block>
-              <div class="d-flex mt-3">
-                <div class="flex-shrink-0">
-                  <img alt="Image placeholder" class="avatar rounded-circle" src="/assets/img/bruce-mars.jpg">
-                </div>
-                <div class="flex-grow-1 ms-3">
-                  <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="h6 my-0">Jessica Stones</h6>
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
-                                     class="bi bi-trash3 me-2" viewBox="0 0 16 16">
-                      <path
-                              d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-                    </svg></a>
-                  </div>
-                  <p class="text-sm">Society has put up so many boundaries, so many limitations on what’s right and wrong that
-                    it’s almost impossible to get a pure thought out. It’s like a little kid, a little boy.</p>
-                </div>
-              </div>
               <div class="d-flex mt-4">
                 <div class="flex-shrink-0">
                   <img alt="Image placeholder" class="avatar rounded-circle me-3" src="/assets/img/team-4.jpg">
                 </div>
                 <div class="flex-grow-1 my-auto">
                   <form action="/user/shop/detail/register" method="post">
+                    <div class="input-group mb-2">
+                      <select class="form-control form-select-sm" name="review_score">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5" selected>5</option>
+                      </select>
+                    </div>
                     <textarea class="form-control" placeholder="Write your comment" rows="2" style="resize: none;" name="review_content"></textarea>
                     <input type="hidden" name="product_no" th:value="${product.product_no}">
                     <input type="hidden" name="user_id" th:value="${session.session_id}">
+                    <button type="submit" class="btn btn-outline-pink btn-sm">등록</button>
                   </form>
                 </div>
               </div>
@@ -149,6 +142,21 @@
             document.querySelector('.imgView').innerHTML = str;
 
           }
+
+          // toasts 토스트 Start----------------------------------------
+
+          document.addEventListener('DOMContentLoaded', function () {
+            const cartToast = document.getElementById('cartToast')
+            if ([[${cartToastMsg}]]) {
+              cartToast.classList.add("show");
+
+              setTimeout(function () {
+                cartToast.classList.remove('show');
+              }, 5000);
+            }
+          });
+          // toasts 토스트 End----------------------------------------
+
           /*]]>*/
         </script>
       </div>

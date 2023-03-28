@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,14 +30,16 @@ public class CartController {
         return "user/shop/cart";
     }
     @PostMapping("/register")
-    String register(CartDTO cartDTO, HttpServletRequest request){
+    String register(CartDTO cartDTO, HttpServletRequest request, RedirectAttributes redirectAttributes){
         cartService.insert(cartDTO);
 
         HttpSession session = request.getSession();
         int cart = cartService.findById(cartDTO.getUser_id()).size();
         session.setAttribute("session_cart",cart);
 
-        return "redirect:/user/shop/cart/"+session.getAttribute("session_id");
+        redirectAttributes.addFlashAttribute("cartToastMsg", "toast");
+
+        return "redirect:/user/shop/detail/"+cartDTO.getProduct_no();
     }
     @GetMapping("/delete/{cart_no}")
     String delete(@PathVariable int cart_no, HttpServletRequest request){
