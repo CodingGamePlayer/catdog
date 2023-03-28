@@ -15,6 +15,7 @@ public class ReviewDTO {
     private String user_id;
     private int product_no;
     private LocalDate review_regdate;
+    private int review_score;
     private String review_content;
     private String user_image;
 }

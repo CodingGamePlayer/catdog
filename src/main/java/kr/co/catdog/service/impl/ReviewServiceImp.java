@@ -6,6 +6,7 @@ import kr.co.catdog.mapper.ReviewMapper;
 import kr.co.catdog.mapper.UserMapper;
 import kr.co.catdog.service.ReviewService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ReviewServiceImp implements ReviewService {
-    private ReviewMapper reviewMapper;
-    private ModelMapper modelMapper;
-    private UserMapper userMapper;
+    private final ReviewMapper reviewMapper;
+    private final ModelMapper modelMapper;
+    private final UserMapper userMapper;
 
     @Override
     public List<ReviewDTO> selectAll(int product_no) {
@@ -42,7 +44,7 @@ public class ReviewServiceImp implements ReviewService {
 
     @Override
     public int delete(int review_no) {
-        int result = reviewMapper.delete();
+        int result = reviewMapper.delete(review_no);
 
         return !(result > 0) ? 0 : 1;
     }
