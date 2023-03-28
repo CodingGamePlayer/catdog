@@ -113,7 +113,7 @@
         <hr class="horizontal dark m-0">
         <div class="toast-body d-flex align-items-center justify-content-between">
             <span class="">정말 삭제하시겠습니까?</span>
-            <a href="">
+            <a th:href="@{|${deleteToastMsg}|}">
                 <button class="btn btn-light btn-sm p-1 px-3 mb-0 text-xxs">OK</button>
             </a>
         </div>
@@ -634,6 +634,12 @@
             setTimeout(function () {
                 successToast.classList.remove('show');
             }, 5000);
+        }
+
+        const deleteToast = document.getElementById('deleteToast')
+        if ([[${deleteToastMsg}]]) {
+            console.log([[${deleteToastMsg}]])
+            deleteToast.classList.add("show");
         }
 
     })
