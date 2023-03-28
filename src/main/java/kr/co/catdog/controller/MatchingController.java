@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,6 +60,16 @@ public class MatchingController {
                 .build();
         mav.addObject("matchingDTOs",matchingService.list(matchingDTO));
         mav.setViewName("/user/matching/list");
+        return mav;
+    }
+
+    @GetMapping("/user/matching/result-matching")
+    public ModelAndView resultMatching(@RequestParam("user_id") String user_id, @RequestParam("matching_user_id") String matching_user_id){
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("myPet",matchingService.getMyPet(user_id));
+        mav.addObject("matchingPet",matchingService.getMyPet(matching_user_id));
+        mav.setViewName("/user/matching/resultMatching");
+
         return mav;
     }
 

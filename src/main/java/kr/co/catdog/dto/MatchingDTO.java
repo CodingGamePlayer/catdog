@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 public class MatchingDTO<E> {
 
-    private int maching_no;
+    private int matching_no;
     private String user_id;
     private String matching_user_id;
     private int matching_request;

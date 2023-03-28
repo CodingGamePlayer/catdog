@@ -134,13 +134,8 @@ public class CommunityController {
 	}
 //	내가 쓴글 불러오기
 	@GetMapping("mycommunity")
-	ModelAndView myCommunity(HttpServletRequest request) {
+	ModelAndView myCommunity(@RequestParam("user_id") String user_id) {
 		ModelAndView mav = new ModelAndView();
-		HttpSession session = request.getSession();
-		String user_id = (String)session.getAttribute("session_id");
-		if(user_id == null) {
-			mav.setViewName("/sign-in");
-		}
 		CommunityDTO communityDTO = CommunityDTO.builder()
 												.user_id(user_id)
 												.build();
