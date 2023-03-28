@@ -31,6 +31,11 @@
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.2.0/dist/jdenticon.min.js" async
             integrity="sha384-yBhgDqxM50qJV5JPdayci8wCfooqvhFYbIKhv0hTtLvfeeyJMJCscRfFNKIxt43M"
             crossorigin="anonymous"></script>
+
+    <!--Tag Library -->
+    <link rel="stylesheet" href="https://unpkg.com/tagin@2.0.2/dist/tagin.min.css">
+    <script src="https://unpkg.com/tagin@2.0.2/dist/tagin.min.js"></script>
+
 </head>
 
 <body class="overflow-x-hidden" style="background-image: url('/assets/img/background.png'); background-size: 100%; ">
@@ -49,7 +54,7 @@
                aria-hidden="true"></i>
         </div>
         <hr class="horizontal dark m-0">
-        <div class="toast-body" th:text="${successToastMsg}">
+        <div class="toast-body" id="toast-success-body" th:text="${successToastMsg}">
         </div>
     </div>
     <div class="toast fade hide p-2 mt-2 jh-bg-pink" role="alert" aria-live="assertive" id="infoToast"
@@ -149,7 +154,7 @@
                aria-hidden="true"></i>
         </div>
         <hr class="horizontal dark m-0">
-        <div class="toast-body" th:text="${warningToastMsg}">
+        <div class="toast-body" id="warning-Toast-body" th:text="${warningToastMsg}">
 
         </div>
     </div>

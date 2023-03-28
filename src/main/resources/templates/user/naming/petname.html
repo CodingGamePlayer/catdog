@@ -6,8 +6,9 @@
 <div layout:fragment="content">
     <div class="col-12 d-flex justify-content-center py-2 px-4">
         <div class="col-6">
-            <h1>작명소</h1>
-            <h3>作名所</h3>
+            <h3>작명소</h3>
+            <h4>作名所</h4>
+            <h6>create by OpenAI API</h6>
         </div>
         <div class="col-6">
             <img class="img-fluid" src="/assets/img/naming4.png">
@@ -16,48 +17,31 @@
     <section class="py-4">
         <div class="container">
             <div class="row">
-                <div class="col-4">
-                    <div class="input-group-addon">
-                        <select class="form-control" id="catdog">
-                            <option selected>개 / 고양이</option>
-                            <option>강아지</option>
-                            <option>고양이</option>
-                        </select>
+                <form class="needs-validation" novalidate>
+                    <input type="text" name="tags" class="form-control tagin" required>
+                    <div class="valid-feedback">Ok</div>
+                    <div class="invalid-feedback">키워드를 추가 또는 삭제하세요.</div>
+                    <div class="btn-wrap d-flex justify-content-end pt-2">
+                        <button class="btn btn-secondary btn-sm px-2 mx-1" id="add1" type="button">강아지</button>
+                        <button class="btn btn-pink btn-sm px-2 mx-1" id="add2" type="button">고양이</button>
+                        <button class="btn btn-primary px-2 mx-1" id="createName" type="submit">이름 짓기</button>
                     </div>
-                </div>
-                <div class="col-4">
-                    <div class="input-group-addon">
-                        <select class="form-control" id="personality">
-                            <option selected>성격</option>
-                            <option>귀여운</option>
-                            <option>엉뚱한</option>
-                            <option>발랄한</option>
-                            <option>사랑스러운</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="input-group-addon">
-                        <select class="form-control" id="hairColor">
-                            <option selected>색깔</option>
-                            <option>흰색</option>
-                            <option>검은색</option>
-                            <option>갈색</option>
-                            <option>노란색</option>
-                        </select>
-                    </div>
-                </div>
+
+                </form>
             </div>
             <div class="row pt-2">
-                <div class="d-flex justify-content-end pt-3">
-                    <input type="button" class="btn btn-primary" value="이름 짓기" id="createName">
+                <div class="d-flex justify-content-center" id="loading">
+                    <div class="spinner-border" role="status">
+                        <img alt="" src="/assets/img/noimg.jpg" class="img-fluid border-radius-lg shadow-lg" onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div class="">
+                        <h5>이름을 생성중입니다.</h5>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <hr class="border border-primary border-1 opacity-75">
-
 
     <section class="row d-flex justify-content-center p-3" id="namingList">
         <div class="card">
@@ -75,80 +59,191 @@
             -->
         </div>
     </section>
+    <script src="https://unpkg.com/tagin@2.0.2/dist/tagin.min.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
 
-    <script>
-
+        const loadingBar = document.getElementById("loading");
+        loadingBar.style.visibility = "hidden";
         const createNameBtn = document.getElementById("createName");
-        createNameBtn.addEventListener('click', getPetName);
 
-        let hairColor = document.getElementById("hairColor");
-        let personality = document.getElementById("personality");
-        let catdog = document.getElementById("catdog");
+        let get_user_id = [[${user_id}]];
 
-        let questionData = {
-            method: "POST",
-            body: JSON.stringify(hairColor, personality, catdog),
-            headers: {
-                'Content-Type': 'application/json'
+        const successToast = document.getElementById('successToast')
+        const successToastBody = document.getElementById('toast-success-body');
+
+        const warningToast = document.getElementById('warningToast')
+        const warningToastbody = document.getElementById('warning-Toast-body');
+
+        let tagin = new Tagin(document.querySelector('.tagin'), {
+            enter: true,
+            placeholder: '키워드를 입력하세요. 키워드는 5개 까지 가능합니다.'
+        });
+
+        document.getElementById('add1').addEventListener('click', function () {
+            tagin.addTag('강아지')
+            this.remove()
+        })
+
+        document.getElementById('add2').addEventListener('click', function () {
+            tagin.addTag(['고양이'])
+            this.remove()
+        })
+
+        function showKeywordError(len) {
+            if(len < 1){
+                warningToast.classList.add("show");
+                warningToastbody.innerHTML = '키워드가 없어요!';
+                setTimeout(function () {
+                    warningToast.classList.remove('show');
+                }, 5000);
+
+            }else if(len > 5){
+                warningToast.classList.add("show");
+                warningToastbody.innerHTML = '키워드가 5개를 초과했어요!';
+                setTimeout(function () {
+                    warningToast.classList.remove('show');
+                }, 5000);
+
             }
         }
 
+        createNameBtn.addEventListener('click', function() {
+            document.querySelectorAll('.needs-validation').forEach(form => {
+                form.addEventListener('submit', event => {
+                    let len = tagin.getTags().length;
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                        showKeywordError(len);
+                    }else if(len > 5){
+                        event.preventDefault()
+                        event.stopPropagation()
+                        showKeywordError(len);
+                    }else{
+                        event.preventDefault()
+                        event.stopPropagation()
+                        createNameBtn.addEventListener('click', getPetName);
+                    }
+                })
+            })
+        });
+
+
+        function updateMypetName(petName, user_id){
+
+            //name = petName.split('(')[0];
+            const data = { user_id : user_id, petName : petName}
+
+            fetch("/api/user/naming/updatePetname/"+user_id, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+                    successToast.classList.add("show");
+                    successToastBody.innerHTML = petName+'로 펫 이름이 변경되었습니다.';
+                    setTimeout(function () {
+                        successToast.classList.remove('show');
+                    }, 5000);
+                }).catch(error => {
+                console.error(error);
+                alert("이름 업데이트 중 오류")
+            });
+        }
+
+
+
         function getPetName() {
 
+            let len = tagin.getTags().length;
+
+            if(len < 1){
+                warningToast.classList.add("show");
+                warningToastbody.innerHTML = '키워드가 없어요!';
+                setTimeout(function () {
+                    warningToast.classList.remove('show');
+                }, 5000);
+                return;
+            }else if(len > 5){
+                warningToast.classList.add("show");
+                warningToastbody.innerHTML = '키워드가 5개를 초과했어요!';
+                setTimeout(function () {
+                    warningToast.classList.remove('show');
+                }, 5000);
+                return;
+            }
+
+            let questionData = {
+                method: "POST",
+                body: tagin.getTags(),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            loadingBar.style.visibility = "visible";
+            createNameBtn.style.visibility = "hidden";
             fetch('/api/user/naming/mypetName', questionData)
                 .then(response => response.json())
                 .then(data => {
+                    loadingBar.style.visibility = "hidden";
+                    createNameBtn.style.visibility = "visible";
 
-                    console.log(data.choices[0].text);
                     const namingList = document.querySelector("#namingList");
                     namingList.innerHTML = ``;
                     const staticOption = document.createElement('div');
                     staticOption.innerHTML = `
+    <hr class="border border-primary border-1 opacity-75">
     <div class="row pb-3 d-flex justify-content-center text-center">
         <h5>생성된 이름</h5>
+        <p>이름을 클릭하면 펫이름이 변경됩니다.</p>
     </div>
     `;
                     namingList.appendChild(staticOption);
 
-                    let arr = data.choices[0].text.split("다.");
-                    const item = document.createElement('div');
+                    const strings = data.choices[0].text;
+                    console.log(strings);
+                    const stringArray = strings.split("다.");
+                    const nameReasonArray = [];
+                    stringArray.forEach(str => {
+                        const splitArray = str.split("-");
+                        const name = splitArray[0];
+                        const reason = splitArray[1];
+                        nameReasonArray.push({name, reason});
+                    });
+                    console.log(nameReasonArray[0].name);
+                    console.log(nameReasonArray[0].reason);
 
-                    const names = arr.map(str => str.split(" : ")[0].trim().length);
-                    const descriptions = arr.map(str => str.split(" : ")[1].trim().length);
-
-                    console.log(names); // [5, 5, 3]
-                    console.log(descriptions); // [42, 26, 26]
-
-
-                    console.log(arr.length);
-
-                    for(let idx = 0; idx < arr.length; idx ++) {
-                        console.log(arr[idx]);
+                    for (let idx = 0; idx < 3; idx++) {
+                        const item = document.createElement('div');
                         item.innerHTML = `
+
     <div class="card my-2">
         <div class="card-body mx-3">
-            <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">자세히</span>
             <div class="d-flex justify-content-between align-items-center">
-                <a href="#" class="card-title h5 d-block text-darker">
-                `+arr[idx].toString()+
-
-                            `
+                <a href="#" class="card-title h5 d-block text-darker" onclick="updateMypetName('${nameReasonArray[idx].name.split('.')[1].trim().split('(')[0].trim()}', '${get_user_id}')">
+                ${nameReasonArray[idx].name}
                 </a>
             </div>
             <p class="card-description mb-1">
-                <span class="text-bold text-sm">작명 이유 : </span>
+                <span class="text-bold text-sm">${nameReasonArray[idx].reason}다.</span>
             </p>
-            <p class="card-description mb-1">
-                <span class="text-bold text-sm">대충 즐겨찾기 버튼 : </span>
-            </p>
-
         </div>
     </div>
     `;
                         namingList.appendChild(item);
                     }
-
-
+                    let taginWrapper = document.querySelector('.tagin-wrapper');
+                    let spanTags = taginWrapper.querySelectorAll('span');
+                    for (let i = 0; i < spanTags.length; i++) {
+                        spanTags[i].parentNode.removeChild(spanTags[i]);
+                    }
                 });
         }
     </script>
