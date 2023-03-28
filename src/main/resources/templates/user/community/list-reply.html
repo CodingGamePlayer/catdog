@@ -22,7 +22,7 @@
                   <h6 class="h6 mt-0" th:text="${reply.user_id}"></h6>
                     <div class="row d-flex align-items-center px-2">
                       <div class="col-8 d-flex align-items-center">
-                        <p class="text-sm" th:text="${reply.reply_content}"></p>
+                        <div style="width: 170px;" th:text="${reply.reply_content}"></div>
                       </div>
                       <div class="col-4 pe-4">
                         <div class="d-flex align-items-center justify-content-sm-end">
@@ -82,7 +82,7 @@
 	                                    <h6 class="h6 mt-0" >${reply.user_id}</h6>
 	                                      <div class="row d-flex align-items-center px-2">
 	                                        <div class="col-8 d-flex align-items-center">
-	                                          <p class="text-sm" >${reply.reply_content}</p>
+	                                          <div style="width: 170px;" >${reply.reply_content}</div>
 	                                        </div>
 	                                        <div class="col-4 pe-4">
 	                                          <div class="d-flex align-items-center justify-content-sm-end">

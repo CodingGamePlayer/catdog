@@ -39,19 +39,23 @@
     <select id="list" resultMap="petMap">
         SELECT *
         FROM pet
+        LEFT JOIN user ON pet.user_id = user.user_id
         <include refid="searchMatching"/>
 
     </select>
 
     <sql id="searchMatching">
         <where>
+            pet.user_id not in (#{user_id})
+            AND user_matchinguse = 1
 
-            category1_no = #{category1_no}
-
+            <if test="category1_no !=0">
+                AND category1_no = #{category1_no}
+            </if>
             <if test="category2_no !=0">
                 AND category2_no = #{category2_no}
             </if>
-            <if test="ageFirst !=0 AND ageSecond !=0">
+            <if test="ageFirst !=0">
                 AND pet_age BETWEEN #{ageFirst} AND #{ageSecond}
             </if>
 

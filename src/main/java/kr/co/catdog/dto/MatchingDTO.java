@@ -1,17 +1,20 @@
 package kr.co.catdog.dto;
 
+import kr.co.catdog.domain.MatchingVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Slf4j
 @Builder
-public class MatchingDTO {
+public class MatchingDTO<E> {
 
     private int maching_no;
     private String user_id;
@@ -24,6 +27,12 @@ public class MatchingDTO {
     private int pet_gender;
     private int ageFirst;
     private int ageSecond;
+    private Object data;
+
+    public MatchingDTO(Object data){
+        this.data = data;
+    }
+
 
 
 }
