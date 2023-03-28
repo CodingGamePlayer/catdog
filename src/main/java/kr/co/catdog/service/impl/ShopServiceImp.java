@@ -16,10 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,17 +43,11 @@ public class ShopServiceImp implements ShopService {
 
     @Override
     public List<ProductDTO> orderByReviewCount() {
-        List<ReviewVO> reviewVOList = reviewMapper.orderByReviewCount();
+        List<ProductDTO> productDTOList = selectAll();
+        productDTOList.forEach(productDTO -> {
+            productDTO.setReviewCount(reviewMapper.selectAll(productDTO.getProduct_no()).size());
+        });
 
-        List<ProductDTO> productDTOList = reviewVOList.stream()
-                .map(reviewVO -> findById(reviewVO.getProduct_no()))
-                .collect(Collectors.toList());
-
-//        selectAll().stream()
-//                .map(productDTO ->
-//                    reviewMapper.selectAll(productDTO.getProduct_no()).size())
-//                .sorted(Comparator.comparing().reversed())
-//                .collect(Collectors.toList());
         return productDTOList;
     }
 

@@ -41,7 +41,7 @@ public class ChatGptApiTest {
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("model","text-davinci-003");
-        requestBody.put("prompt", "강아지 이름 3개 지어주는데 [발랄함, 검은색] 키워드를 반영해서 만들어주고 이유도 알려줘");
+        requestBody.put("prompt", "강아지 이름 3개 지어주는데 [발랄함, 검은색] 키워드를 반영해서 만들어주고 이유도 알려주고 이름 : 이유 | 형식으로 부탁해");
         requestBody.put("temperature", 0.9f);
         requestBody.put("max_tokens", 800);
 
