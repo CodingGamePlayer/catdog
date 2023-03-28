@@ -11,32 +11,38 @@
         <form action="/user/shop/register" method="post" enctype="multipart/form-data">
             <div class="col-12">
                 <div class="card h-100">
-                    <label for="fileInput">
+
                         <div class="card-body">
                             <h5 class="font-weight-bolder">Product Image</h5>
                             <div class="row">
-                                <div class="col-12 text-center">
-                                    <div class="my-gallery d-flex mt-4 pt-2 uploadResult" itemscope=""
-                                         itemtype="http://schema.org/ImageGallery" data-pswp-uid="1">
-                                        <figure class="col-12" itemProp="associatedMedia" itemScope=""
-                                                itemType="http://schema.org/ImageObject">
-                                            <img class="w-75 min-height-100 max-height-100 border-radius-lg"
-                                                 src="/assets/img/new.png" itemProp="thumbnail" alt="Image description">
-                                        </figure>
+                                <label for="formFile">
+                                    <div class="col-12 text-center">
+                                        <div class="my-gallery d-flex mt-4 pt-2 uploadResult" itemscope=""
+                                             itemtype="http://schema.org/ImageGallery" data-pswp-uid="1">
+                                            <figure class="col-12" itemProp="associatedMedia" itemScope=""
+                                                    itemType="http://schema.org/ImageObject">
+                                                <img class="w-75 min-height-100 max-height-100 border-radius-lg"
+                                                     src="/assets/img/new.png" itemProp="thumbnail"
+                                                     alt="Image description">
+                                            </figure>
+                                        </div>
                                     </div>
-                                </div>
-                                <!--                  <div class="col-12 mt-4">-->
-                                <!--                    <div class="d-flex">-->
-                                <!--                      <label for="fileInput">-->
-                                <!--                        <div class="btn btn-pink btn-sm mb-0 me-2">Add</div>-->
-                                <!--                      </label>-->
-                                <input type="file" accept="image/*" name="files" id="fileInput" style="display: none;"
-                                       multiple>
-                                <!--                    </div>-->
-                                <!--                  </div>-->
+                                </label>
+                                    <div class="col-12 mt-4">
+                                        <div class="d-flex">
+                                            <!--                                                      <label for="uploadBtn">-->
+                                            <div class="btn btn-pink btn-sm mb-0 me-2 uploadBtn" id="uploadBtn">Add
+                                            </div>
+                                            <!--                                                      </label>-->
+                                            <input type="file" accept="image/*" name="files" id="formFile"
+                                                   style="display: none;"
+                                                   multiple>
+                                        </div>
+                                    </div>
+
                             </div>
                         </div>
-                    </label>
+
                 </div>
             </div>
             <div class="col-12 mt-4">
@@ -88,50 +94,111 @@
             </div>
         </form>
     </div>
+    <!-- 파일 첨부용 JS start-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/assets/js/upload.js"></script>
+
+    <!-- 파일 첨부용 JS end-->
     <script>
-        const fileInput = document.querySelector("input[name='files']")
+        let input_UUID;
+        let input_Filename;
 
-        document.querySelector("#fileInput").addEventListener('change', function () {
+
+        document.querySelector(".uploadBtn").addEventListener("click", function (e) {
+            console.log("ggkkg")
+            const formObj = new FormData();
+            const fileInput = document.querySelector("input[name='files']")
+            console.log(fileInput.files)
             const files = fileInput.files
-            // const file = this.files[0]
-            // console.log(file);
 
-            if (files.length == 0) {
-                return;
-            }
-            console.log(files);
-            document.querySelector(".uploadResult").innerHTML = ''
             for (let i = 0; i < files.length; i++) {
-                previewAdd(URL.createObjectURL(files[i]));
-            }
-        });
+                formObj.append("files",files[i]);
+                console.log(files[i])
+                console.log("gkgkgkgk")
 
-        function previewAdd(img) {
-            console.log(img);
-            if (img.length != 0) {
-                const str = `<figure class="col-3" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+            }
+
+            uploadToServer(formObj).then(result => {
+                console.log(result)
+                // uploadResult.innerHTML =''
+                for (const uploadResult of result) {
+                       showUploadFile(uploadResult)
+                }
+
+            }).catch(e => {
+            console.log("glglglgl")
+            })
+            console.log("여기")
+        },false);
+
+        const uploadResult = document.querySelector(".uploadResult")
+
+
+        function showUploadFile({uuid,fileName,link}){
+
+            console.log("쇼업로드파일")
+            input_UUID=uuid;
+            input_Filename=fileName;
+            const str = `<figure class="col-3" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
                               <a href="${img}" itemprop="contentUrl" data-size="500x600" target="_blank">
                                 <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
                                      src="${img}" itemprop="thumbnail" alt="Image description">
                               </a>
                             </figure>`
+            uploadResult.innerHTML += str
 
-                document.querySelector(".uploadResult").innerHTML += str
-            } else {
-                console.log("sdfd")
-                fileReset()
-            }
         }
 
-        function fileReset() {
-            const str = `<figure class="col-12" itemProp="associatedMedia" itemScope=""
-                                  itemType="http://schema.org/ImageObject">
-                            <img class="w-75 min-height-100 max-height-100 border-radius-lg"
-                                 src="/assets/img/new.png"
-                                 itemProp="thumbnail" alt="Image description">
-                         </figure>`
-            document.querySelector(".uploadResult").innerHTML = str
+        function removeFile(uuid, fileName, obj) {
+            const targetDiv=obj.closest(".card")
+            removeFileToServer(uuid,fileName).then(data =>{
+                targetDiv.remove()
+            })
         }
+
+        // const fileInput = document.querySelector("input[name='files']")
+        //
+        // document.querySelector("#fileInput").addEventListener('change', function () {
+        //     const files = fileInput.files
+        //     // const file = this.files[0]
+        //     // console.log(file);
+        //
+        //     if (files.length == 0) {
+        //         return;
+        //     }
+        //     console.log(files);
+        //     document.querySelector(".uploadResult").innerHTML = ''
+        //     for (let i = 0; i < files.length; i++) {
+        //         previewAdd(URL.createObjectURL(files[i]));
+        //     }
+        // });
+
+        // function previewAdd(img) {
+        //     console.log(img);
+        //     if (img.length != 0) {
+        //         const str = `<figure class="col-3" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+        //                       <a href="${img}" itemprop="contentUrl" data-size="500x600" target="_blank">
+        //                         <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
+        //                              src="${img}" itemprop="thumbnail" alt="Image description">
+        //                       </a>
+        //                     </figure>`
+        //
+        //         document.querySelector(".uploadResult").innerHTML += str
+        //     } else {
+        //         console.log("sdfd")
+        //         fileReset()
+        //     }
+        // }
+        //
+        // function fileReset() {
+        //     const str = `<figure class="col-12" itemProp="associatedMedia" itemScope=""
+        //                           itemType="http://schema.org/ImageObject">
+        //                     <img class="w-75 min-height-100 max-height-100 border-radius-lg"
+        //                          src="/assets/img/new.png"
+        //                          itemProp="thumbnail" alt="Image description">
+        //                  </figure>`
+        //     document.querySelector(".uploadResult").innerHTML = str
+        // }
 
     </script>
 </div>
