@@ -73,7 +73,7 @@ public class ChatGptServiceImpl implements ChatGptService {
         sb.append("키워드는 작명 이유에만 사용하시오.");
         sb.append("이름 우측에 이름과 어울리는 이모지를 추가하시오.");
         sb.append("각 행의 양식은 1. 이름 (이모지) - 작명이유의 포멧으로만 나타내시오.");
-        sb.append("작명이유의 어미는 반드시 '지었습니다.'로 끝나게 작성하시오.");
+        sb.append("작명이유의 어미는 반드시 '에서 영감을 받아 지었습니다.'로 끝나게 작성하시오.");
         sb.append("첫번째 이름이 나오기 전에 '.'을 사용하지 마시오.");
         return sb.toString();
     }
