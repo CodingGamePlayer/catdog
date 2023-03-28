@@ -40,4 +40,20 @@
         DELETE FROM product
         WHERE product_no = #{product_no}
     </delete>
+
+    <select id="orderByReviewCount" resultMap="productMap">
+        SELECT a.*
+        FROM catdog.product AS a
+                 LEFT JOIN (SELECT product_no, count(review_no) AS count FROM catdog.review GROUP BY product_no) AS b
+                           ON a.product_no = b.product_no
+        ORDER BY b.count DESC, a.product_no DESC;
+    </select>
+
+    <select id="orderByReviewScore" resultMap="productMap">
+        SELECT a.*
+        FROM catdog.product AS a
+                 LEFT JOIN (SELECT product_no, avg(review_score) AS score FROM catdog.review GROUP BY product_no) AS b
+                           ON a.product_no = b.product_no
+        ORDER BY b.score DESC, a.product_no DESC LIMIT 5;
+    </select>
 </mapper>

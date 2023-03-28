@@ -1,12 +1,9 @@
 package kr.co.catdog.service.impl;
 
 import kr.co.catdog.domain.ProductVO;
-import kr.co.catdog.domain.ReviewVO;
 import kr.co.catdog.dto.ProductDTO;
-import kr.co.catdog.dto.ReviewDTO;
 import kr.co.catdog.mapper.MediaMapper;
 import kr.co.catdog.mapper.ProductMapper;
-import kr.co.catdog.mapper.ReviewMapper;
 import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +24,6 @@ public class ShopServiceImp implements ShopService {
     private final ModelMapper modelMapper;
     private final ProductMapper productMapper;
     private final MediaMapper mediaMapper;
-    private final ReviewMapper reviewMapper;
     @Value("${kr.co.catdog.upload.path}")
     private String upPath;
 
@@ -43,20 +39,17 @@ public class ShopServiceImp implements ShopService {
 
     @Override
     public List<ProductDTO> orderByReviewCount() {
-        List<ProductDTO> productDTOList = selectAll();
-        productDTOList.forEach(productDTO -> {
-            productDTO.setReviewCount(reviewMapper.selectAll(productDTO.getProduct_no()).size());
-        });
+        List<ProductDTO> productDTOList = productMapper.orderByReviewCount().stream()
+                .map(productVO -> modelMapper.map(productVO, ProductDTO.class))
+                .collect(Collectors.toList());
 
         return productDTOList;
     }
 
     @Override
     public List<ProductDTO> orderByReviewScore() {
-        List<ReviewVO> reviewVOList = reviewMapper.orderByReviewScore();
-
-        List<ProductDTO> productDTOList = reviewVOList.stream()
-                .map(reviewVO -> findById(reviewVO.getProduct_no()))
+        List<ProductDTO> productDTOList = productMapper.orderByReviewScore().stream()
+                .map(productVO -> modelMapper.map(productVO, ProductDTO.class))
                 .collect(Collectors.toList());
         return productDTOList;
     }
