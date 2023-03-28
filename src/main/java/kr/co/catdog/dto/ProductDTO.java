@@ -24,7 +24,9 @@ public class ProductDTO {
     private int product_price;
     private LocalDate product_regdate;
 
-    private String media_path;
+    private String[] media_path;
     private List<MultipartFile> files;
     private List<MediaVO> mediaVOList;
+
+
 }

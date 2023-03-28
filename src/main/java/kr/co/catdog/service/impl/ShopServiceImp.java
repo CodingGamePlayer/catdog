@@ -1,5 +1,6 @@
 package kr.co.catdog.service.impl;
 
+import kr.co.catdog.domain.MediaVO;
 import kr.co.catdog.domain.ProductVO;
 import kr.co.catdog.dto.ProductDTO;
 import kr.co.catdog.mapper.MediaMapper;
@@ -70,23 +71,18 @@ public class ShopServiceImp implements ShopService {
 
         int result = productMapper.insert(productDTO);
 
-        productDTO.getFiles().forEach(multipartFile -> {
+        String[] fileArray = productDTO.getMedia_path();
+        for (int i = 0; i < fileArray.length; i++) {
+            MediaVO mediaVO = MediaVO.builder()
+                    .product_no(productDTO.getProduct_no())
+                    .media_path(fileArray[i])
+                    .build();
+            mediaMapper.insert(mediaVO);
 
-            if (!multipartFile.getOriginalFilename().equals("")) {
+        }
 
-                String fileName = UUID.randomUUID().toString() + "_" + multipartFile.getOriginalFilename();
-                String filePath = upPath + "\\" + fileName;
-                File dest = new File(filePath);
-                try {
-                    multipartFile.transferTo(dest);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                productDTO.setMedia_path(fileName);
 
-                mediaMapper.insert(productDTO);
-            }
-        });
+//                mediaMapper.insert(productDTO);
 
         return !(result > 0) ? 0 : 1;
     }

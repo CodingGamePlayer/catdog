@@ -15,10 +15,11 @@ public class UploadResultDTO {
     private Boolean img;
 
     public String getLink() {
-        if (img) {
-            return "s_" + uuid + "_" + fileName;
-        } else {
-            return uuid + "_" + fileName;
-        }
+        return uuid + "_" + fileName;
+//        if (img) {
+//            return "s_" + uuid + "_" + fileName;
+//        } else {
+//            return uuid + "_" + fileName;
+//        }
     }
 }
