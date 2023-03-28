@@ -19,7 +19,7 @@
                 <div class="col-4">
                     <div class="input-group-addon">
                         <select class="form-control" id="catdog">
-                            <option selected>개 / 고양이</option>
+                            <option>개 / 고양이</option>
                             <option>강아지</option>
                             <option>고양이</option>
                         </select>
@@ -28,7 +28,7 @@
                 <div class="col-4">
                     <div class="input-group-addon">
                         <select class="form-control" id="personality">
-                            <option selected>성격</option>
+                            <option>성격</option>
                             <option>귀여운</option>
                             <option>엉뚱한</option>
                             <option>발랄한</option>
@@ -39,7 +39,7 @@
                 <div class="col-4">
                     <div class="input-group-addon">
                         <select class="form-control" id="hairColor">
-                            <option selected>색깔</option>
+                            <option>색깔</option>
                             <option>흰색</option>
                             <option>검은색</option>
                             <option>갈색</option>
@@ -52,12 +52,18 @@
                 <div class="d-flex justify-content-end pt-3">
                     <input type="button" class="btn btn-primary" value="이름 짓기" id="createName">
                 </div>
+                <div class="d-flex justify-content-center" id="loading">
+                    <div class="spinner-border" role="status">
+                        <img alt="" src="/assets/img/noimg.jpg" class="img-fluid border-radius-lg shadow-lg" onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div class="">
+                        <h5>이름을 생성중입니다.</h5>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-
-    <hr class="border border-primary border-1 opacity-75">
-
 
     <section class="row d-flex justify-content-center p-3" id="namingList">
         <div class="card">
@@ -76,79 +82,115 @@
         </div>
     </section>
 
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
 
+        const loadingBar = document.getElementById("loading");
+        loadingBar.style.visibility = "hidden";
         const createNameBtn = document.getElementById("createName");
         createNameBtn.addEventListener('click', getPetName);
+        let get_user_id = [[${user_id}]];
 
-        let hairColor = document.getElementById("hairColor");
-        let personality = document.getElementById("personality");
-        let catdog = document.getElementById("catdog");
 
-        let questionData = {
-            method: "POST",
-            body: JSON.stringify(hairColor, personality, catdog),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+
+
+        function updateMypetName(petName, user_id){
+
+            //name = petName.split('(')[0];
+            const data = { user_id : user_id, petName : petName}
+
+            fetch("/api/user/naming/updatePetname/"+user_id, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+
+                }).catch(error => {
+                console.error(error);
+                alert("이름 업데이트 중 오류")
+            });
         }
+
+
 
         function getPetName() {
 
+            let hairColor = document.getElementById("hairColor");
+            let personality = document.getElementById("personality");
+            let catdog = document.getElementById("catdog");
+
+            let prompt = "[" + hairColor.value + ", " + personality.value + ", " + catdog.value + "]";
+            console.log(hairColor.value);
+            console.log(personality.value);
+            console.log(catdog.value);
+
+            let questionData = {
+                method: "POST",
+                body: prompt,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            loadingBar.style.visibility = "visible";
+            createNameBtn.style.visibility = "hidden";
             fetch('/api/user/naming/mypetName', questionData)
                 .then(response => response.json())
                 .then(data => {
+                    loadingBar.style.visibility = "hidden";
+                    createNameBtn.style.visibility = "visible";
 
-                    console.log(data.choices[0].text);
                     const namingList = document.querySelector("#namingList");
                     namingList.innerHTML = ``;
                     const staticOption = document.createElement('div');
                     staticOption.innerHTML = `
+    <hr class="border border-primary border-1 opacity-75">
     <div class="row pb-3 d-flex justify-content-center text-center">
         <h5>생성된 이름</h5>
+        <h5></h5>
     </div>
     `;
                     namingList.appendChild(staticOption);
 
-                    let arr = data.choices[0].text.split("다.");
-                    const item = document.createElement('div');
 
-                    const names = arr.map(str => str.split(" : ")[0].trim().length);
-                    const descriptions = arr.map(str => str.split(" : ")[1].trim().length);
+                    const strings = data.choices[0].text;
+                    console.log(strings);
+                    const stringArray = strings.split("다.");
+                    const nameReasonArray = [];
+                    stringArray.forEach(str => {
+                        const splitArray = str.split("-");
+                        const name = splitArray[0];
+                        const reason = splitArray[1];
+                        nameReasonArray.push({name, reason});
+                    });
+                    console.log(nameReasonArray[0].name);
+                    console.log(nameReasonArray[0].reason);
 
-                    console.log(names); // [5, 5, 3]
-                    console.log(descriptions); // [42, 26, 26]
-
-
-                    console.log(arr.length);
-
-                    for(let idx = 0; idx < arr.length; idx ++) {
-                        console.log(arr[idx]);
+                    for (let idx = 0; idx < 3; idx++) {
+                        const item = document.createElement('div');
                         item.innerHTML = `
+
     <div class="card my-2">
         <div class="card-body mx-3">
-            <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">자세히</span>
             <div class="d-flex justify-content-between align-items-center">
-                <a href="#" class="card-title h5 d-block text-darker">
-                `+arr[idx].toString()+
-
-                            `
+                <a href="#" class="card-title h5 d-block text-darker" onclick="updateMypetName('${nameReasonArray[idx].name.split('.')[1].trim().split('(')[0].trim()}', '${get_user_id}')">
+                ${nameReasonArray[idx].name}
                 </a>
             </div>
             <p class="card-description mb-1">
-                <span class="text-bold text-sm">작명 이유 : </span>
+                <span class="text-bold text-sm">${nameReasonArray[idx].reason}다.</span>
             </p>
-            <p class="card-description mb-1">
-                <span class="text-bold text-sm">대충 즐겨찾기 버튼 : </span>
-            </p>
-
         </div>
     </div>
     `;
                         namingList.appendChild(item);
                     }
-
-
                 });
         }
     </script>

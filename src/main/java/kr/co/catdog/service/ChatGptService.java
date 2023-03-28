@@ -8,5 +8,6 @@ import org.springframework.http.HttpEntity;
 public interface ChatGptService {
     public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto);
     public ChatGptResponseDto getResponse(HttpEntity<ChatGptRequestDto> chatGptRequestDtoHttpEntity);
-    public ChatGptResponseDto askQuestion(QuestionRequestDto requestDto);
+    public ChatGptResponseDto askQuestion(String param);
+    String makePrompt(String options);
 }
