@@ -20,6 +20,7 @@ public class NamingApiController {
 
     @PostMapping("/api/user/naming/mypetName")
     public ChatGptResponseDto sendQuestion(@RequestBody String param) {
+        log.info(chatGptService.askQuestion(chatGptService.makePrompt(param)).getChoices().toString());
         return chatGptService.askQuestion(chatGptService.makePrompt(param));
     }
 

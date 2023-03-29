@@ -29,7 +29,11 @@ public class AccountController {
 
     @PostMapping("/login")
     String login(UserDTO userDTO, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        userService.login(userDTO, request);
+        int loginResult = userService.login(userDTO, request);
+        if(loginResult == 0){
+            redirectAttributes.addFlashAttribute("warningToastMsg", "로그인에 실패했습니다.");
+            return "redirect:/login";
+        }
         redirectAttributes.addFlashAttribute("successToastMsg", "로그인에 성공하였습니다.");
 //        id없거나 비밀번호다를때 알려줘
         return "redirect:/";

@@ -5,7 +5,7 @@ import kr.co.catdog.dto.UserDTO;
 import javax.servlet.http.HttpServletRequest;
 
 public interface UserService {
-    void login(UserDTO userDTO, HttpServletRequest request);
+    int login(UserDTO userDTO, HttpServletRequest request);
     UserDTO findById(String user_id);
 
     int insert(UserDTO userDTO);
