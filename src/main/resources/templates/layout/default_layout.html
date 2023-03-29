@@ -599,25 +599,25 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
+    window.onload = function() {
+        // (TopBar 외부영역 클릭시 닫힘) Start---------------------------
+        let collapse = false;
+        const collapseBtn = document.getElementById('collapseBtn');
 
-    // (TopBar 외부영역 클릭시 닫힘) Start---------------------------
-    let collapse = false;
-    const collapseBtn = document.getElementById('collapseBtn');
+        collapseBtn.addEventListener('click', function () {
+            collapse = !(collapse);
+        })
 
-    collapseBtn.addEventListener('click', function () {
-        collapse = !(collapse);
-    })
-
-    document.addEventListener('click', function (e) {
-        if (collapse == false) {
-            return;
-        }
-        if (e.target.closest('.collapseArea')) {
-            return;
-        }
-        collapseBtn.click();
-    });
-
+        document.addEventListener('click', function (e) {
+            if (collapse == false) {
+                return;
+            }
+            if (e.target.closest('.collapseArea')) {
+                return;
+            }
+            collapseBtn.click();
+        });
+    }
     // (TopBar 외부영역 클릭시 닫힘) End---------------------------
 
 

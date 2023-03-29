@@ -30,9 +30,12 @@ public class UserServiceImp implements UserService {
     private final PetMapper petMapper;
     private final CartMapper cartMapper;
 
+
     @Override
-    public void login(UserDTO userDTO, HttpServletRequest request) {
+    public int login(UserDTO userDTO, HttpServletRequest request) {
         UserVO uservo = userMapper.login(userDTO);
+
+        if(uservo == null) return 0;
 
         HttpSession session = request.getSession();
         session.setAttribute("session_id", uservo.getUser_id());
@@ -40,7 +43,7 @@ public class UserServiceImp implements UserService {
         session.setAttribute("session_img", uservo.getUser_image());
         int cart = cartMapper.findById(uservo.getUser_id()).size();
         session.setAttribute("session_cart", cart);
-
+        return 1;
     }
 
     @Override
