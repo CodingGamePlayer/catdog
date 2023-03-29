@@ -15,10 +15,10 @@
               <p class="mb-0 text-sm">Pet info and options to manage it.</p>
             </div>
             <div class="card-body">
-              <form role="form text-left" action="/user/profile/edit-pet" method="post">
+              <form class="needs-validation" role="form text-left" action="/user/profile/edit-pet" method="post" novalidate>
                 <label>Name</label>
                 <div class="input-group mb-2">
-                  <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name-addon" th:value="${pet.pet_name}" name="pet_name">
+                  <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name-addon" th:value="${pet.pet_name}" maxlength="40" name="pet_name" required>
                 </div>
                 <label for="type1">category1</label>
                 <div class="input-group mb-2">
@@ -48,12 +48,12 @@
                 </div>
                 <label>Age</label>
                 <div class="input-group mb-2">
-                  <input type="number" class="form-control" placeholder="Age" aria-label="Age" aria-describedby="age-addon" th:value="${pet.pet_age}" name="pet_age" min="0">
+                  <input type="number" class="form-control" placeholder="Age" aria-label="Age" aria-describedby="age-addon" th:value="${pet.pet_age}" name="pet_age" min="0" max="50" required>
                 </div>
                 <label>Pet Number</label>
                 <div class="input-group mb-2">
                   <input type="text" class="form-control" placeholder="Pet Number" aria-label="petnumber"
-                         aria-describedby="petnumber-addon" th:value="${pet.pet_animalnum}" name="pet_animalnum">
+                         aria-describedby="petnumber-addon" th:value="${pet.pet_animalnum}" name="pet_animalnum" maxlength="15" required>
                 </div>
                 <label>Gender</label>
                 <div class="d-flex">
@@ -94,8 +94,33 @@
             </div>
           </div>
         </div>
+
+        <script>
+          (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                    .forEach(function (form) {
+                      form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                          event.preventDefault()
+                          event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                      }, false)
+                    })
+          })()
+
+        </script>
+
       </div>
       <!-- End Content -->
+
 
 
 </html>
