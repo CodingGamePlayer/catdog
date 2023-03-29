@@ -52,38 +52,43 @@
                         <div class="row">
                             <div class="col-12">
                                 <label>Name</label>
-                                <input class="form-control" type="text" placeholder="Name" onfocus="focused(this)"
+                                <input class="form-control" type="text" th:value="${product.product_name}" placeholder="Name" onfocus="focused(this)"
                                        onfocusout="defocused(this)" name="product_name" id="product_name">
                             </div>
                             <div class="col-12">
                                 <label class="mt-4">Price</label>
-                                <input class="form-control" type="text" placeholder="Price" onfocus="focused(this)"
+                                <input class="form-control" type="text" placeholder="Price" onfocus="focused(this)" th:value="${product.product_price}"
                                        onfocusout="defocused(this)" name="product_price" id="product_price">
                             </div>
                             <div class="col-12">
                                 <label>Stock</label>
-                                <input class="form-control" type="number" placeholder="Stock" onfocus="focused(this)"
+                                <input class="form-control" type="number" placeholder="Stock" onfocus="focused(this)" th:value="${product.product_stock}"
                                        onfocusout="defocused(this)" name="product_stock" min="1" id="product_stock">
                             </div>
                             <div class="col-12">
                                 <label>Category</label>
-                                <select class="form-control" name="category1_no" id="category1_no">
-                                    <th:block th:each="category : ${category.category1VOList}">
-                                        <option th:text="${category.category1_type}"
-                                                th:value="${category.category1_no}"></option>
+                                <select class="form-control" id="Category1" name="category1_no">
+                                    <th:block th:each=" category : ${category.category1VOList}">
+                                        <th:block th:if="${product.category1_no} == ${category.category1_no}">
+                                            <option th:text="${category.category1_type}" th:value="${category.category1_no}" selected></option>
+                                        </th:block>
+                                        <th:block th:unless="${product.category1_no} == ${category.category1_no}">
+                                            <option th:text="${category.category1_type}" th:value="${category.category1_no}"></option>
+                                        </th:block>
                                     </th:block>
                                 </select>
                             </div>
                             <div class="col-12">
                                 <label>Content</label>
-                                <textarea class="form-control" placeholder="Content" rows="2" style="resize: none;"
+                                <textarea class="form-control" placeholder="Content" rows="2" style="resize: none;" th:text="${product.product_content}"
                                           name="product_content" id="product_content"></textarea>
                             </div>
                             <input type="hidden" th:value="${session.session_id}" name="user_id" id="user_id">
+                            <input type="hidden" th:value="${product.product_no}" name="product_no" id="product_no">
                         </div>
                         <div class="col-12 mt-4">
                             <div class="d-flex">
-                                <button class="btn btn-pink btn-sm mb-0 me-2" type="submit" id="submitBtn">Add</button>
+                                <button class="btn btn-pink btn-sm mb-0 me-2" type="submit" id="submitBtn">Edit</button>
                                 <button class="btn btn-outline-pink btn-sm mb-0" type="reset" onclick="removeAll()">
                                     Remove
                                 </button>
@@ -99,10 +104,17 @@
     <script src="/assets/js/upload.js"></script>
     <!-- 파일 첨부용 JS end-->
 
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
         let input_UUID;
         let input_Filename;
         const fileArray = [];
+        document.addEventListener('DOMContentLoaded',function () {
+            const mediaVOList=[[$product.mediaVOList]];
+            // if(mediaVOList){
+            //     mediaVOList.
+            // }
+        })
 
         document.querySelector("#formFile").addEventListener('change', function (e) {
 
@@ -206,6 +218,7 @@
             const input_category1_no = document.querySelector('#category1_no').value;
             const input_product_content = document.querySelector('#product_content').value;
             const input_user_id = document.querySelector('#user_id').value;
+            const input_product_no = document.querySelector('#product_no').value;
 
             const product = {
                 product_name: input_product_name,
@@ -214,6 +227,7 @@
                 category1_no: input_category1_no,
                 product_content: input_product_content,
                 user_id: input_user_id,
+                product_no: input_product_no,
                 media_path: fileArray
             };
 
@@ -222,17 +236,17 @@
             const url = "/api/user/shop";
 
             fetch(url, {
-                method: "POST",
+                method: "PUT",
                 body: JSON.stringify(product),
                 headers: {
                     "Content-Type": "application/json"
                 }
             }).then(response => {
                 if (response.ok) {
-                    alert('등록이 완료되었습니다.');
+                    alert('수정이 완료되었습니다.');
                     window.location.reload();
                 } else {
-                    alert('등록을 실패하였습니다.');
+                    alert('수정을 실패하였습니다.');
                 }
             });
 
@@ -274,7 +288,7 @@
         // }
         //
 
-
+        /*]]>*/
     </script>
 </div>
 <!-- End Content -->

@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface MediaMapper {
     List<MediaVO> findById(int product_no);
-    int insert(ProductDTO productDTO);
+    int insert(MediaVO mediaVO);
     int delete(ProductDTO productDTO);
 
 }

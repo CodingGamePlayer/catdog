@@ -14,6 +14,9 @@ public interface ProductMapper {
     int update(ProductDTO productDTO);
     int delete(int product_no);
 
+    List<ProductVO> orderByReviewCount();
+    List<ProductVO> orderByReviewScore();
+
 
 
 }

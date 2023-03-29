@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class CartApiController {
     private final CartService cartService;
     @PutMapping("/api/user/shop/cart")
-    ResponseEntity<CartDTO> edit(@RequestBody CartDTO cartDTO){
+    public ResponseEntity<CartDTO> edit(@RequestBody CartDTO cartDTO){
         int result = cartService.update(cartDTO);
         if(result == 0){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
