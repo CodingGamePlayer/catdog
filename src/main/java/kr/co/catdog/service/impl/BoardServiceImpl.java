@@ -1,10 +1,13 @@
 package kr.co.catdog.service.impl;
 
+import kr.co.catdog.CatdogApplication;
 import kr.co.catdog.domain.BoardVO;
 import kr.co.catdog.dto.BoardDTO;
 import kr.co.catdog.dto.GovermentHospitalDTO;
+import kr.co.catdog.dto.PetDTO;
 import kr.co.catdog.mapper.BoardMapper;
 import kr.co.catdog.service.BoardService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +17,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class BoardServiceImpl implements BoardService {
 
     private BoardMapper boardMapper;
-    private final ModelMapper modelMapper = new ModelMapper();
+    private ModelMapper modelMapper;
 
     @Override
     public List<BoardDTO> getBoardList() {
@@ -35,7 +39,9 @@ public class BoardServiceImpl implements BoardService {
         String writer = (String)boardData.get("writer");
         String content = (String)boardData.get("content");
 
-        if (writer.isEmpty() || writer == null) writer = "익명";
+        if (writer.isEmpty() || writer == null) {
+            writer = "익명";
+        }
         return BoardDTO.builder()
                 .writer(writer)
                 .content(content)
@@ -43,7 +49,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Autowired
-    public BoardServiceImpl(BoardMapper boardMapper) {
+    public BoardServiceImpl(BoardMapper boardMapper, ModelMapper modelMapper) {
         this.boardMapper = boardMapper;
+        this.modelMapper = modelMapper;
     }
 }

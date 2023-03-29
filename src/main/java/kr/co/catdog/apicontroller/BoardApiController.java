@@ -27,6 +27,7 @@ public class BoardApiController {
 
     @GetMapping("/api/user/board/loadContent/")
     public List<BoardDTO> boardList() {
+        log.info("getBoardData API");
         return boardService.getBoardList();
     }
     @Autowired

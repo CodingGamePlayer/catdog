@@ -10,7 +10,7 @@
         <result property="content" column="content"/>
     </resultMap>
 
-    <insert id="insert">
+    <insert id="insert" parameterType="BoardVO">
         INSERT INTO board
         (`writer`,
         `content`
@@ -25,7 +25,7 @@
     <select id="getRecentBoard" resultMap="boardMap">
         SELECT *
         FROM board
-        ORDER BY id
+        ORDER BY id DESC
         LIMIT 5
     </select>
 

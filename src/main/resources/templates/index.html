@@ -196,11 +196,13 @@
                         </div>
                   </div>
             <script>
+                  const successToast = document.getElementById('successToast')
+                  const successToastBody = document.getElementById('toast-success-body');
                   const boardInput = document.getElementById('board-content-input');
                   const writerInput = document.getElementById('writer-input');
                   function writeBoard() {
 
-                        const data = { writer : boardInput.value, content : writerInput.value}
+                        const data = { writer : writerInput.value, content : boardInput.value}
 
                         fetch("/api/user/board/writeContent/"+boardInput.value, {
                               method: "POST",
@@ -218,8 +220,6 @@
                                       setTimeout(function () {
                                             successToast.classList.remove('show');
                                       }, 5000);
-                                      boardInput.innerText = '';
-                                      writerInput.innerText = '';
                                       getBoardData();
                                 }).catch(error => {
                               console.error(error);
@@ -257,6 +257,8 @@
                                           `;
                                           body.appendChild(tr);
                                     });
+                              boardInput.value = '';
+                              writerInput.value = '';
                         }).catch(error => {
                               console.error(error);
                               alert("boardData Load중 에러");
