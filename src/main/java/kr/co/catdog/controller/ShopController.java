@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.StringValueExp;
-
 
 @Controller
 @Slf4j
@@ -56,6 +54,8 @@ public class ShopController {
     String editForm(@PathVariable int product_no, Model model) {
 
         model.addAttribute("product", shopService.findById(product_no));
+
+        log.info(String.valueOf(shopService.findById(product_no)));
         model.addAttribute("category", categoryService.selectAll());
 
         return "user/shop/edit";

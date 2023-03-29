@@ -37,20 +37,15 @@ public class UploadApiController {
                 String uuid = UUID.randomUUID().toString();
                 Path savePath = Paths.get(upPath, uuid + "_" + originalName);
 
-                boolean image = false;
 
                 try {
                     multipartFile.transferTo(savePath);
 
-                    if (Files.probeContentType(savePath).startsWith("image")) {
-                        image = true;
-                        java.io.File thumbFile = new File(upPath, uuid + "_" + originalName);
-                        Thumbnailator.createThumbnail(savePath.toFile(), thumbFile, 700, 600);
-                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                list.add(UploadResultDTO.builder().uuid(uuid).fileName(originalName).img(image).build());
+                list.add(UploadResultDTO.builder().uuid(uuid).fileName(originalName).build());
             }); // end forEach
             return list;
         } // end if
@@ -60,7 +55,6 @@ public class UploadApiController {
     @GetMapping("/user/view/{fileName}")
     public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName) {
         Resource resource = new FileSystemResource(upPath + File.separator + fileName);
-        String resourceName = resource.getFilename();
         HttpHeaders headers = new HttpHeaders();
 
         try {

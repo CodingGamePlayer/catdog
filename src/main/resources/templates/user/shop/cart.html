@@ -13,17 +13,17 @@
             <div class="card card-profile card-plain">
             <div class="card-body text-center bg-white shadow border-radius-lg m-4 p-1 my-2">
               <div class="col-12 d-flex justify-content-center align-items-start p-2 my-1">
-                <th:block th:if="${cart.productVO.product_stock != 0}">
+                <th:block th:if="${cart.productDTO.product_stock != 0}">
                   <div class="col-1 d-flex justify-content-center form-check form-check-info text-left">
-                    <input class="form-check-input" type="checkbox" th:value="${cart.productVO.product_price * cart.cart_quantity}" name="checkedProduct" checked th:onclick="price()">
+                    <input class="form-check-input" type="checkbox" th:value="${cart.productDTO.product_price * cart.cart_quantity}" name="checkedProduct" checked th:onclick="price()">
                   </div>
                   <div class="col-4">
-                    <img class="img border-radius-lg max-width-100 w-100" src="/assets/img/bruce-mars.jpg" alt="bruce">
+                    <img class="img border-radius-lg max-width-100 w-100" th:src="@{|/testimg/${cart.productDTO.mediaVO.media_path}|}" alt="bruce">
                   </div>
                   <div class="col-7 pt-2 p-1">
                     <div class="d-flex justify-content-between">
-                      <a th:href="@{|/user/shop/detail/${cart.productVO.product_no}|}">
-                        <h6 class="" th:text="${cart.productVO.product_name}"></h6>
+                      <a th:href="@{|/user/shop/detail/${cart.productDTO.product_no}|}">
+                        <h6 class="" th:text="${cart.productDTO.product_name}"></h6>
                       </a>
                       <a th:href="@{|/user/shop/cart/delete/${cart.cart_no}|}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
@@ -48,11 +48,11 @@
                         </svg></a>
                     </div>
                     <div class="d-flex justify-content-end font-weight-bolder pe-1">
-                      <span th:text="|₩ ${cart.productVO.product_price * cart.cart_quantity}|"></span>
+                      <span th:text="|₩ ${cart.productDTO.product_price * cart.cart_quantity}|"></span>
                     </div>
                   </div>
                 </th:block>
-                <th:block th:unless="${cart.productVO.product_stock != 0}">
+                <th:block th:unless="${cart.productDTO.product_stock != 0}">
                   <div class="col-1 d-flex justify-content-center form-check form-check-info text-left">
                     <input class="form-check-input" type="checkbox" name="checkedProduct" disabled>
                   </div>
@@ -61,7 +61,7 @@
                   </div>
                   <div class="col-7 pt-2 p-1">
                     <div class="d-flex justify-content-between">
-                      <h6 class="" th:text="${cart.productVO.product_name}"></h6>
+                      <h6 class="" th:text="${cart.productDTO.product_name}"></h6>
                       <a th:href="@{|/user/shop/cart/delete/${cart.cart_no}|}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
                              class="bi bi-trash3 mb-1" viewBox="0 0 16 16">
