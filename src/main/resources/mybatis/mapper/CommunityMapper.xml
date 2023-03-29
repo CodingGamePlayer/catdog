@@ -58,8 +58,8 @@
     </select>
     
     <update id="update" parameterType="CommunityVO">
-    	UPDATE community SET category_no = #{category_no}, community_content = #{community_content},
-   			   community_editdate = now()
+    	UPDATE community SET category_no = (SELECT category1_no FROM category1 WHERE category1_type = #{category_type}),
+    	community_content = #{community_content}, community_editdate = now()
     	WHERE community_no = #{community_no}
     </update>
     
