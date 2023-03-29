@@ -27,6 +27,7 @@ public class MatchingDTO<E> {
     private int pet_gender;
     private int ageFirst;
     private int ageSecond;
+    private PetDTO petDTO;
     private Object data;
 
     public MatchingDTO(Object data){

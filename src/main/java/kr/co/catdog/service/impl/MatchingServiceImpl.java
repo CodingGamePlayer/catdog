@@ -6,6 +6,7 @@ import kr.co.catdog.dto.MatchingDTO;
 import kr.co.catdog.dto.PetDTO;
 import kr.co.catdog.mapper.MatchingMapper;
 import kr.co.catdog.mapper.PetMapper;
+import kr.co.catdog.mapper.UserMapper;
 import kr.co.catdog.service.MatchingService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -26,6 +27,8 @@ public class MatchingServiceImpl implements MatchingService {
     private PetMapper petMapper;
 
     private MatchingMapper matchingMapper;
+
+    private UserMapper userMapper;
 
     @Override
     public PetDTO getMyPet(String user_id) {
@@ -83,7 +86,9 @@ public class MatchingServiceImpl implements MatchingService {
                 .collect(Collectors.toList());
         for(int i = 0 ; i < matchingDTOs.size() ; i++){
             matchingDTOs.get(i).setData(petMapper.findById(matchingDTOs.get(i).getMatching_user_id()));
+            matchingDTOs.get(i).setPetDTO(modelMapper.map(petMapper.findById(matchingDTOs.get(i).getUser_id()), PetDTO.class));
         }
+
 
         return matchingDTOs;
     }
@@ -95,10 +100,28 @@ public class MatchingServiceImpl implements MatchingService {
         return matchingMapper.update(matchingDTO);
     }
 
+    @Override
+    public MatchingDTO getPet(MatchingDTO matchingDTO) {
+        matchingDTO.setPetDTO(modelMapper.map(petMapper.findById(matchingDTO.getUser_id()), PetDTO.class));
+        matchingDTO.setData(modelMapper.map(petMapper.findById(matchingDTO.getMatching_user_id()), PetDTO.class));
+        matchingDTO.setMatching_request(modelMapper.map(matchingMapper.findByMatchingNo(matchingDTO), MatchingDTO.class).getMatching_request());
+        return matchingDTO;
+    }
+
+    @Override
+    public int effectiveness(String user_id) {
+        if(userMapper.findById(user_id).getUser_matchinguse() == true){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
 
     @Autowired
-    public MatchingServiceImpl(PetMapper petMapper, MatchingMapper matchingMapper) {
+    public MatchingServiceImpl(PetMapper petMapper, MatchingMapper matchingMapper, UserMapper userMapper) {
         this.petMapper = petMapper;
         this.matchingMapper = matchingMapper;
+        this.userMapper = userMapper;
     }
 }

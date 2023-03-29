@@ -27,14 +27,20 @@
     <select id="list" parameterType="MatchingDTO" resultMap="MatchingMap">
         SELECT *
         FROM matching
-        WHERE (user_id = #{user_id} AND matching_request = 0 OR matching_request = 1)
-        OR (matching_user_id = #{user_id} AND matching_request = 1)
+        WHERE (user_id = #{user_id} AND matching_request NOT IN (3))
+        OR (matching_user_id = #{user_id} AND matching_request = 1 OR matching_request = 2)
     </select>
 
     <update id="update" parameterType="MatchingDTO">
         UPDATE matching SET matching_request = #{matching_request}
         WHERE matching_no = #{matching_no}
     </update>
+
+    <select id="findByMatchingNo" parameterType="MatchingDTO" resultMap="MatchingMap">
+        SELECT *
+        FROM matching
+        WHERE matching_no = #{matching_no}
+    </select>
 
 
 </mapper>
