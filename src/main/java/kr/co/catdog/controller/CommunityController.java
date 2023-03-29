@@ -43,7 +43,7 @@ public class CommunityController {
 		CommunityVO communityVO = CommunityVO.builder()
 											.user_id(user_id)
 											.build();
-		mav.addObject("msg", "cnBtn");
+		mav.addObject("registerMsg", "community");
 		mav.addObject("communityVOs", communityservice.selectAll(communityVO));
 		mav.addObject("user_id", user_id);
 		mav.setViewName("/user/community/list-community");
@@ -62,25 +62,15 @@ public class CommunityController {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("session_id");
-		if(user_id == null) {
-			mav.setViewName("/sign-in");
-		}else {
 		mav.addObject("user_id", user_id);
-		
 		mav.setViewName("/user/community/register");
-		}
 		return mav;
 	}
 //	글 등록 파일 업로드
 	@PostMapping("register")
 	ModelAndView register(CommunityDTO communityDTO) throws IllegalStateException, IOException {
 		ModelAndView mav = new ModelAndView();
-		UUID uuid = UUID.randomUUID();
-		String fileName = uuid.toString()+communityDTO.getFile().getOriginalFilename();
-		String filePath = upPath + "\\" + fileName;
-		File dest = new File(filePath);
-		communityDTO.getFile().transferTo(dest);
-		communityDTO.setMedia_path(fileName);
+		createPath(communityDTO);
 		int result = communityservice.register(communityDTO);
 		if(!(result>0)) {
 			mav.addObject("msg", "글쓰기 실패!!");
@@ -92,7 +82,17 @@ public class CommunityController {
 		
 		return mav;
 	}
-//	글 수정 화면 이동
+
+	private void createPath(CommunityDTO communityDTO) throws IOException {
+		UUID uuid = UUID.randomUUID();
+		String fileName = uuid.toString()+communityDTO.getFile().getOriginalFilename();
+		String filePath = upPath + "\\" + fileName;
+		File dest = new File(filePath);
+		communityDTO.getFile().transferTo(dest);
+		communityDTO.setMedia_path(fileName);
+	}
+
+	//	글 수정 화면 이동
 	@GetMapping("update")
 	ModelAndView updateForm(CommunityDTO communityDTO, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -107,14 +107,9 @@ public class CommunityController {
 	@PostMapping("update")
 	ModelAndView update(CommunityDTO communityDTO, @RequestParam("referer") String referer) throws IllegalStateException, IOException {
 		ModelAndView mav = new ModelAndView();
-		
+		log.info("수정 dTO : "+communityDTO);
 		if(!communityDTO.getFile().isEmpty()) {
-			UUID uuid = UUID.randomUUID();
-			String fileName = uuid.toString()+communityDTO.getFile().getOriginalFilename();
-			String filePath = upPath + "\\" + fileName;
-			File dest = new File(filePath);
-			communityDTO.getFile().transferTo(dest);
-			communityDTO.setMedia_path(fileName);
+			createPath(communityDTO);
 			communityservice.update(communityDTO);
 			mav.setViewName("redirect:"+referer);
 			log.info("1 실행 됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -139,13 +134,8 @@ public class CommunityController {
 	}
 //	내가 쓴글 불러오기
 	@GetMapping("mycommunity")
-	ModelAndView myCommunity(HttpServletRequest request) {
+	ModelAndView myCommunity(@RequestParam("user_id") String user_id) {
 		ModelAndView mav = new ModelAndView();
-		HttpSession session = request.getSession();
-		String user_id = (String)session.getAttribute("session_id");
-		if(user_id == null) {
-			mav.setViewName("/sign-in");
-		}
 		CommunityDTO communityDTO = CommunityDTO.builder()
 												.user_id(user_id)
 												.build();
