@@ -15,4 +15,8 @@ public interface MatchingService {
 
     int update(MatchingDTO matchingDTO);
 
+    MatchingDTO getPet(MatchingDTO matchingDTO);
+
+    int effectiveness(String user_id);
+
 }
