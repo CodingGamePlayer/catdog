@@ -108,11 +108,24 @@
         /*<![CDATA[*/
         let input_UUID;
         let input_Filename;
+        let input_MediaPath;
+
         const fileArray = [];
         document.addEventListener('DOMContentLoaded',function () {
-            const mediaVOList=[[$product.mediaVOList]];
+            const mediaVOList=[[${product.mediaVOList}]];
             if(mediaVOList){
                 console.log(mediaVOList)
+
+                mediaVOList.forEach( mediaVO => {
+                    const path = mediaVO.media_path;
+                    const pathInfo = path.split('_');
+                    const extracted_UUID = pathInfo[0];
+                    const extracted_Filename = pathInfo[1];
+                    console.log(extracted_Filename)
+                    console.log(path)
+                    showUploadFile({extracted_UUID,extracted_Filename});
+                    }
+                )
             }
         })
 
@@ -146,7 +159,8 @@
         const uploadResult = document.querySelector(".uploadResult")
 
         function showUploadFile({uuid, fileName, link}) {
-
+            console.log(link)
+            con
             input_UUID = uuid;
             input_Filename = fileName;
             const str = `<figure class="col-3 position-relative figureRemove" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
@@ -159,7 +173,7 @@
                                 </span>
                                 </a>
                                 <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
-                                     src="/testimg/${link}" data-src="${uuid + "_" + fileName}" itemprop="thumbnail" alt="Image description">
+                                     src="/testimg/${link}" data-src="/testimg/${uuid + "_" + fileName}" itemprop="thumbnail" alt="Image description">
                             </a>
                         </figure>`
             if (fileArray.length == 0) {
@@ -175,13 +189,13 @@
 
         function removeFile(uuid, fileName, obj) {
             const targetDiv = obj.closest(".figureRemove")
-            removeFileToServer(uuid, fileName).then(data => {
-                targetDiv.remove()
+            removeFileToServer(uuid, fileName).then(data => { //저장파일 삭제
+                targetDiv.remove() //뷰 영역 삭제
             })
 
             const index = fileArray.indexOf(uuid + "_" + fileName);
             if (index > -1) {
-                fileArray.splice(index, 1);
+                fileArray.splice(index, 1); //배열 값 삭제
             }
 
             if (fileArray.length == 0) {
