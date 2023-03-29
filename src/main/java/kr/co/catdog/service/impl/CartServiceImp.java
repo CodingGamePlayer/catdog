@@ -5,6 +5,7 @@ import kr.co.catdog.dto.CartDTO;
 import kr.co.catdog.mapper.CartMapper;
 import kr.co.catdog.mapper.ProductMapper;
 import kr.co.catdog.service.CartService;
+import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class CartServiceImp implements CartService {
     private final CartMapper cartMapper;
     private final ModelMapper modelMapper;
     private final ProductMapper productMapper;
+    private final ShopService shopService;
 
     @Override
     public List<CartDTO> findById(String user_id) {
@@ -28,7 +30,7 @@ public class CartServiceImp implements CartService {
                 .collect(Collectors.toList());
 
         cartDTOList.forEach(cartDTO -> {
-            cartDTO.setProductVO(productMapper.findById(cartDTO.getProduct_no()));
+            cartDTO.setProductDTO(shopService.findById(cartDTO.getProduct_no()));
         });
         return cartDTOList;
     }
