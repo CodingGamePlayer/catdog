@@ -30,18 +30,4 @@
         WHERE review_no = #{review_no}
     </delete>
 
-    <select id="orderByReviewCount" resultMap="reviewMap">
-        SELECT product_no, count(review_no) AS count
-        FROM review
-        GROUP BY product_no
-        ORDER BY count DESC, product_no DESC;
-    </select>
-
-    <select id="orderByReviewScore" resultMap="reviewMap">
-        SELECT product_no, avg(review_score) AS avg
-        FROM catdog.review
-        GROUP BY product_no
-        ORDER BY avg DESC, product_no DESC
-        LIMIT 5
-    </select>
 </mapper>
