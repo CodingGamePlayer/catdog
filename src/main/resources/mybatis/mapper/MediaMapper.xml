@@ -13,11 +13,15 @@
         SELECT * FROM media WHERE product_no = #{product_no}
     </select>
 
+    <select id="thumbnail" resultMap="mediaMap">
+        SELECT * FROM media WHERE product_no = #{product_no} ORDER BY media_no LIMIT 1
+    </select>
+
     <insert id="insert">
         INSERT INTO media (product_no, media_path) VALUES (#{product_no}, #{media_path})
     </insert>
 
     <delete id="delete">
-        DELETE FROM media WHERE product_no = #{product_no}
+        DELETE FROM media WHERE media_no = #{media_no}
     </delete>
 </mapper>

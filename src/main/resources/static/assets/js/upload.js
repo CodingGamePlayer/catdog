@@ -12,7 +12,7 @@ async function uploadToServer (formObj) {
             'Content-Type': 'multipart/form-data',
         },
     });
-
+        console.log(response.data)
     return response.data
 }
 
