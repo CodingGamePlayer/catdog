@@ -4,6 +4,7 @@ package kr.co.catdog.controller;
 import kr.co.catdog.dto.MatchingDTO;
 import kr.co.catdog.dto.PetDTO;
 import kr.co.catdog.service.MatchingService;
+import kr.co.catdog.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +24,22 @@ public class MatchingController {
 
     @Autowired
     private MatchingService matchingService;
+    @Autowired
+    private UserService userService;
     @GetMapping("/user/matching")
     public ModelAndView showMatching(HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
         HttpSession session = request.getSession();
         String user_id = (String) session.getAttribute("session_id");
-        mav.addObject("myPet", matchingService.getMyPet(user_id));
-        mav.setViewName("/user/matching/showMatching");
+        if(matchingService.effectiveness(user_id) ==1) {
+            mav.addObject("myPet", matchingService.getMyPet(user_id));
+            mav.setViewName("/user/matching/showMatching");
+        }else{
+            mav.addObject("matchingUseFailToastMsg", "회원정보에서 매칭등록 비활성화 되어있습니다.");
+            mav.addObject("user", userService.findById(user_id));
+            mav.setViewName("/user/profile/edit-person");
+
+        }
         return mav;
     }
 
@@ -55,12 +65,18 @@ public class MatchingController {
         ModelAndView mav = new ModelAndView();
         HttpSession session = request.getSession();
         String user_id = (String) session.getAttribute("session_id");
-        MatchingDTO matchingDTO = MatchingDTO.builder()
-                .user_id(user_id)
-                .build();
-        mav.addObject("user_id",user_id);
-        mav.addObject("matchingDTOs",matchingService.list(matchingDTO));
-        mav.setViewName("/user/matching/list");
+        if(matchingService.effectiveness(user_id) == 1) {
+            MatchingDTO matchingDTO = MatchingDTO.builder()
+                    .user_id(user_id)
+                    .build();
+            mav.addObject("user_id", user_id);
+            mav.addObject("matchingDTOs", matchingService.list(matchingDTO));
+            mav.setViewName("/user/matching/list");
+        }else{
+            mav.addObject("matchingUseFailToastMsg", "회원정보에서 매칭등록 비활성화 되어있습니다.");
+            mav.addObject("user", userService.findById(user_id));
+            mav.setViewName("/user/profile/edit-person");
+        }
         return mav;
     }
 
@@ -68,9 +84,9 @@ public class MatchingController {
     public ModelAndView resultMatching(MatchingDTO matchingDTO){
         ModelAndView mav = new ModelAndView();
         log.info("매칭 리스트에서 넘어온 DTO : "+matchingDTO);
-        mav.addObject("myPet",matchingService.getMyPet(matchingDTO.getUser_id()));
-        mav.addObject("matchingPet",matchingService.getMyPet(matchingDTO.getMatching_user_id()));
-        mav.addObject("matching_no",matchingDTO.getMatching_no());
+        mav.addObject("matchingDTO",matchingService.getPet(matchingDTO));
+        mav.addObject("user",userService.findById(matchingDTO.getUser_id()));
+        mav.addObject("matchingUser",userService.findById(matchingDTO.getMatching_user_id()));
         mav.setViewName("/user/matching/resultMatching");
 
         return mav;
