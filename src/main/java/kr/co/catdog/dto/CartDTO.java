@@ -16,5 +16,5 @@ public class CartDTO {
     private int product_no;
     private int cart_quantity;
 
-    private ProductVO productVO;
+    private ProductDTO productDTO;
 }

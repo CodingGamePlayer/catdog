@@ -33,6 +33,17 @@ public class ShopApiController {
     }
 
 
+    @PutMapping("/api/user/shop")
+    public ResponseEntity<ProductDTO> edit(@RequestBody ProductDTO productDTO) {
+        log.info(String.valueOf(productDTO));
+        int result = shopService.update(productDTO);
+
+        if(result == 0){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
 //    @PostMapping(value = "/misu", consumes = MediaType.APPLICATION_JSON_VALUE)
 //    public ResponseEntity<MisuDTO> register(@RequestBody MisuDTO misuDTO) {

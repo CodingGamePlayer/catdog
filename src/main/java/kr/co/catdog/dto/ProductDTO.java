@@ -28,5 +28,6 @@ public class ProductDTO {
     private List<MultipartFile> files;
     private List<MediaVO> mediaVOList;
 
+    private MediaVO mediaVO;
 
 }

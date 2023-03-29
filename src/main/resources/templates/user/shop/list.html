@@ -50,7 +50,7 @@
                   <a th:href="@{|/user/shop/detail/${product.product_no}|}">
                     <div class="p-3 pb-2">
                       <img class="w-100 border-radius-md move-on-hover shadow-lg"
-                           src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/color-bags.jpg"
+                           th:src="@{|/testimg/${product.mediaVO.media_path}|}"
                            style="width: 173px; height: 180px;">
                     </div>
                   </a>
