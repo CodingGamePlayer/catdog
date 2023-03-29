@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,11 +33,16 @@ public class AccountController {
         int loginResult = userService.login(userDTO, request);
         if(loginResult == 0){
             redirectAttributes.addFlashAttribute("warningToastMsg", "로그인에 실패했습니다.");
-            return "redirect:/login";
+            return "redirect:/loginFail";
         }
         redirectAttributes.addFlashAttribute("successToastMsg", "로그인에 성공하였습니다.");
 //        id없거나 비밀번호다를때 알려줘
         return "redirect:/";
+    }
+
+    @GetMapping("/loginFail")
+    String loginFail(@ModelAttribute("warningToastMsg")String warningToastMsg) {
+        return "sign-in";
     }
 
     @GetMapping("/logout")
