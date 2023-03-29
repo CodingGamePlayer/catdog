@@ -656,6 +656,35 @@
             deleteToast.classList.add("show");
         }
 
+        const warningToast = document.getElementById('warningToast')
+        if ([[${warningToastMsg}]]) {
+            console.log([[${warningToastMsg}]])
+            warningToast.classList.add("show");
+
+            setTimeout(function () {
+                warningToast.classList.remove('show');
+            }, 5000);
+        }
+
+        const errorToast = document.getElementById('errorToast')
+        if ([[${errorToastMsg}]]) {
+            console.log([[${errorToastMsg}]])
+            errorToast.classList.add("show");
+
+            setTimeout(function () {
+                errorToast.classList.remove('show');
+            }, 5000);
+        }
+
+        const failToast = document.getElementById('failToast')
+        if ([[${failToastMsg}]]) {
+            console.log([[${failToastMsg}]])
+            failToast.classList.add("show");
+
+            setTimeout(function () {
+                failToast.classList.remove('show');
+            }, 5000);
+        }
     })
 
     function logout() {

@@ -14,6 +14,4 @@ public interface ReviewMapper {
 
     int delete(int review_no);
 
-    List<ReviewVO> orderByReviewCount();
-    List<ReviewVO> orderByReviewScore();
 }
