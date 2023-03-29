@@ -16,4 +16,6 @@ public interface MatchingMapper {
     List<MatchingVO> list(MatchingDTO matchingDTO);
 
     int update(MatchingDTO matchingDTO);
+
+    MatchingVO findByMatchingNo(MatchingDTO matchingDTO);
 }
