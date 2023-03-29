@@ -430,8 +430,17 @@
                                     </li>
                                     <li class="nav-item px-4">
                                         <span class="nav-link text-lg font-weight-bold">Community</span>
-                                        <a href="/user/community/mycommunity"><span class="nav-link py-1">내가 쓴 글</span></a>
+                                        <a th:href="|/user/community/mycommunity?user_id=${session.session_id}|"><span class="nav-link py-1">내가 쓴 글</span></a>
                                         <a href="/user/community/myreply"><span class="nav-link py-1">내가 쓴 댓글</span></a>
+                                    </li>
+                                    <li class="nav-item px-4">
+                                      <span class="nav-link">
+                                        <hr class="bg-dark my-0 py-0">
+                                      </span>
+                                    </li>
+                                    <li class="nav-item px-4">
+                                        <span class="nav-link text-lg font-weight-bold">Matching</span>
+                                        <a href="/user/matching/list"><span class="nav-link py-1">나의 매칭</span></a>
                                     </li>
                                     <li class="nav-item d-flex justify-content-end align-items-center p-3">
                                         <a href="#" class="nav-link" onclick="logout()">
@@ -517,7 +526,7 @@
                         </a>
                     </div>
                     <div class="col-2 d-flex justify-content-center pt-1">
-                        <a class="text-xxs jh-bar" href="#">
+                        <a class="text-xxs jh-bar" href="/user/matching">
                             <div class="col-12 d-flex justify-content-center pb-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                                      class="bi bi-search-heart" viewBox="0 0 16 16">

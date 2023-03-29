@@ -153,3 +153,5 @@ Stroke effects - Nucleo outline icons
 .custom-checkbox input[type="checkbox"]:checked + .checkicon::before {
   content: "\f004"; /* 체크된 상태의 Font Awesome 아이콘 */
 }
+
+

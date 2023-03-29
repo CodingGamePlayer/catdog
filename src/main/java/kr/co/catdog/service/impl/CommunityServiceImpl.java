@@ -61,7 +61,7 @@ public class CommunityServiceImpl implements CommunityService {
 	public int update(CommunityDTO communityDTO) {
 		CommunityVO communityVO = CommunityVO.builder()
 											.community_no(communityDTO.getCommunity_no())
-											.category_no(communityDTO.getCategory_no())
+											.category_type(communityDTO.getCategory_type())
 											.community_content(communityDTO.getCommunity_content())
 											.build();
 		int result = communityMapper.update(communityVO);

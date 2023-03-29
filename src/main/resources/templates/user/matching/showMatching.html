@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko" itemscope itemtype="http://schema.org/WebPage"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout.html}">
+
+
+<!-- Content -->
+<div layout:fragment="content">
+
+    <form action="/user/matching" method="post" onsubmit="return dataValidation()">
+        <div class="row mx-2">
+            <div class="col-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h6 class="font-weight-bolder">MyPet</h6>
+                        <div class="row">
+                            <div class="col-12 text-center" th:if="${myPet.category1_no == 1}">
+                                <img class="" alt="Image placeholder" width="100" height="100"
+                                     th:src="|/testimg/${session.session_img}|" onerror="this.onerror=null; this.src='/assets/img/siba.jpg'">
+                            </div>
+                            <div class="col-12 text-center" th:if="${myPet.category1_no == 2}">
+                                <img class="" alt="Image placeholder" width="100" height="100"
+                                     th:src="|/testimg/${session.session_img}|" onerror="this.onerror=null; this.src='/assets/img/goyang.jpg'">
+                            </div>
+                            <div class="col-12">
+                                <label for="myPetName">이름</label>
+                                <small class="d-block text-muted ms-3" id="myPetName"
+                                       th:text="${myPet.pet_name}"></small>
+                            </div>
+                            <div class="col-12">
+                                <label for="myPetAge">나이</label>
+                                <small class="d-block text-muted ms-3" id="myPetAge" th:text="${myPet.pet_age}"></small>
+                            </div>
+                            <div class="col-12">
+                                <label for="myPetGender">성별</label>
+                                <small class="d-block text-muted ms-3" id="myPetGender" name="pet_gender"
+                                       th:text="${myPet.pet_gender == 1 ? 'Male' : 'Female'}"
+                                       th:value="${myPet.pet_gender}"></small>
+                            </div>
+                            <div class="col-12">
+                                <label for="myPetAnimalnum">동물국가등록번호</label>
+                                <small class="d-block text-muted ms-3" id="myPetAnimalnum"
+                                       th:text="${myPet.pet_animalnum}"></small>
+                                <input type="hidden" name="category1_no" th:value="${myPet.category1_no}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card  h-100">
+                    <div class="card-body">
+                        <h6 class="font-weight-bolder">MatchingPet</h6>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <img class="" alt="Image placeholder" width="100" height="100"
+                                     src="/assets/img/question.jpg">
+                            </div>
+                            <div class="col-12">
+                                <label for="matchingPetName">이름</label>
+                                <small class="d-block text-muted ms-3" id="matchingPetName">?</small>
+                            </div>
+                            <div class="col-12">
+                                <label for="matchingPetAge">나이</label>
+                                <small class="d-block text-muted ms-3" id="matchingPetAge">?</small>
+                            </div>
+                            <div class="col-12">
+                                <label for="matchingPetGender">성별</label>
+                                <small class="d-block text-muted ms-3" id="matchingPetGender">?</small>
+                            </div>
+                            <div class="col-12">
+                                <label for="matchingPetAnimalnum">동물국가등록번호</label>
+                                <small class="d-block text-muted ms-3" id="matchingPetAnimalnum">?</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-4">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <label  style="font-size: 15px;">크기</label>
+                        <select class="form-control" id="Category2" name="category2_no">
+                            <option th:selected="${myPet.category2_no == 3}" value="3">소형</option>
+                            <option th:selected="${myPet.category2_no == 2}" value="2">중형</option>
+                            <option th:selected="${myPet.category2_no == 1}" value="1">대형</option>
+                            <option value="0">상관 없음</option>
+                        </select>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            </div>
+            <div class="col-12 mt-4">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <label class="form-label" style="font-size: 15px;">나이</label>
+                        <div class="d-flex justify-content-center">
+                            <label>상관없음</label>
+                            <input class="mb-2" type="checkbox" onchange="nosanggwan(this)">
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-4">
+                                <select class="form-select" id="ageFirst" name="ageFirst">
+                                    <option th:each="i : ${#numbers.sequence(1, 23)}"
+                                            th:value="${i}" th:text="${i}" th:selected="${i == 1}"></option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <select class="form-select" id="ageSecond" name="ageSecond">
+                                    <option th:each="i : ${#numbers.sequence(1, 23)}"
+                                            th:value="${i}" th:text="${i}" th:selected="${i == 10}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <input type="hidden" th:value="${myPet.user_id}" name="user_id">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-4">
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-pink btn-sm mb-0 mt-3" type="submit">Matching</button>
+                </div>
+            </div>
+        </div>
+    </form>
+<script th:inline="javascript">
+function dataValidation(){
+    const ageFirst = parseInt(document.getElementById('ageFirst').value);
+    const ageSecond = parseInt(document.getElementById('ageSecond').value);
+
+    if(ageFirst>ageSecond){
+        alert("두 번째 선택 된 나이가 첫 번째 선택 된 나이보다 높아야 합니다.")
+        return false;
+    }
+    return true;
+
+}
+
+function nosanggwan(checkebox){
+
+    const ageFirst = document.getElementById('ageFirst');
+    const ageSecond = document.getElementById('ageSecond');
+
+    if(checkebox.checked){
+
+        ageFirst.disabled = true;
+        ageSecond.disabled = true;
+    }else{
+        ageFirst.disabled = false;
+        ageSecond.disabled = false;
+
+    }
+}
+
+</script>
+
+</div>
+<!-- End Content -->
+</html>
