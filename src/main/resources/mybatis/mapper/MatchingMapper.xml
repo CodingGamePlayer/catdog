@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.catdog.mapper.MatchingMapper">
+
+    <resultMap id="MatchingMap" type="MatchingVO">
+        <result property="matching_no" column="matching_no"/>
+        <result property="user_id" column="user_id"/>
+        <result property="matching_user_id" column="matching_user_id"/>
+        <result property="matching_request" column="matching_request"/>
+        <result property="matching_response" column="matching_response"/>
+        <result property="matching_result" column="matching_result"/>
+    </resultMap>
+
+    <select id="findByUserId" parameterType="MatchingVO" resultType="int">
+        SELECT IF(COUNT(*)>0,1,0) AS result
+        FROM matching
+        WHERE user_id = #{user_id} AND matching_user_id = #{matching_user_id}
+    </select>
+
+    <insert id="register" parameterType="MatchingVO">
+        INSERT INTO matching(user_id, matching_user_id) VALUES (#{user_id}, #{matching_user_id})
+    </insert>
+
+    <select id="list" parameterType="MatchingDTO" resultMap="MatchingMap">
+        SELECT *
+        FROM matching
+        WHERE (user_id = #{user_id} AND matching_request = 0 OR matching_request = 1)
+        OR (matching_user_id = #{user_id} AND matching_request = 1)
+    </select>
+
+    <update id="update" parameterType="MatchingDTO">
+        UPDATE matching SET matching_request = #{matching_request}
+        WHERE matching_no = #{matching_no}
+    </update>
+
+
+</mapper>

@@ -88,6 +88,13 @@ public class MatchingServiceImpl implements MatchingService {
         return matchingDTOs;
     }
 
+    @Override
+    public int update(MatchingDTO matchingDTO) {
+
+
+        return matchingMapper.update(matchingDTO);
+    }
+
 
     @Autowired
     public MatchingServiceImpl(PetMapper petMapper, MatchingMapper matchingMapper) {

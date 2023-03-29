@@ -13,4 +13,6 @@ public interface MatchingService {
 
     List<MatchingDTO> list(MatchingDTO matchingDTO);
 
+    int update(MatchingDTO matchingDTO);
+
 }
