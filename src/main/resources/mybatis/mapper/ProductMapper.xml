@@ -56,4 +56,6 @@
                            ON a.product_no = b.product_no
         ORDER BY b.score DESC, a.product_no DESC LIMIT 5;
     </select>
+
+
 </mapper>

@@ -32,7 +32,7 @@
               <div class="col-12 text-center">
                 <div class="imgView">
                   <th:block th:if="${product.mediaVOList.isEmpty()}">
-                    <img class="w-100 border-radius-lg shadow-lg mx-auto " src="/assets/img/df.png" alt="">
+                    <img class="w-100 border-radius-lg shadow-lg mx-auto " src="/assets/img/df.png" width="378" height="233">
                   </th:block>
                 </div>
                 <div class="my-gallery d-flex mt-4 pt-2" itemscope="">
@@ -128,15 +128,16 @@
           /*<![CDATA[*/
           setTimeout(
                   document.addEventListener("DOMContentLoaded", function () {
-                    document.querySelector('.imgView-s').click()
-                  })
-                  , 2000);
+                    if ([[${product.mediaVOList}]]) {
+                      document.querySelector('.imgView-s').click()
+                    }
+                  }), 2000);
 
           function imgView(url) {
             console.log(url);
             const str = `<a href="${url}" itemprop="contentUrl" data-size="500x600" target="_blank">
                           <img class="w-100 border-radius-lg shadow-lg mx-auto"
-                               src="${url}" alt="">
+                               src="${url}" width="378" height="233">
                         </a>`
 
             document.querySelector('.imgView').innerHTML = str;
