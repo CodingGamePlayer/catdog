@@ -40,7 +40,7 @@ public class MatchingServiceImpl implements MatchingService {
     }
 
     @Override
-    public PetDTO matching(MatchingDTO matchingDTO) {
+    public  MatchingDTO matching(MatchingDTO matchingDTO) {
         List<PetVO> petVOList = petMapper.list(matchingDTO);
         Random random = new Random();
         PetVO petVO;
@@ -65,17 +65,21 @@ public class MatchingServiceImpl implements MatchingService {
         } while (result == 1 );
 //        적합한 상대가 없다면 null 반환
         if(petVO==null){
-            return null;
+            matchingDTO.setData(petVO);
+            return matchingDTO;
         }
-        PetDTO petDTO = modelMapper.map(petVO, PetDTO.class);
+        matchingDTO.setData(modelMapper.map(petVO, PetDTO.class));
+        matchingDTO.setPetDTO(modelMapper.map(petMapper.findById(matchingDTO.getUser_id()), PetDTO.class));
 //        적합한 랜덤 상대를 찾았다면 matching 테이블에 기록 후 해당 펫정보를 반환
         MatchingVO matchingVO = MatchingVO.builder()
                 .user_id(matchingDTO.getUser_id())
-                .matching_user_id(petDTO.getUser_id())
+                .matching_user_id(petVO.getUser_id())
                 .build();
         matchingMapper.register(matchingVO);
+        log.info("register db다녀온 매칭VO : "+matchingVO);
+        matchingDTO.setMatching_no(matchingVO.getMatching_no());
 
-        return petDTO;
+        return matchingDTO;
     }
 
     @Override
@@ -102,7 +106,9 @@ public class MatchingServiceImpl implements MatchingService {
 
     @Override
     public MatchingDTO getPet(MatchingDTO matchingDTO) {
-        matchingDTO.setPetDTO(modelMapper.map(petMapper.findById(matchingDTO.getUser_id()), PetDTO.class));
+        PetDTO petDTO = modelMapper.map(petMapper.findById(matchingDTO.getUser_id()), PetDTO.class);
+        log.info("resultMatching에 들어가는 petDTO : "+petDTO);
+        matchingDTO.setPetDTO(petDTO);
         matchingDTO.setData(modelMapper.map(petMapper.findById(matchingDTO.getMatching_user_id()), PetDTO.class));
         matchingDTO.setMatching_request(modelMapper.map(matchingMapper.findByMatchingNo(matchingDTO), MatchingDTO.class).getMatching_request());
         return matchingDTO;

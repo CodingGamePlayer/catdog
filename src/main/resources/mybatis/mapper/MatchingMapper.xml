@@ -17,10 +17,11 @@
     <select id="findByUserId" parameterType="MatchingVO" resultType="int">
         SELECT IF(COUNT(*)>0,1,0) AS result
         FROM matching
-        WHERE user_id = #{user_id} AND matching_user_id = #{matching_user_id}
+        WHERE (user_id = #{user_id} AND matching_user_id = #{matching_user_id})
+        OR (user_id = #{matching_user_id} AND matching_user_id = #{user_id})
     </select>
 
-    <insert id="register" parameterType="MatchingVO">
+    <insert id="register" parameterType="MatchingVO" useGeneratedKeys="true" keyProperty="matching_no">
         INSERT INTO matching(user_id, matching_user_id) VALUES (#{user_id}, #{matching_user_id})
     </insert>
 

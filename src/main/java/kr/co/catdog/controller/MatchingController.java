@@ -44,17 +44,20 @@ public class MatchingController {
     }
 
     @PostMapping("/user/matching")
-    public ModelAndView matching(MatchingDTO matchingDTO){
+    public ModelAndView matching(MatchingDTO matchingDTO, HttpServletRequest request){
         log.info("매칭뷰에서 넘어온 DTO : "+matchingDTO);
         ModelAndView mav = new ModelAndView();
-        PetDTO petDTO = matchingService.matching(matchingDTO);
-        if(petDTO != null) {
-            mav.addObject("myPet", matchingService.getMyPet(matchingDTO.getUser_id()));
-            mav.addObject("matchingPet", petDTO);
+        HttpSession session = request.getSession();
+        String user_id = (String) session.getAttribute("session_id");
+        matchingDTO = matchingService.matching(matchingDTO);
+        log.info("매칭 서비스에서 넘어온 dataDTO : "+matchingDTO.getData());
+        if(matchingDTO.getData() != null) {
+            mav.addObject("matchingDTO", matchingDTO);
             mav.setViewName("/user/matching/resultMatching");
         }else{
-            mav.addObject("myPet", matchingService.getMyPet(matchingDTO.getUser_id()));
-            mav.setViewName("/user/matching/failMatching");
+            mav.addObject("matchingFailToastMsg", "조건에 맞는 매칭 상대가 없습니다.");
+            mav.addObject("myPet", matchingService.getMyPet(user_id));
+            mav.setViewName("/user/matching/showMatching");
         }
 
         return mav;
