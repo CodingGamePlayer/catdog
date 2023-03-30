@@ -9,7 +9,7 @@ public interface MatchingService {
 
     PetDTO getMyPet(String user_id);
 
-    PetDTO matching(MatchingDTO matchingDTO);
+    MatchingDTO matching(MatchingDTO matchingDTO);
 
     List<MatchingDTO> list(MatchingDTO matchingDTO);
 
