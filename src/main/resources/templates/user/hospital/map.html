@@ -44,7 +44,6 @@
 
     // navigator.geolocation logic -> 현재 위.경도를 가져옴 -> 못가져오면 기본 값으로 map을 생성함
     if(navigator.geolocation){
-      console.log('지오로케이션 먹음')
       navigator.geolocation.getCurrentPosition((position) => {
         var currentPosition = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude);
         map.setCenter(currentPosition);
@@ -223,17 +222,7 @@
       kakao.maps.load(getNearestHospital());
     });
 
-    /*
-    kakao.maps.event.addListener( clusterer, 'clustered', function( clusterer ) {
-      clusterer.forEach(cluster => {
-        let tempMarkers = cluster.getMarkers();
-        temp = tempMarkers[0].address_name;
-        console.log(temp);
-        // 클러스터의 마커 정보를 확인 및 적용할 text를 구해서 각 클러스터의 커스텀 오버레이 content에 text를 재설정해주세요.
-        cluster.getClusterMarker().getContent().innerText = temp;
-      });
-    });
-     */
+
 
     // Deletes all markers in the array by removing references to them.
     function deleteMarkers() {
