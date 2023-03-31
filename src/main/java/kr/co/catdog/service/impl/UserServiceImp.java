@@ -76,6 +76,10 @@ public class UserServiceImp implements UserService {
             throw new RuntimeException(e);
         }
         userDTO.setUser_image(fileName);
+//        matchinguse가 null값이면 0 으로 set
+        if(userDTO.getUser_matchinguse() == null){
+            userDTO.setUser_matchinguse(false);
+        }
 
         int result = userMapper.update(userDTO);
 
