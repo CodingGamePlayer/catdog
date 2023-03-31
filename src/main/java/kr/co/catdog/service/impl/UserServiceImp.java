@@ -49,6 +49,7 @@ public class UserServiceImp implements UserService {
     @Override
     public UserDTO findById(String user_id) {
         UserVO uservo = userMapper.findById(user_id);
+        if(uservo == null) return null;
         UserDTO dto = modelMapper.map(uservo, UserDTO.class);
 
         return dto;
