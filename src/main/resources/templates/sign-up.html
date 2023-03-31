@@ -19,20 +19,23 @@
                   <input type="email" class="form-control" placeholder="Email" aria-label="Id"
                          aria-describedby="id-addon"  maxlength="40" id="account_id" required>
                 </div>
+                <div hidden="hidden" id="email_check">
+                    <p class="text-xs text-danger text-bold">올바른 이메일 양식을 사용해주세요.</p>
+                </div>
                 <label>Password</label>
                 <div class="input-group mb-3">
                   <input type="password" class="form-control" placeholder="Password" aria-label="Password"
                          aria-describedby="password-addon"  minlength="6" maxlength="15" id="user_pw" autoComplete="on" required>
                 </div>
                 <div hidden="hidden" id="password_check">
-                    <p class="text-xs text-danger text-bold">글자수는 6 ~ 15이며 영어와 숫자를 사용하셔야 합니다.</p>
+                    <p class="text-xs text-danger text-bold">글자수는 6 ~ 15이며 영어와 숫자만을 사용해주세요.</p>
                 </div>
                 <label>Name</label>
                 <div class="input-group mb-3">
                   <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name-addon"  maxlength="10" id="user_name" required>
                 </div>
                 <div hidden="hidden" id="name_check">
-                    <p class="text-xs text-danger text-bold">이름 글자수는 최대 10글자이며 특수문자는 사용하실 수 없습니다.</p>
+                    <p class="text-xs text-danger text-bold">이름은 최대 10글자이며 특수문자는 사용하실 수 없습니다.</p>
                 </div>
                 <div class="text-center">
                   <button type="button" id="enrollBtn" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0">Sign up</button>
@@ -49,15 +52,19 @@
         </div>
         <script>
 
+
           const failToast = document.getElementById('failToast');
           const failToastBody = document.getElementById('toast-fail-body');
           const warningToast = document.getElementById('warningToast')
           const warningToastbody = document.getElementById('warning-Toast-body');
+
           const enrollBtn = document.getElementById('enrollBtn');
+          const email_check = document.getElementById('email_check');
           const pw_check = document.getElementById('password_check');
           const name_check = document.getElementById('name_check');
           const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/;
           const nameRegex = /^[\uAC00-\uD7AF\u1100-\u11FFa-zA-Z0-9]{1,10}$/;
+          const emailRegex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
           enrollBtn.addEventListener('click', function () {
 
@@ -66,6 +73,12 @@
             let user_name = document.getElementById('user_name').value;
 
             let check_valid;
+
+            if(validateEmail(user_id) == 0) {
+                email_check.hidden = false;
+                showWarningToast('올바르지 않은 이메일입니다.');
+                check_valid = 0;
+            }
 
             if(validatePassword(user_pw) == 0){
                 pw_check.hidden = false;
@@ -92,7 +105,7 @@
             })
                     .then(response => response.json())
                     .then(data => {
-                      if(data.value === 1){
+                      if(data === 1){
                         window.location.href='/login';
                       }else{
                         failToast.classList.add("show");
@@ -126,6 +139,13 @@
 
           function validateName(name){
               if (nameRegex.test(name)) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          }
+          function validateEmail(email){
+              if (emailRegex.test(email)) {
                   return 1;
               } else {
                   return 0;
