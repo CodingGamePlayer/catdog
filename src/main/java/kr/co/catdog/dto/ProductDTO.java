@@ -25,9 +25,10 @@ public class ProductDTO {
     private LocalDate product_regdate;
 
     private String[] media_path;
-    private List<MultipartFile> files;
     private List<MediaVO> mediaVOList;
 
     private MediaVO mediaVO;
+
+    private String sort;
 
 }

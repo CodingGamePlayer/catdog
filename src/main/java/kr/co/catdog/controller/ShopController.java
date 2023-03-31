@@ -25,6 +25,9 @@ public class ShopController {
         model.addAttribute("registerMsg", "shop");
         model.addAttribute("productList",shopService.orderByReviewCount());
         model.addAttribute("productScoreList",shopService.orderByReviewScore());
+        model.addAttribute("category", categoryService.selectAll());
+
+        log.info(String.valueOf(shopService.orderByReviewScore()));
 
 
         return "user/shop/list";

@@ -29,13 +29,13 @@ public class ShopServiceImp implements ShopService {
     private String upPath;
 
     @Override
-    public List<ProductDTO> selectAll() {
-        List<ProductVO> productVOList = productMapper.selectAll();
+    public List<ProductDTO> selectAll(ProductDTO productDTO) {
+        List<ProductVO> productVOList = productMapper.selectAll(productDTO);
         List<ProductDTO> productDTOList = new ArrayList<>();
         productVOList.forEach(productVO -> {
-            ProductDTO productDTO = modelMapper.map(productVO,ProductDTO.class);
-            productDTO.setMediaVO(mediaMapper.thumbnail(productDTO.getProduct_no()));
-            productDTOList.add(productDTO);
+            ProductDTO DTO = modelMapper.map(productVO,ProductDTO.class);
+            DTO.setMediaVO(mediaMapper.thumbnail(DTO.getProduct_no()));
+            productDTOList.add(DTO);
         });
         return productDTOList;
     }

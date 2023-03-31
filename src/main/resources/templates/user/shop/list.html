@@ -5,108 +5,151 @@
       layout:decorate="~{layout/default_layout.html}">
 
 
+<!-- Content -->
+<div layout:fragment="content">
+    <div class="col-12">
+        <select class="form-control sort" id="category1" name="category1_no">
+            <th:block th:each=" category : ${category.category1VOList}">
+                <option th:text="${category.category1_type}" th:value="${category.category1_no}"></option>
+            </th:block>
+        </select>
+        <select class="form-control sort" id="sort" name="sort">
+            <option th:text="낮은가격순" th:value="낮은가격순"></option>
+            <option th:text="높은가격순" th:value="높은가격순"></option>
+            <option th:text="등록일순" th:value="등록일순"></option>
+            <option th:text="판매량순" th:value="판매량순"></option>
+            <option th:text="리뷰많은순" th:value="리뷰많은순"></option>
+            <option th:text="리뷰좋은순" th:value="리뷰좋은순"></option>
+        </select>
+    </div>
+    <script>
+        const input_cate1 = document.getElementById('category1');
+        const input_sort = document.getElementById('sort');
+        let result_cate1;
+        let result_sort
 
-      <!-- Content -->
-      <div layout:fragment="content">
-          <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner" id="carousel-inner">
-              </div>
-              <div class="position-absolute w-100 top-0" style="min-height: 32vh;">
-                  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon position-absolute bottom-50" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-                      <span class="carousel-control-next-icon position-absolute bottom-50" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                  </a>
-              </div>
-          </div>
-          <div class="container px-3">
-              <div class="row">
-                  <th:block th:each="product : ${productList}">
-                      <div class="col-6 mt-1 px-1">
-                          <div class="card card-profile mt-md-0 shadow-none">
-                              <a th:href="@{|/user/shop/detail/${product.product_no}|}">
-                                  <div class="p-3 pb-2">
-                                      <th:block th:if="${product.mediaVO == null}">
-                                          <img class="w-100 border-radius-md move-on-hover shadow-lg"
-                                               src="/assets/img/df.png" width="173" height="180">
-                                      </th:block>
-                                      <th:block th:unless="${product.mediaVO == null}">
-                                          <img class="w-100 border-radius-md move-on-hover shadow-lg"
-                                               th:src="@{|/testimg/${product.mediaVO.media_path}|}" width="173" height="180">
-                                      </th:block>
-                                  </div>
-                              </a>
-                              <div class="card-body blur justify-content-center text-center p-1 mx-1 mb-3 border-radius-md">
-                                  <p class="text-sm mb-1" th:text="${product.product_name}"></p>
-                                  <div class="row justify-content-center text-center">
-                                      <div class="col-12 mx-auto">
-                                          <th:block th:if="${product.product_stock != 0}">
-                                              <h5 class="jh-pink-title mb-0 text-sm"
-                                                  th:text="|₩ ${product.product_price}|"></h5>
-                                          </th:block>
-                                          <th:block th:unless="${product.product_stock != 0}">
-                                              <h5 class="jh-pink-title mb-0 text-sm" th:text="'SOLD OUT'"></h5>
-                                          </th:block>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </th:block>
-              </div>
-          </div>
-          <script th:inline="javascript">
-              /*<![CDATA[*/
-              function movesite(id) {
-                  console.log("asd");
-                  // window.location.href = "/user/shop/detail/{id}";
-              }
-              document.addEventListener('DOMContentLoaded', function () {
-                  const productScoreList = [[${productScoreList}]];
-                  let src ='';
-                  if (productScoreList) {
-                      for (let i = 0; i < productScoreList.length; i++) {
-                          if (productScoreList[i].mediaVO) {
-                              const media_path = productScoreList[i].mediaVO.media_path
-                              src = "/testimg/" + media_path;
-                          } else {
-                              src = "/assets/img/df.png";
-                          }
-                          let productUrl = "/user/shop/detail/"+productScoreList[i].product_no;
-                          console.log(productUrl)
-                          const str = ` <div class="carousel-item" onclick="movesite({id})">
-                                              <div class="page-header min-vh-25 m-3 border-radius-xl">
-                                                  <img src="${src}" class="w-100" width="378" height="233" >
-                                                  <span class="mask"></span>
-                                              </div>
-                                        </div>`;
+        input_cate1.addEventListener("change", () => {
+            result_cate1 = input_cate1.value;
+            console.log(result_cate1)
+        })
 
-                          const strFirst = ` <div class="carousel-item active">
-                                              <div class="page-header min-vh-25 m-3 border-radius-xl">
-                                            <a href="${productUrl}">
-                                                  <img src="${src}" class="w-100" width="378" height="233">
-                                            </a>
-                                                  <span class="mask"></span>
-                                              </div>
-                                        </div>`;
-                          if (i == 0) {
-                              document.querySelector('#carousel-inner').innerHTML += strFirst;
-                          } else {
-                              document.querySelector('#carousel-inner').innerHTML += str;
-                          }
-                      }
-                  }
-              })
+        input_sort.addEventListener("change", () => {
+            result_sort = input_sort.value;
+            console.log(result_sort)
+        })
+    </script>
+    <div class="col-12">
+        <div class="card m-4">
+            <div class="card-body p-0">
+                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <th:block th:each="productScoreList : ${productScoreList}">
+                            <div class="carousel-item" id="carousel-item">
+                                <a th:href="@{|/user/shop/detail/${productScoreList.product_no}|}">
+                                    <th:block th:if="${productScoreList.mediaVO != null}">
+                                        <img th:src="@{|/testimg/${productScoreList.mediaVO.media_path}|}"
+                                             class="d-block w-100 border-radius-xl" alt="..." width="378" height="233">
+                                    </th:block>
+                                    <th:block th:unless="${productScoreList.mediaVO != null}">
+                                        <img src="/assets/img/df.png" class="d-block w-100 border-radius-xl" alt="..."
+                                             width="378" height="233">
+                                    </th:block>
+                                </a>
+                            </div>
+                        </th:block>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container px-3">
+        <div class="row">
+            <th:block th:each="product : ${productList}">
+                <div class="col-6 mt-1 px-1">
+                    <div class="card card-profile mt-md-0 shadow-none">
+                        <a th:href="@{|/user/shop/detail/${product.product_no}|}">
+                            <div class="p-3 pb-2">
+                                <th:block th:if="${product.mediaVO == null}">
+                                    <img class="w-100 border-radius-md move-on-hover shadow-lg"
+                                         src="/assets/img/df.png" width="173" height="180">
+                                </th:block>
+                                <th:block th:unless="${product.mediaVO == null}">
+                                    <img class="w-100 border-radius-md move-on-hover shadow-lg"
+                                         th:src="@{|/testimg/${product.mediaVO.media_path}|}" width="173"
+                                         height="180">
+                                </th:block>
+                            </div>
+                        </a>
+                        <div class="card-body blur justify-content-center text-center p-1 mx-1 mb-3 border-radius-md">
+                            <p class="text-sm mb-1" th:text="${product.product_name}"></p>
+                            <div class="row justify-content-center text-center">
+                                <div class="col-12 mx-auto">
+                                    <th:block th:if="${product.product_stock != 0}">
+                                        <h5 class="jh-pink-title mb-0 text-sm"
+                                            th:text="|₩ ${product.product_price}|"></h5>
+                                    </th:block>
+                                    <th:block th:unless="${product.product_stock != 0}">
+                                        <h5 class="jh-pink-title mb-0 text-sm" th:text="'SOLD OUT'"></h5>
+                                    </th:block>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const firstCarouselItem = document.querySelector(".carousel-item:first-child");
+            firstCarouselItem.classList.add("active");
 
-              /*]]>*/
-          </script>
-      </div>
-      <!-- End Content -->
+            const carouselEl = document.querySelector('#carouselExampleCaptions');
+            const carousel = new bootstrap.Carousel(carouselEl, {
+                interval: 3000,
+                pause: 'hover',
+                wrap: true
+            });
 
 
+        })
+
+
+        // function sort() {
+        //     const data = {
+        //         category1_no: input_category1_no,
+        //         sort: input_sort
+        //     }
+        //     console.log(data);
+        //
+        //     const queryString = Object.keys(data)
+        //         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+        //         .join('&');
+        //
+        //     console.log(${queryString})
+        //     fetch(`/api/user/shop?${queryString}`)
+        //
+        //         .then(response => response.json())
+        //         .then(data => console.log(data))
+        //         .catch(error => console.error(error));
+        //
+        //
+        // }
+
+
+    </script>
+</div>
+<!-- End Content -->
 
 
 </html>

@@ -6,110 +6,107 @@
 
 
 
-      <!-- Content -->
-      <div layout:fragment="content">
-        <div class="row mx-2">
-          <form action="/user/shop/edit" method="post">
-          <div class="col-12">
-            <div class="card h-100">
-              <div class="card-body">
-                <h5 class="font-weight-bolder">Product Image</h5>
-                <div class="row">
-                  <div class="col-12">
-                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                      <div class="carousel-inner">
-                        <div class="carousel-item">
-                          <div class="page-header min-vh-25 m-3 border-radius-xl"
-                               style="background-image: url('/assets/img/image1.png');">
-                            <span class="mask"></span>
-                          </div>
-                        </div>
-                        <div class="carousel-item">
-                          <div class="page-header min-vh-25 m-3 border-radius-xl"
-                               style="background-image: url('/assets/img/charles.jpg');">
-                            <span class="mask"></span>
-                          </div>
-                        </div>
-                        <div class="carousel-item active">
-                          <div class="page-header min-vh-25 m-3 border-radius-xl"
-                               style="background-image: url('/assets/img/meeting.jpg');">
-                            <span class="mask"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="position-absolute w-100 top-0" style="min-height: 32vh;">
-                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-                          <span class="carousel-control-prev-icon position-absolute bottom-50" aria-hidden="true"></span>
-                          <span class="visually-hidden">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-                          <span class="carousel-control-next-icon position-absolute bottom-50" aria-hidden="true"></span>
-                          <span class="visually-hidden">Next</span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 mt-4">
-                    <div class="d-flex">
-                      <button class="btn btn-pink btn-sm mb-0 me-2" type="button">Edit</button>
-                      <button class="btn btn-outline-pink btn-sm mb-0" type="button">Remove</button>
-                    </div>
-                  </div>
+<!-- Content -->
+<div layout:fragment="content">
+  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner" id="carousel-inner">
+    </div>
+    <div class="position-absolute w-100 top-0" style="min-height: 32vh;">
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon position-absolute bottom-50" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon position-absolute bottom-50" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </a>
+    </div>
+  </div>
+  <div class="container px-3">
+    <div class="row">
+      <th:block th:each="product : ${productList}">
+        <div class="col-6 mt-1 px-1">
+          <div class="card card-profile mt-md-0 shadow-none">
+            <a th:href="@{|/user/shop/detail/${product.product_no}|}">
+              <div class="p-3 pb-2">
+                <th:block th:if="${product.mediaVO == null}">
+                  <img class="w-100 border-radius-md move-on-hover shadow-lg"
+                       src="/assets/img/df.png" width="173" height="180">
+                </th:block>
+                <th:block th:unless="${product.mediaVO == null}">
+                  <img class="w-100 border-radius-md move-on-hover shadow-lg"
+                       th:src="@{|/testimg/${product.mediaVO.media_path}|}" width="173" height="180">
+                </th:block>
+              </div>
+            </a>
+            <div class="card-body blur justify-content-center text-center p-1 mx-1 mb-3 border-radius-md">
+              <p class="text-sm mb-1" th:text="${product.product_name}"></p>
+              <div class="row justify-content-center text-center">
+                <div class="col-12 mx-auto">
+                  <th:block th:if="${product.product_stock != 0}">
+                    <h5 class="jh-pink-title mb-0 text-sm"
+                        th:text="|₩ ${product.product_price}|"></h5>
+                  </th:block>
+                  <th:block th:unless="${product.product_stock != 0}">
+                    <h5 class="jh-pink-title mb-0 text-sm" th:text="'SOLD OUT'"></h5>
+                  </th:block>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-12 mt-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="font-weight-bolder">Product Information</h5>
-                <div class="row">
-                  <div class="col-12">
-                    <label>Name</label>
-                    <input class="form-control" type="text" th:value="${product.product_name}" onfocus="focused(this)"
-                           onfocusout="defocused(this)" name="product_name">
-                  </div>
-                  <div class="col-12">
-                    <label class="mt-4">Price</label>
-                    <input class="form-control" type="text" onfocus="focused(this)" onfocusout="defocused(this)" th:value="${product.product_price}" name="product_price">
-                  </div>
-                  <div class="col-12">
-                    <label>Stock</label>
-                    <input class="form-control" type="number" onfocus="focused(this)" onfocusout="defocused(this)" th:value="${product.product_stock}" name="product_stock" min="0">
-                  </div>
-                  <div class="col-12">
-                    <label>Category</label>
-                    <select class="form-control" id="Category1" name="category1_no">
-                      <th:block th:each=" category : ${category.category1VOList}">
-                        <th:block th:if="${product.category1_no} == ${category.category1_no}">
-                          <option th:text="${category.category1_type}" th:value="${category.category1_no}" selected></option>
-                        </th:block>
-                        <th:block th:unless="${product.category1_no} == ${category.category1_no}">
-                          <option th:text="${category.category1_type}" th:value="${category.category1_no}"></option>
-                        </th:block>
-                      </th:block>
-                    </select>
-                  </div>
-                  <div class="col-12">
-                    <label>Content</label>
-                    <textarea class="form-control" placeholder="Write your comment" rows="2" style="resize: none;" th:text="${product.product_content}" name="product_content"></textarea>
-                  </div>
-                  <input type="hidden" th:value="${product.product_no}" name="product_no">
-                </div>
-                <div class="col-12 mt-4">
-                  <div class="d-flex">
-                    <button class="btn btn-pink btn-sm mb-0 me-2" type="submit">Edit</button>
-                    <button class="btn btn-outline-pink btn-sm mb-0" type="reset">Remove</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          </form>
         </div>
+      </th:block>
+    </div>
+  </div>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    function movesite(id) {
+      console.log("asd");
+      // window.location.href = "/user/shop/detail/{id}";
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+      const productScoreList = [[${productScoreList}]];
+      let src ='';
+      if (productScoreList) {
+        for (let i = 0; i < productScoreList.length; i++) {
+          if (productScoreList[i].mediaVO) {
+            const media_path = productScoreList[i].mediaVO.media_path
+            src = "/testimg/" + media_path;
+          } else {
+            src = "/assets/img/df.png";
+          }
+          let productUrl = "/user/shop/detail/"+productScoreList[i].product_no;
+          console.log(productUrl)
+          const str = ` <div class="carousel-item" onclick="movesite({id})">
+                                              <div class="page-header min-vh-25 m-3 border-radius-xl">
+                                                  <img src="${src}" class="w-100" width="378" height="233" >
+                                                  <span class="mask"></span>
+                                              </div>
+                                        </div>`;
 
-      </div>
-      <!-- End Content -->
+          const strFirst = ` <div class="carousel-item active">
+                                              <div class="page-header min-vh-25 m-3 border-radius-xl">
+                                            <a href="${productUrl}">
+                                                  <img src="${src}" class="w-100" width="378" height="233">
+                                            </a>
+                                                  <span class="mask"></span>
+                                              </div>
+                                        </div>`;
+          if (i == 0) {
+            document.querySelector('#carousel-inner').innerHTML += strFirst;
+          } else {
+            document.querySelector('#carousel-inner').innerHTML += str;
+          }
+        }
+      }
+    })
+
+    /*]]>*/
+  </script>
+</div>
+<!-- End Content -->
+
+
 
 
 </html>
