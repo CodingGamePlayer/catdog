@@ -201,7 +201,7 @@
                aria-hidden="true"></i>
         </div>
         <hr class="horizontal dark m-0">
-        <div class="toast-body" th:text="${failToastMsg}">
+        <div class="toast-body" id="toast-fail-body" th:text="${failToastMsg}">
         </div>
     </div>
     <div class="toast fade p-2 mt-2 bg-white hide" role="alert" aria-live="assertive" id="matchingUseFailToast"
@@ -655,9 +655,12 @@
         let collapse = false;
         const collapseBtn = document.getElementById('collapseBtn');
 
-        collapseBtn.addEventListener('click', function () {
-            collapse = !(collapse);
-        })
+        if(collapseBtn != null){
+            collapseBtn.addEventListener('click', function () {
+                collapse = !(collapse);
+            })
+        }
+
 
         document.addEventListener('click', function (e) {
             if (collapse == false) {

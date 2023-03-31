@@ -61,13 +61,6 @@ public class AccountController {
         return "sign-up";
     }
 
-    @PostMapping("/signup")
-    String signup(UserDTO userDTO) {
-        int result = userService.insert(userDTO);
-
-        return "redirect:/login";
-    }
-
     @GetMapping("/g")
     String g(){
         return "toasts";
