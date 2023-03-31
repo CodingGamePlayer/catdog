@@ -37,7 +37,7 @@ public class UserController {
 
     @PostMapping("/edit-person")
     String editPerson(UserDTO userDTO, HttpServletRequest request) {
-
+        log.info("user-edit에서 오는 userDTO : "+userDTO.getUser_matchinguse());
         int result = userService.update(userDTO);
         UserDTO DTO = userService.findById(userDTO.getUser_id());
 
