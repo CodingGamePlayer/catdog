@@ -47,21 +47,13 @@ public class ShopApiController {
     @GetMapping("/api/user/shop")
     public ResponseEntity<List<ProductDTO>> list(@RequestBody ProductDTO productDTO) {
         log.info("ddddddddddd"+String.valueOf(productDTO));
-//        List<ProductDTO> productDTOList = shopService.selectAll(productDTO);
+        List<ProductDTO> productDTOList = shopService.selectAll(productDTO);
 
-//        if(){
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//        }
-//
+        if( productDTOList == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-//    @PostMapping(value = "/misu", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<MisuDTO> register(@RequestBody MisuDTO misuDTO) {
-//
-//        if(misuDTO.getMisu_uuid() == null){
-//            misuDTO.setMisu_uuid("");
-//            misuDTO.setMisu_filename("");
-//        }
-//    }
 }

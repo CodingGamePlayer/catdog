@@ -67,39 +67,39 @@
 
     <sql id="category">
         <where>
-            <if test="category1_no != null and category1_no == category1_no">
+            <if test="category1_no != 0 and category1_no == category1_no">
                 category1_no = #{category1_no}
             </if>
         </where>
     </sql>
 
     <sql id="sort">
-        <if test="sort != null and sort == '낮은가격순'">
+        <if test="category_sort != null and category_sort == '낮은가격순'">
             ORDER BY product_price ASC
         </if>
-        <if test="sort != null and sort == '높은가격순'">
+        <if test="category_sort != null and category_sort == '높은가격순'">
             ORDER BY product_price DESC
         </if>
-        <if test="sort != null and sort == '등록일순'">
+        <if test="category_sort != null and category_sort == '등록일순'">
             ORDER BY product_regdate DESC
         </if>
-        <if test="sort != null and sort == '판매량순'">
+        <if test="category_sort != null and category_sort == '판매량순'">
             ORDER BY product_ DESC
         </if>
-        <if test="sort != null and sort == '리뷰많은순'">
+        <if test="category_sort != null and category_sort == '리뷰많은순'">
             ORDER BY b.count DESC
         </if>
-        <if test="sort != null and sort == '리뷰좋은순'">
+        <if test="category_sort != null and category_sort == '리뷰좋은순'">
             ORDER BY b.score DESC
         </if>
     </sql>
 
     <sql id="review">
-        <if test="sort != null and sort == '리뷰많은순'">
+        <if test="category_sort != null and category_sort == '리뷰많은순'">
             LEFT JOIN (SELECT product_no, count(review_no) AS count FROM catdog.review GROUP BY product_no) AS b
             ON a.product_no = b.product_no
         </if>
-        <if test="sort != null and sort == '리뷰좋은순'">
+        <if test="category_sort != null and category_sort == '리뷰좋은순'">
             LEFT JOIN (SELECT product_no, avg(review_score) AS score FROM catdog.review GROUP BY product_no) AS b
             ON a.product_no = b.product_no
         </if>

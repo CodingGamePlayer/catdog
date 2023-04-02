@@ -29,6 +29,6 @@ public class ProductDTO {
 
     private MediaVO mediaVO;
 
-    private String sort;
+    private String category_sort;
 
 }
