@@ -37,6 +37,7 @@ public class ShopServiceImp implements ShopService {
             DTO.setMediaVO(mediaMapper.thumbnail(DTO.getProduct_no()));
             productDTOList.add(DTO);
         });
+        // gkgk
         return productDTOList;
     }
 
