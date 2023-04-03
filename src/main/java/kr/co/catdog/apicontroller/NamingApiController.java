@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.Map;
 
 @RestController
@@ -20,7 +21,6 @@ public class NamingApiController {
 
     @PostMapping("/api/user/naming/mypetName")
     public ChatGptResponseDto sendQuestion(@RequestBody String param) {
-        log.info(chatGptService.askQuestion(chatGptService.makePrompt(param)).getChoices().toString());
         return chatGptService.askQuestion(chatGptService.makePrompt(param));
     }
 
