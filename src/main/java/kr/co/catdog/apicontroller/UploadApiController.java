@@ -37,11 +37,8 @@ public class UploadApiController {
                 String uuid = UUID.randomUUID().toString();
                 Path savePath = Paths.get(upPath, uuid + "_" + originalName);
 
-
                 try {
                     multipartFile.transferTo(savePath);
-
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

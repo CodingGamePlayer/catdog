@@ -20,7 +20,7 @@
                 <option th:text="낮은가격순" th:value="낮은가격순"></option>
                 <option th:text="높은가격순" th:value="높은가격순"></option>
                 <option th:text="리뷰많은순" th:value="리뷰많은순"></option>
-                <option th:text="리뷰좋은순" th:value="리뷰좋은순"></option>
+                <option th:text="리뷰좋은순" th:value="리뷰평점순"></option>
             </select>
             <button type="submit" class="">검색</button>
         </form>
@@ -77,11 +77,15 @@
                         <th:block th:each="productScoreList : ${productScoreList}">
                             <div class="carousel-item" id="carousel-item">
                                 <a th:href="@{|/user/shop/detail/${productScoreList.product_no}|}">
-                                    <th:block th:if="${productScoreList.mediaVO.media_path != '/assets/img/df.png'}">
+                                    <!--                                    <th:block th:if="${productScoreList.mediaVO.media_path != '/assets/img/df.png'}">-->
+                                    <th:block th:if="${productScoreList.mediaVO != null}">
+
                                         <img th:src="@{|/testimg/${productScoreList.mediaVO.media_path}|}"
-                                             class="d-block w-100 border-radius-xl" alt="..." width="378" height="233">
+                                             class="d-block w-100 border-radius-xl" alt="..." width="378" height="233"
+                                             onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
                                     </th:block>
-                                    <th:block th:unless="${productScoreList.mediaVO.media_path != '/assets/img/df.png'}">
+                                    <th:block th:unless="${productScoreList.mediaVO != null}">
+                                        <!--                                    <th:block th:unless="${productScoreList.mediaVO.media_path != '/assets/img/df.png'}">-->
                                         <img src="/assets/img/df.png" class="d-block w-100 border-radius-xl" alt="..."
                                              width="378" height="233">
                                     </th:block>
@@ -110,12 +114,14 @@
                     <div class="card card-profile mt-md-0 shadow-none">
                         <a th:href="@{|/user/shop/detail/${product.product_no}|}">
                             <div class="p-3 pb-2">
-                                <th:block th:if="${product.mediaVO.media_path != '/assets/img/df.png'}">
+                                <!--                                <th:block th:if="${product.mediaVO.media_path != '/assets/img/df.png'}">-->
+                                <th:block th:if="${product.mediaVO != null}">
                                     <img class="w-100 border-radius-md move-on-hover shadow-lg"
                                          th:src="@{|/testimg/${product.mediaVO.media_path}|}" width="173"
-                                         height="180">
+                                         height="180" onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
                                 </th:block>
-                                <th:block th:unless="${product.mediaVO.media_path != '/assets/img/df.png'}">
+                                <th:block th:unless="${product.mediaVO != null}">
+                                    <!--                                <th:block th:unless="${product.mediaVO.media_path != '/assets/img/df.png'}">-->
                                     <img class="w-100 border-radius-md move-on-hover shadow-lg"
                                          src="/assets/img/df.png" width="173" height="180">
                                 </th:block>
@@ -141,6 +147,7 @@
         </div>
     </div>
     <script>
+        // carousel Start ---------------------------------------------------------------------
         document.addEventListener('DOMContentLoaded', function () {
             const firstCarouselItem = document.querySelector(".carousel-item:first-child");
             firstCarouselItem.classList.add("active");
@@ -152,6 +159,7 @@
                 wrap: true
             });
         })
+        // carousel End ---------------------------------------------------------------------
 
     </script>
 </div>
