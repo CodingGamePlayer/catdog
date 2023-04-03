@@ -39,7 +39,10 @@ public class ShopServiceImp implements ShopService {
             DTO.setMediaVO(isValidImagePath(mediaVO));
             productDTOList.add(DTO);
         });
+
+
         log.info("gkgkgkk"+String.valueOf(productDTOList));
+
         return productDTOList;
     }
 
