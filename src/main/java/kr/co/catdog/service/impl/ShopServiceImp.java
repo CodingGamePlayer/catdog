@@ -38,10 +38,7 @@ public class ShopServiceImp implements ShopService {
             DTO.setMediaVO(mediaMapper.thumbnail(DTO.getProduct_no()));
             productDTOList.add(DTO);
         });
-productDTOList.forEach( productDTO1 -> log.info("리스트dto"+String.valueOf(productDTO1)));
-
-
-
+        log.info("gkgkgkk"+String.valueOf(productDTOList));
         return productDTOList;
     }
 
