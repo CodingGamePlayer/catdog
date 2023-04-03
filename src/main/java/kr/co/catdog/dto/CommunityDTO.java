@@ -26,5 +26,14 @@ public class CommunityDTO {
 	private int media_no;
 	private int media_type;
 	private String media_path;
+	private int loadCount;
+	private int reply_no;
+	private String reply_user_id;
+	private String reply_content;
+	private String reply_regdate;
+	private int reply_count;
+	private int heart_count;
+	private boolean heart_boolean;
+
 
 }

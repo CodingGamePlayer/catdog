@@ -23,4 +23,6 @@ public interface CommunityService {
 	
 	List<CommunityVO> popularPosts(CommunityDTO communityDTO);
 
+	List<CommunityDTO> selectSize(CommunityDTO communityDTO);
+
 }

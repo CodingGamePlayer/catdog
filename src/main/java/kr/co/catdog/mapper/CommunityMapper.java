@@ -2,6 +2,7 @@ package kr.co.catdog.mapper;
 
 import java.util.List;
 
+import kr.co.catdog.domain.PageResponseVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.catdog.domain.CommunityVO;
@@ -37,5 +38,7 @@ public interface CommunityMapper {
 	
 //	인기글 검색 (1 순위 좋아요 내림차순, 2순위 가장 최근에 써진 글 내림차순) 
 	List<CommunityVO> popularPosts(CommunityVO communityVO);
+
+	List<CommunityVO> selectSize(PageResponseVO pageResponseVO);
 
 }
