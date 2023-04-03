@@ -21,6 +21,7 @@ public class AccountApiController {
     private UserService userService;
     @PostMapping("/api/signup")
     public int signup(@RequestBody UserDTO userDTO) {
+
         UserDTO user = userService.findById(userDTO.getUser_id());
         if(user != null) {
             return 0;
