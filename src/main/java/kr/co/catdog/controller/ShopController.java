@@ -21,10 +21,16 @@ public class ShopController {
     private final ReviewService reviewService;
 
     @GetMapping("/list")
-    String list(Model model) {
+    String list(Model model, ProductDTO productDTO) {
+
+
         model.addAttribute("registerMsg", "shop");
-        model.addAttribute("productList",shopService.orderByReviewCount());
+        model.addAttribute("productList",shopService.selectAll(productDTO));
         model.addAttribute("productScoreList",shopService.orderByReviewScore());
+        model.addAttribute("category", categoryService.selectAll());
+
+
+        log.info(String.valueOf(productDTO));
 
 
         return "user/shop/list";

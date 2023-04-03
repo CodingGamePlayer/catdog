@@ -18,7 +18,16 @@
                     <input class="form-check-input" type="checkbox" th:value="${cart.productDTO.product_price * cart.cart_quantity}" name="checkedProduct" checked th:onclick="price()">
                   </div>
                   <div class="col-4">
-                    <img class="img border-radius-lg max-width-100 w-100" th:src="@{|/testimg/${cart.productDTO.mediaVO.media_path}|}" alt="bruce">
+                    <a th:href="@{|/user/shop/detail/${cart.productDTO.product_no}|}">
+                      <th:block th:if="${cart.productDTO.mediaVO.media_path != '/assets/img/df.png'}">
+                        <img class="img border-radius-lg max-width-100 w-100"
+                             th:src="@{|/testimg/${cart.productDTO.mediaVO.media_path}|}" width="100" height="100">
+                      </th:block>
+                      <th:block th:unless="${cart.productDTO.mediaVO.media_path != '/assets/img/df.png'}">
+                        <img class="img border-radius-lg max-width-100 w-100"
+                             src="/assets/img/df.png" width="100" height="100">
+                      </th:block>
+                    </a>
                   </div>
                   <div class="col-7 pt-2 p-1">
                     <div class="d-flex justify-content-between">
@@ -57,7 +66,14 @@
                     <input class="form-check-input" type="checkbox" name="checkedProduct" disabled>
                   </div>
                   <div class="col-4">
-                    <img class="img border-radius-lg max-width-100 w-100" src="/assets/img/bruce-mars.jpg" alt="bruce">
+                    <th:block th:if="${cart.productDTO.mediaVO.media_path != '/assets/img/df.png'}">
+                      <img class="img border-radius-lg max-width-100 w-100"
+                           th:src="@{|/testimg/${cart.productDTO.mediaVO.media_path}|}" width="100" height="100">
+                    </th:block>
+                    <th:block th:unless="${cart.productDTO.mediaVO.media_path != '/assets/img/df.png'}">
+                      <img class="img border-radius-lg max-width-100 w-100"
+                           src="/assets/img/df.png" width="100" height="100">
+                    </th:block>
                   </div>
                   <div class="col-7 pt-2 p-1">
                     <div class="d-flex justify-content-between">

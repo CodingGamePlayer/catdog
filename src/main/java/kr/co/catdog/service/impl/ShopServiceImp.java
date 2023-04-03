@@ -29,14 +29,17 @@ public class ShopServiceImp implements ShopService {
     private String upPath;
 
     @Override
-    public List<ProductDTO> selectAll() {
-        List<ProductVO> productVOList = productMapper.selectAll();
+    public List<ProductDTO> selectAll(ProductDTO productDTO) {
+        List<ProductVO> productVOList = productMapper.selectAll(productDTO);
         List<ProductDTO> productDTOList = new ArrayList<>();
         productVOList.forEach(productVO -> {
-            ProductDTO productDTO = modelMapper.map(productVO,ProductDTO.class);
-            productDTO.setMediaVO(mediaMapper.thumbnail(productDTO.getProduct_no()));
-            productDTOList.add(productDTO);
+            ProductDTO DTO = modelMapper.map(productVO,ProductDTO.class);
+            MediaVO mediaVO = mediaMapper.thumbnail(productDTO.getProduct_no());
+
+            DTO.setMediaVO(isValidImagePath(mediaVO));
+            productDTOList.add(DTO);
         });
+        log.info("gkgkgkk"+String.valueOf(productDTOList));
         return productDTOList;
     }
 
@@ -46,6 +49,7 @@ public class ShopServiceImp implements ShopService {
         List<ProductDTO> productDTOList = new ArrayList<>();
         productVOList.forEach(productVO -> {
             ProductDTO productDTO = modelMapper.map(productVO,ProductDTO.class);
+
             productDTO.setMediaVO(mediaMapper.thumbnail(productDTO.getProduct_no()));
             productDTOList.add(productDTO);
         });
@@ -58,11 +62,26 @@ public class ShopServiceImp implements ShopService {
         List<ProductVO> productVOList = productMapper.orderByReviewScore();
         List<ProductDTO> productDTOList = new ArrayList<>();
         productVOList.forEach(productVO -> {
-            ProductDTO productDTO = modelMapper.map(productVO,ProductDTO.class);
-            productDTO.setMediaVO(mediaMapper.thumbnail(productDTO.getProduct_no()));
+            ProductDTO productDTO = modelMapper.map(productVO, ProductDTO.class);
+            MediaVO mediaVO = mediaMapper.thumbnail(productDTO.getProduct_no());
+
+            productDTO.setMediaVO(isValidImagePath(mediaVO));
             productDTOList.add(productDTO);
         });
         return productDTOList;
+    }
+
+    private MediaVO isValidImagePath(MediaVO mediaVO) { // 사진파일 유효한지 확인
+        if (mediaVO != null) {
+            String path = upPath + mediaVO.getMedia_path();
+            File file = new File(path);
+            boolean isValidImage = file.exists() && !file.isDirectory();
+            if (isValidImage) {
+                return mediaVO;
+            }
+        }
+        return MediaVO.builder()
+                .media_path("/assets/img/df.png").build();
     }
 
     @Override
@@ -71,8 +90,12 @@ public class ShopServiceImp implements ShopService {
         ProductVO productVO = productMapper.findById(product_no);
         ProductDTO productDTO = modelMapper.map(productVO, ProductDTO.class);
 
-        productDTO.setMediaVOList(mediaMapper.findById(product_no));
-        productDTO.setMediaVO(mediaMapper.thumbnail(product_no));
+        List<MediaVO> mediaVOList = mediaMapper.findById(product_no).stream()
+                .map(mediaVO -> isValidImagePath(mediaVO))
+                .collect(Collectors.toList());
+
+        productDTO.setMediaVOList(mediaVOList);
+        productDTO.setMediaVO(isValidImagePath(mediaMapper.thumbnail(product_no)));
 
         return productDTO;
     }
