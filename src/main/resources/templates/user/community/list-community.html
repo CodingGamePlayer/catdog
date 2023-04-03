@@ -45,6 +45,7 @@
     function getCommunityList(){
       loadCount++;
       const url = "/api/user/community/list?user_id="+user_id+"&loadcount="+loadCount;
+      console.log("url 보여줘 : "+url);
       fetch(url)
               .then(response => {
                 if (!response.ok) {
