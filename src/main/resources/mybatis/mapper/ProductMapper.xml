@@ -15,9 +15,9 @@
         <result property="product_regdate" column="product_regdate"/>
     </resultMap>
 
-    <select id="selectAll" resultMap="productMap">
-        SELECT * FROM product ORDER BY product_no DESC
-    </select>
+<!--    <select id="selectAll" resultMap="productMap">-->
+<!--        SELECT * FROM product ORDER BY product_no DESC-->
+<!--    </select>-->
 
     <select id="findById" resultMap="productMap">
         SELECT * FROM product
@@ -56,4 +56,52 @@
                            ON a.product_no = b.product_no
         ORDER BY b.score DESC, a.product_no DESC LIMIT 5;
     </select>
+
+    <select id="selectAll" resultMap="productMap">
+        SELECT a.*
+        FROM catdog.product AS a
+        <include refid="review"></include>
+        <include refid="category"></include>
+        <include refid="sort"></include>
+    </select>
+
+    <sql id="category">
+        <where>
+            <if test="category1_no != 0 and category1_no == category1_no">
+                category1_no = #{category1_no}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="sort">
+        <if test="category_sort != null and category_sort == '낮은가격순'">
+            ORDER BY product_price ASC
+        </if>
+        <if test="category_sort != null and category_sort == '높은가격순'">
+            ORDER BY product_price DESC
+        </if>
+        <if test="category_sort != null and category_sort == '등록일순'">
+            ORDER BY product_regdate DESC
+        </if>
+        <if test="category_sort != null and category_sort == '판매량순'">
+            ORDER BY product_ DESC
+        </if>
+        <if test="category_sort != null and category_sort == '리뷰많은순'">
+            ORDER BY b.count DESC
+        </if>
+        <if test="category_sort != null and category_sort == '리뷰좋은순'">
+            ORDER BY b.score DESC
+        </if>
+    </sql>
+
+    <sql id="review">
+        <if test="category_sort != null and category_sort == '리뷰많은순'">
+            LEFT JOIN (SELECT product_no, count(review_no) AS count FROM catdog.review GROUP BY product_no) AS b
+            ON a.product_no = b.product_no
+        </if>
+        <if test="category_sort != null and category_sort == '리뷰좋은순'">
+            LEFT JOIN (SELECT product_no, avg(review_score) AS score FROM catdog.review GROUP BY product_no) AS b
+            ON a.product_no = b.product_no
+        </if>
+    </sql>
 </mapper>

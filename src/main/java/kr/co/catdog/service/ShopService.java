@@ -5,7 +5,7 @@ import kr.co.catdog.dto.ProductDTO;
 import java.util.List;
 
 public interface ShopService {
-    List<ProductDTO> selectAll();
+    List<ProductDTO> selectAll(ProductDTO productDTO);
     List<ProductDTO> orderByReviewCount();
     List<ProductDTO> orderByReviewScore();
     ProductDTO findById(int product_no);
