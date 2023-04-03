@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
+import kr.co.catdog.dto.CommunityDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -50,6 +51,17 @@ public class CommunityApiController {
 		}
 		return ResponseEntity.ok().headers(headers).body(resource);
 
+	}
+
+	@GetMapping("/api/user/community/list")
+	public List<CommunityDTO> getList(@RequestParam("user_id") String user_id, @RequestParam("loadcount") int loadCount){
+		log.info("list에서 넘어온 user_id : "+user_id);
+		log.info("list에서 넘어온 loadCount : "+loadCount);
+		CommunityDTO communityDTO = CommunityDTO.builder()
+				.user_id(user_id)
+				.loadCount(loadCount)
+				.build();
+		return communityService.selectSize(communityDTO);
 	}
 
 
