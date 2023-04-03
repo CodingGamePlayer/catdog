@@ -22,56 +22,55 @@
         <result property="heart_count" column="heart_count"/>
         <result property="heart_boolean" column="heart_boolean"/>
     </resultMap>
-    
+
     <insert id="register" parameterType="CommunityDTO" useGeneratedKeys="true" keyProperty="community_no">
     	INSERT INTO community(user_id, category_no, community_content, community_regdate)
     	VALUES (#{user_id}, (SELECT category1_no FROM category1 WHERE category1_type = #{category_type}), #{community_content}, now())
     </insert>
-    
+
     <insert id="registerMedia" parameterType="CommunityDTO">
     	INSERT INTO media(community_no, media_type, media_path)
     	VALUES (#{community_no}, #{media_type}, #{media_path})
    	</insert>
-    
+
     <select id="selectAlllike" resultMap="CommunityMap">
     	SELECT community.*, media.media_type, media_path,
-    	(SELECT COUNT(*) FROM reply WHERE reply.community_no = community.community_no) AS reply_count 
-    	FROM community 
+    	(SELECT COUNT(*) FROM reply WHERE reply.community_no = community.community_no) AS reply_count
+    	FROM community
     	LEFT JOIN media ON community.community_no = media.community_no
     	ORDER BY community.community_no DESC
     </select>
-    
+
     <select id="selectAll" parameterType="CommunityVO" resultMap="CommunityMap">
     	SELECT community.*, media.media_type, media_path,
     	(SELECT COUNT(*) FROM reply WHERE reply.community_no = community.community_no) AS reply_count,
     	(SELECT COUNT(*) from heart WHERE community.community_no = heart.community_no AND heart.heart_boolean = true ) AS heart_count,
-    	(SELECT heart.heart_boolean FROM heart WHERE community.community_no = catdog.heart.community_no AND
-			heart.user_id = #{user_id}) AS heart_boolean FROM community
-    	LEFT JOIN media ON community.community_no = media.community_no
+    	(SELECT heart.heart_boolean FROM heart WHERE community.community_no = catdog.heart.community_no AND	heart.user_id = #{user_id}) AS heart_boolean
+    	FROM community LEFT JOIN media ON community.community_no = media.community_no
     	ORDER BY community.community_no DESC
     </select>
-    
+
     <select id="findByCommunity" parameterType="CommunityVO" resultMap="CommunityMap">
     	SELECT community.*,media.media_no, media.media_type, media_path FROM community
     	LEFT JOIN media ON community.community_no = media.community_no
     	WHERE community.community_no = #{community_no}
     </select>
-    
+
     <update id="update" parameterType="CommunityVO">
     	UPDATE community SET category_no = (SELECT category1_no FROM category1 WHERE category1_type = #{category_type}),
     	community_content = #{community_content}, community_editdate = now()
     	WHERE community_no = #{community_no}
     </update>
-    
+
     <update id="updateMedia" parameterType="MediaVO">
     	UPDATE media SET media_path = #{media_path}
     	WHERE media_no = #{media_no}
     </update>
-    
+
     <delete id="delete" parameterType="CommunityVO">
     	DELETE FROM community WHERE community_no = #{community_no}
     </delete>
-    
+
     <select id="myCommunity" parameterType="CommunityVO" resultMap="CommunityMap">
     	SELECT community.*, media.media_type, media_path,
     	(SELECT COUNT(*) FROM reply WHERE reply.community_no = community.community_no) AS reply_count,
@@ -82,7 +81,7 @@
     	WHERE community.user_id = #{user_id}
     	ORDER BY community.community_no DESC
     </select>
-    
+
     <select id="popularPosts" parameterType="CommunityVO" resultMap="CommunityMap">
     	SELECT community.*, media.media_type, media_path,
     	(SELECT COUNT(*) FROM reply WHERE reply.community_no = community.community_no) AS reply_count,
@@ -93,6 +92,16 @@
     	ORDER BY heart_count DESC, community.community_regdate DESC
     </select>
 
+	<select id="selectSize" parameterType="PageResponseVO" resultMap="CommunityMap">
+        SELECT community.*, media.media_type, media_path,
+        (SELECT COUNT(*) FROM reply WHERE reply.community_no = community.community_no) AS reply_count,
+        (SELECT COUNT(*) from heart WHERE community.community_no = heart.community_no AND heart.heart_boolean = true ) AS heart_count,
+        (SELECT heart.heart_boolean FROM heart WHERE community.community_no = catdog.heart.community_no AND	heart.user_id = #{user_id}) AS heart_boolean
+        FROM community LEFT JOIN media ON community.community_no = media.community_no
+        ORDER BY community.community_no DESC
+        LIMIT #{startIndex}, #{size}
+	</select>
 
-   
+
+
 </mapper>

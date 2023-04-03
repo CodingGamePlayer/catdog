@@ -1,134 +1,258 @@
 <!DOCTYPE html>
 <html lang="ko" itemscope itemtype="http://schema.org/WebPage" xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout.html}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout.html}">
 
 
 
 <!-- Content -->
 <div layout:fragment="content">
-  <th:block th:each="communityVO : ${communityVOs}">
-    <div class="col-12">
-      <div class="card shadow-none">
-        <div class="card-header d-flex align-items-center border-bottom py-3">
-          <div class="d-flex align-items-center">
-            <a href="javascript:;">
-              <svg data-jdenticon-value="nickname" th:data-jdenticon-value="${communityVO.user_id}" width="40"
-                height="40" class="avatar avatar-sm"></svg>
-            </a>
-            <div class="mx-3">
-              <a href="javascript:;" class="text-dark font-weight-600 text-sm" th:text="${communityVO.user_id}"></a>
-              <small class="d-block text-muted" th:text="${communityVO.community_regdate}"></small>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="d-flex justify-content-sm-center">
-            <img alt="" th:src="|/testimg/${communityVO.media_path}|" class="img-fluid border-radius-lg shadow-lg" onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
-          </div>
-          <div class="row align-items-center px-2 mt-4 mb-2">
-            <div class="col-6">
-              <div class="d-flex">
-                <div class="likecheck d-flex align-items-center">
-                  <label class="custom-checkbox jh-pink me-1 mt-2" th:for="'likeCheck'+${communityVO.community_no}" >
-	                  <input type="checkbox" class="form-check-input " th:id = "'likeCheck'+${communityVO.community_no}" 
-	                  th:attr="checked=${communityVO.heart_boolean ? true : false}" th:onchange="likeToggle(this, [[${communityVO.community_no}]],[[${user_id}]])">
-               		  <span class="checkicon"></span>
-                  </label>
-                  <span class="text-sm me-3 " th:id="'likeCnt'+${communityVO.community_no}"
-                    th:text="${communityVO.heart_count}">150</span>
-                </div>
-                <div class="d-flex align-items-center">
-                  <i class="ni jh-pink ni-chat-round me-2 cursor-pointer" data-bs-toggle="collapse"
-                    th:href="'#collapseExample'+${communityVO.community_no}"
-                    th:onclick="loadReplys([[${communityVO.community_no}]], [[${user_id}]])" role="button"
-                    aria-expanded="false" aria-controls="collapseExample"></i>
-                  <span class="text-sm me-3" th:id="'replyCount'+${communityVO.community_no}"
-                    th:text="${communityVO.reply_count}">36</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="d-flex align-items-center justify-content-sm-end" th:if="${user_id == communityVO.user_id}">
-                <a th:href="'/user/community/update?community_no='+${communityVO.community_no}">
-                	<small class="ps-2 me-2">
-						<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-						  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-						  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-						</svg>
-                	</small>
-                </a>
-                <a th:href="'/user/community/delete?community_no='+${communityVO.community_no}">
-                	<small class="ps-2">
-	                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-trash3 me-2" viewBox="0 0 16 16">
-	                      <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-	                    </svg>
-                	</small>
-                </a>
-              </div>
-            </div>
-            <a href="javascript:;" class="text-dark font-weight-600 text-sm" th:text="${communityVO.user_id}"></a>
-            <p class="mb-4" th:text="${communityVO.community_content}"></p>
-            <hr class="horizontal dark my-3">
-          </div>
-          <!-- 기본 댓글 템플릿 start -->
-          <div class="collapse" th:id="'collapseExample'+${communityVO.community_no}">
-            <div class="card card-body" th:id="'cardReplyList'+${communityVO.community_no}">
-              <div class="d-flex">
-                <div class="flex-shrink-0">
-                  <img alt="Image placeholder" class="avatar rounded-circle" src="../../../assets/img/siba.jpg">
-                </div>
-                <div class="flex-grow-1 ms-3">
-                  <h6 class="h5 mt-0">Michael Lewis</h6>
-                  <p class="text-sm">I always felt like I could do anything. That’s the main thing people are controlled
-                    by!
-                    Thoughts- their perception of themselves!</p>
-                  <div class="row d-flex align-items-center px-2">
-                    <div class="col-6">
-                      <div class="d-flex align-items-center">
-                        <i class="ni ni-like-2 me-1 cursor-pointer"></i>
-                        <span class="text-sm me-2">3 likes</span>
-                      </div>
-                    </div>
-                    <div class="col-6 pe-4">
-                      <div class="d-flex align-items-center justify-content-sm-end">
-                        <a href="#">
-                        	<small class="ps-2">
-		                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
-		                                     class="bi bi-trash3 me-2" viewBox="0 0 16 16">
-			                      <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-			                    </svg>
-                        	</small>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="d-flex mt-4">
-              <div class="flex-shrink-0">
-                <img alt="Image placeholder" class="avatar rounded-circle me-3" src="../../../assets/img/siba.jpg">
-              </div>
-              <div class="flex-grow-1 my-auto">
-                <form>
-                  <input type="hidden" th:value="${user_id}" id="user_id">
-                  <input type="hidden" th:value="${communityVO.community_no}"
-                    th:id="'community_no'+${communityVO.community_no}">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Write your comment" aria-label="reply-content"
-                      aria-describedby="button-reply" th:id="'reply_content'+${communityVO.community_no}" maxlength="50">
-                    <button class="btn btn-outline-secondary jh-pink mb-0" type="button" id="button-reply"
-                      th:onclick="'replyOnSubmit('+${communityVO.community_no}+')'">등록</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-          <!-- 기본 댓글 템플릿 end -->
-        </div>
-      </div>
-    </div>
-  </th:block>
+  <div id="communityList">
+
+  </div>
+  <div id="getList"></div>
+  <!-- 커뮤니티 리스트 불러오기 -->
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    // 페이지가 로딩되면 실행되는 함수
+    let loadCount = 0;
+    const user_id = [[${session.session_id}]];
+    const getList = document.getElementById('getList');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          getCommunityList();
+        }
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      loadCount = 0;
+      getCommunityList();
+    });
+
+    function isEmpty(obj) {
+      // 객체가 아니거나 null일 경우 false 반환
+      if (!obj || typeof obj !== 'object') {
+        return false;
+      }
+      // 배열이나 객체의 length가 0인 경우 true 반환
+      return Object.keys(obj).length === 0;
+    }
+
+
+
+    function getCommunityList(){
+      loadCount++;
+      const url = "/api/user/community/list?user_id="+user_id+"&loadcount="+loadCount;
+      fetch(url)
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(response.statusText);
+                }
+
+                return response.json();
+
+              }).then(lists => {
+                if(isEmpty(lists)){
+                  observer.disconnect();
+                }else {
+                  console.log(lists);
+                  const communityList = document.getElementById('communityList');
+                  lists.forEach(communityVO => {
+                    console.log(communityVO);
+                    const div = document.createElement('div');
+
+                    if (communityVO.user_id == user_id) {
+
+
+                      div.innerHTML = ` <div class="col-12">
+                                <div class="card shadow-none">
+                                  <div class="card-header d-flex align-items-center border-bottom py-3">
+                                    <div class="d-flex align-items-center">
+                                      <a href="javascript:;">
+                                        <img src="/assets/img/siba.jpg" class="avatar" alt="profile-image">
+                                      </a>
+                                      <div class="mx-3">
+                                        <a href="javascript:;" class="text-dark font-weight-600 text-sm">${communityVO.user_id}</a>
+                                        <small class="d-block text-muted" >${communityVO.community_regdate}</small>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="card-body">
+                                    <div class="d-flex justify-content-sm-center">
+                                      <img alt="" src="/testimg/${communityVO.media_path}" class="img-fluid border-radius-lg shadow-lg"
+                                           onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
+                                    </div>
+                                    <div class="row align-items-center px-2 mt-4 mb-2">
+                                      <div class="col-6">
+                                        <div class="d-flex">
+                                          <div class="likecheck d-flex align-items-center">
+                                            <label class="custom-checkbox jh-pink me-1 mt-2" for="likeCheck${communityVO.community_no}">
+                                              <input type="checkbox" class="form-check-input " id="likeCheck${communityVO.community_no}"
+                                               ${communityVO.heart_boolean ? 'checked' : ''} onchange="likeToggle(this, ${communityVO.community_no},'${user_id}')">
+                                              <span class="checkicon"></span>
+                                            </label>
+                                            <span class="text-sm me-3 " id="likeCnt${communityVO.community_no}">${communityVO.heart_count}</span>
+                                          </div>
+                                          <div class="d-flex align-items-center">
+                                            <i class="ni jh-pink ni-chat-round me-2 cursor-pointer" data-bs-toggle="collapse"
+                                               href="#collapseExample${communityVO.community_no}"
+                                               onclick="loadReplys(${communityVO.community_no}, '${user_id}')" role="button"
+                                               aria-expanded="false" aria-controls="collapseExample"></i>
+                                            <span class="text-sm me-3" id="replyCount${communityVO.community_no}">${communityVO.reply_count}</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-6">
+                                        <div class="d-flex align-items-center justify-content-sm-end" >
+                                          <a href="'/user/community/update?community_no='+${communityVO.community_no}">
+                                            <small class="ps-2 me-2">
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
+                                                   class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path
+                                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                <path fill-rule="evenodd"
+                                                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                              </svg>
+                                            </small>
+                                          </a>
+                                          <a href="'/user/community/delete?community_no='+${communityVO.community_no}">
+                                            <small class="ps-2">
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
+                                                   class="bi bi-trash3 me-2" viewBox="0 0 16 16">
+                                                <path
+                                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                              </svg>
+                                            </small>
+                                          </a>
+                                        </div>
+                                      </div>
+                                      <a href="javascript:;" class="text-dark font-weight-600 text-sm">${communityVO.user_id}</a>
+                                      <p class="mb-4">${communityVO.community_content}</p>
+                                      <hr class="horizontal dark my-3">
+                                    </div>
+                                    <!-- 기본 댓글 템플릿 start -->
+                                    <div class="collapse" id="collapseExample${communityVO.community_no}">
+                                      <div class="card card-body" id="cardReplyList${communityVO.community_no}">
+
+                                    <!-- 댓글 content 위치-->
+
+                                      </div>
+                                      <div class="d-flex mt-4">
+                                        <div class="flex-shrink-0">
+                                          <img alt="Image placeholder" class="avatar rounded-circle me-3" src="../../../assets/img/siba.jpg">
+                                        </div>
+                                        <div class="flex-grow-1 my-auto">
+                                          <form>
+                                            <input type="hidden" value="${user_id}" id="user_id">
+                                            <input type="hidden" value="${communityVO.community_no}"
+                                                   id="community_no${communityVO.community_no}">
+                                            <div class="input-group">
+                                              <input type="text" class="form-control" placeholder="Write your comment" aria-label="reply-content"
+                                                     aria-describedby="button-reply" id="reply_content${communityVO.community_no}"
+                                                     maxlength="50">
+                                              <button class="btn btn-outline-secondary jh-pink mb-0" type="button" id="button-reply"
+                                                      onclick="replyOnSubmit(${communityVO.community_no})">등록</button>
+                                            </div>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- 기본 댓글 템플릿 end -->
+                                  </div>
+                                </div>
+                              </div> `;
+                    } else {
+                      div.innerHTML = ` <div class="col-12">
+                                <div class="card shadow-none">
+                                  <div class="card-header d-flex align-items-center border-bottom py-3">
+                                    <div class="d-flex align-items-center">
+                                      <a href="javascript:;">
+                                        <img src="/assets/img/siba.jpg" class="avatar" alt="profile-image">
+                                      </a>
+                                      <div class="mx-3">
+                                        <a href="javascript:;" class="text-dark font-weight-600 text-sm">${communityVO.user_id}</a>
+                                        <small class="d-block text-muted" >${communityVO.community_regdate}</small>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="card-body">
+                                    <div class="d-flex justify-content-sm-center">
+                                      <img alt="" src="/testimg/${communityVO.media_path}" class="img-fluid border-radius-lg shadow-lg"
+                                           onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
+                                    </div>
+                                    <div class="row align-items-center px-2 mt-4 mb-2">
+                                      <div class="col-6">
+                                        <div class="d-flex">
+                                          <div class="likecheck d-flex align-items-center">
+                                            <label class="custom-checkbox jh-pink me-1 mt-2" for="likeCheck${communityVO.community_no}">
+                                              <input type="checkbox" class="form-check-input " id="likeCheck${communityVO.community_no}"
+                                               ${communityVO.heart_boolean ? 'checked' : ''} onchange="likeToggle(this, ${communityVO.community_no},'${user_id}')">
+                                              <span class="checkicon"></span>
+                                            </label>
+                                            <span class="text-sm me-3 " id="likeCnt${communityVO.community_no}">${communityVO.heart_count}</span>
+                                          </div>
+                                          <div class="d-flex align-items-center">
+                                            <i class="ni jh-pink ni-chat-round me-2 cursor-pointer" data-bs-toggle="collapse"
+                                               href="#collapseExample${communityVO.community_no}"
+                                               onclick="loadReplys(${communityVO.community_no}, '${user_id}')" role="button"
+                                               aria-expanded="false" aria-controls="collapseExample"></i>
+                                            <span class="text-sm me-3" id="replyCount${communityVO.community_no}">${communityVO.reply_count}</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <a href="javascript:;" class="text-dark font-weight-600 text-sm">${communityVO.user_id}</a>
+                                      <p class="mb-4">${communityVO.community_content}</p>
+                                      <hr class="horizontal dark my-3">
+                                    </div>
+                                    <!-- 기본 댓글 템플릿 start -->
+                                    <div class="collapse" id="collapseExample${communityVO.community_no}">
+                                      <div class="card card-body" id="cardReplyList${communityVO.community_no}">
+
+                                    <!-- 댓글 content 위치-->
+
+                                      </div>
+                                      <div class="d-flex mt-4">
+                                        <div class="flex-shrink-0">
+                                          <img alt="Image placeholder" class="avatar rounded-circle me-3" src="../../../assets/img/siba.jpg">
+                                        </div>
+                                        <div class="flex-grow-1 my-auto">
+                                          <form>
+                                            <input type="hidden" value="${user_id}" id="user_id">
+                                            <input type="hidden" value="${communityVO.community_no}"
+                                                   id="community_no${communityVO.community_no}">
+                                            <div class="input-group">
+                                              <input type="text" class="form-control" placeholder="Write your comment" aria-label="reply-content"
+                                                     aria-describedby="button-reply" id="reply_content${communityVO.community_no}"
+                                                     maxlength="50">
+                                              <button class="btn btn-outline-secondary jh-pink mb-0" type="button" id="button-reply"
+                                                      onclick="replyOnSubmit(${communityVO.community_no})">등록</button>
+                                            </div>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- 기본 댓글 템플릿 end -->
+                                  </div>
+                                </div>
+                              </div> `;
+                    }
+
+                    communityList.appendChild(div);
+                  });
+                  observer.observe(getList);
+                }
+
+      }).catch(error => {
+        console.error(error);
+        alert("글 불러오기 실패");
+      });
+    }
+
+    /*]]>*/
+  </script>
+
 
   <!-- 비동기 댓글 등록  -->
   <script th:inline="javascript">
@@ -148,7 +272,7 @@
         reply_content: input_reply_content
       };
       if (input_user_id == "" || input_community_no == "" ||
-        input_reply_content == "") {
+              input_reply_content == "") {
         alert('zzz 실패입니다.')
         return;
       }
@@ -172,15 +296,15 @@
         }
         loadReplys(input_community_no, input_user_id);
         reCntPlus(input_community_no);
-        console.log("리플 컨텐트 : "+document.getElementById('reply_content' + community_no).value);
-        document.getElementById('reply_content' + community_no).value= '';
+        console.log("리플 컨텐트 : " + document.getElementById('reply_content' + community_no).value);
+        document.getElementById('reply_content' + community_no).value = '';
 
       }).catch(error => {
         console.error(error);
         alert("댓글 등록 실패");
       });
     }
-            	/*]]>*/
+    /*]]>*/
   </script>
 
   <!-- 댓글 창 불러오기 -->
@@ -196,26 +320,26 @@
       reCntPlus(community_no);
       const getUrl = "/api/user/community/reply?community_no=" + community_no;
       fetch(getUrl)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
-          
-          return response.json();
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(response.statusText);
+                }
 
-        }).then(replys => {
-          console.log(replys);
-          const replyList = document.getElementById('cardReplyList' + community_no);
-          replyList.innerHTML = '';
-          replys.forEach(reply => {
-            console.log(reply);
-            console.log("content : " + reply.reply_content);
-            const div = document.createElement('div');
+                return response.json();
 
-            if (reply.user_id == s_user_id) {
+              }).then(replys => {
+        console.log(replys);
+        const replyList = document.getElementById('cardReplyList' + community_no);
+        replyList.innerHTML = '';
+        replys.forEach(reply => {
+          console.log(reply);
+          console.log("content : " + reply.reply_content);
+          const div = document.createElement('div');
+
+          if (reply.user_id == s_user_id) {
 
 
-              div.innerHTML = ` <div class="d-flex">
+            div.innerHTML = ` <div class="d-flex">
                                   <div class="flex-shrink-0">
                                     <a href="javascript:;">
                                       <img src="/assets/img/siba.jpg" class="avatar" alt="profile-image">
@@ -241,8 +365,8 @@
                                       </div>
                                   </div>
                                 </div> `;
-            } else {
-              div.innerHTML = ` <div class="d-flex">
+          } else {
+            div.innerHTML = ` <div class="d-flex">
             	                      <div class="flex-shrink-0">
             	                        <a href="javascript:;">
             	                          <img src="/assets/img/siba.jpg" class="avatar" alt="profile-image">
@@ -261,17 +385,17 @@
             	                        </div>
             	                      </div>
             	                    </div> `;
-            }
+          }
 
-            replyList.appendChild(div);
-          });
-
-        }).catch(error => {
-          console.error(error);
-          alert("댓글창 불러오기 실패");
+          replyList.appendChild(div);
         });
+
+      }).catch(error => {
+        console.error(error);
+        alert("댓글창 불러오기 실패");
+      });
     }
-            	/*]]>*/
+    /*]]>*/
   </script>
 
   <!-- 댓글 개수 -->
@@ -281,18 +405,18 @@
       const reCntUrl = "/api/user/community/reply_count?community_no=" + community_no;
 
       fetch(reCntUrl)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          };
-          return response.json();
-        }).then(reCount => {
-          console.log("리플 카운트 : " + reCount);
-          document.getElementById('replyCount' + community_no).innerHTML = reCount;
-        }).catch(error => {
-          console.error(error);
-          alert("댓글 카운트 불러오기 실패");
-        });
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(response.statusText);
+                };
+                return response.json();
+              }).then(reCount => {
+        console.log("리플 카운트 : " + reCount);
+        document.getElementById('replyCount' + community_no).innerHTML = reCount;
+      }).catch(error => {
+        console.error(error);
+        alert("댓글 카운트 불러오기 실패");
+      });
     }
 
     /*]]>*/
@@ -301,7 +425,7 @@
   <!-- 댓글 삭제 -->
   <script th:inline="javascript">
     /*<![CDATA[*/
-    function replyDelete( reply_no, community_no, s_user_id ) {
+    function replyDelete(reply_no, community_no, s_user_id) {
       const reDeleteUrl = "/api/user/community/delete?reply_no=" + reply_no;
       console.log("reply_no : " + reply_no + "  community_no : " + community_no);
       fetch(reDeleteUrl, {
@@ -326,65 +450,65 @@
   <!-- 좋아요 토글 -->
   <script th:inline="javascript">
     /*<![CDATA[*/
-    	
-    	
-    function likeToggle(checkbox,input_community_no, s_user_id) {
-      console.log("토글 실행 됨");
-      console.log("아이디 : "+s_user_id);
-      
-      if (checkbox.checked) {
-    	  
-          likeUrl = "/api/user/community/like";
-          likeif = {
-            community_no: input_community_no,
-            user_id: s_user_id,
-            heart_boolean: true
-          };
-          fetch(likeUrl, {
-            method: "POST",
-            body: JSON.stringify(likeif),
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }).then(response => {
-            if (!response.ok) {
-              throw new Error(response.statusText);
-            }
-            
-            console.log("좋아요 카운트 불러오기 전까지 실행됨");
-            getLikeCnt(input_community_no);
-          }).catch(error => {
-            console.error(error);
-            alert("좋아요 업데이트 중 오류")
 
-          });
+
+    function likeToggle(checkbox, input_community_no, s_user_id) {
+      console.log("토글 실행 됨");
+      console.log("아이디 : " + s_user_id);
+
+      if (checkbox.checked) {
+
+        likeUrl = "/api/user/community/like";
+        likeif = {
+          community_no: input_community_no,
+          user_id: s_user_id,
+          heart_boolean: true
+        };
+        fetch(likeUrl, {
+          method: "POST",
+          body: JSON.stringify(likeif),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+
+          console.log("좋아요 카운트 불러오기 전까지 실행됨");
+          getLikeCnt(input_community_no);
+        }).catch(error => {
+          console.error(error);
+          alert("좋아요 업데이트 중 오류")
+
+        });
 
       } else {
-    	  
-          let likeUrl = "/api/user/community/like";
-          let likeif = {
-            community_no: input_community_no,
-            user_id: s_user_id,
-            heart_boolean: false
-          };
-          fetch(likeUrl, {
-            method: "PUT",
-            body: JSON.stringify(likeif),
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }).then(response => {
-            if (!response.ok) {
-              throw new Error(response.statusText);
-            }
-                     
-            console.log("좋아요 카운트 불러오기 전까지 실행됨");
-            getLikeCnt(input_community_no);
-          }).catch(error => {
-            console.error(error);
-            alert("좋아요 업데이트 중 오류")
 
-          });
+        let likeUrl = "/api/user/community/like";
+        let likeif = {
+          community_no: input_community_no,
+          user_id: s_user_id,
+          heart_boolean: false
+        };
+        fetch(likeUrl, {
+          method: "PUT",
+          body: JSON.stringify(likeif),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+
+          console.log("좋아요 카운트 불러오기 전까지 실행됨");
+          getLikeCnt(input_community_no);
+        }).catch(error => {
+          console.error(error);
+          alert("좋아요 업데이트 중 오류")
+
+        });
 
 
       }
@@ -399,21 +523,21 @@
     /*<![CDATA[*/
     function getLikeCnt(community_no) {
 
-      likeUrl = "/api/user/community/like?community_no="+community_no;
+      likeUrl = "/api/user/community/like?community_no=" + community_no;
 
       fetch(likeUrl)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          };
-          return response.json();
-        }).then(likeCount => {
-          console.log("좋아요 카운트 : " + likeCount);
-          document.getElementById('likeCnt' + community_no).innerHTML = likeCount;
-        }).catch(error => {
-          console.error(error);
-          alert("좋아요 카운트 불러오기 실패");
-        });
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(response.statusText);
+                };
+                return response.json();
+              }).then(likeCount => {
+        console.log("좋아요 카운트 : " + likeCount);
+        document.getElementById('likeCnt' + community_no).innerHTML = likeCount;
+      }).catch(error => {
+        console.error(error);
+        alert("좋아요 카운트 불러오기 실패");
+      });
     }
 
     /*]]>*/
