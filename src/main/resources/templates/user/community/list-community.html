@@ -17,18 +17,20 @@
     let loadCount = 0;
     const user_id = [[${session.session_id}]];
     const getList = document.getElementById('getList');
+    const communityMsg = [[${communityMsg}]];
 
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          getCommunityList();
+          getCommunityList(communityMsg);
         }
       });
     });
 
     document.addEventListener('DOMContentLoaded', ()=>{
       loadCount = 0;
-      getCommunityList();
+
+      getCommunityList(communityMsg);
     });
 
     function isEmpty(obj) {
@@ -42,9 +44,9 @@
 
 
 
-    function getCommunityList(){
+    function getCommunityList(communityMsg){
       loadCount++;
-      const url = "/api/user/community/list?user_id="+user_id+"&loadcount="+loadCount;
+      const url = "/api/user/community/list?user_id="+user_id+"&loadCount="+loadCount+"&community_msg="+communityMsg;
       console.log("url 보여줘 : "+url);
       fetch(url)
               .then(response => {
