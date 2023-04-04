@@ -14,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@RequestMapping("catdogforest.shop")
 public class NamingApiController {
 
     private ChatGptService chatGptService;
