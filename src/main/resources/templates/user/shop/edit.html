@@ -8,96 +8,102 @@
 <!-- Content -->
 <div layout:fragment="content">
     <div class="row mx-2">
-<!--        <form action="/user/shop/register" method="post" enctype="multipart/form-data">-->
-            <div class="col-12">
-                <div class="card h-100">
+        <!--        <form action="/user/shop/register" method="post" enctype="multipart/form-data">-->
+        <div class="col-12">
+            <div class="card h-100">
 
-                        <div class="card-body">
-                            <h5 class="font-weight-bolder">Product Image</h5>
-                            <div class="row">
-                                <label for="formFile">
-                                    <div class="col-12 text-center">
-                                        <div class="my-gallery d-flex mt-4 pt-2 uploadResult" itemscope=""
-                                             itemtype="http://schema.org/ImageGallery" data-pswp-uid="1">
-                                            <figure class="col-12" itemProp="associatedMedia" itemScope=""
-                                                    itemType="http://schema.org/ImageObject">
-                                                <img class="w-75 min-height-100 max-height-100 border-radius-lg"
-                                                     src="/assets/img/new.png" itemProp="thumbnail"
-                                                     alt="Image description">
-                                            </figure>
-                                        </div>
-                                    </div>
-                                </label>
-                                    <div class="col-12 mt-4">
-                                        <div class="d-flex">
-                                            <!--                                                      <label for="uploadBtn">-->
-<!--                                            <div class="btn btn-pink btn-sm mb-0 me-2 uploadBtn" id="uploadBtn">Add-->
-<!--                                            </div>-->
-                                            <!--                                                      </label>-->
-                                            <input type="file" accept="image/*" name="files" id="formFile"
-                                                   style="display: none;"
-                                                   multiple>
-                                        </div>
-                                    </div>
-
+                <div class="card-body">
+                    <h5 class="font-weight-bolder">Product Image</h5>
+                    <div class="row">
+                        <label for="formFile">
+                            <div class="col-12 text-center">
+                                <div class="my-gallery d-flex mt-4 pt-2 uploadResult" itemscope=""
+                                     itemtype="http://schema.org/ImageGallery" data-pswp-uid="1">
+                                    <figure class="col-12" itemProp="associatedMedia" itemScope=""
+                                            itemType="http://schema.org/ImageObject">
+                                        <img class="w-75 min-height-100 max-height-100 border-radius-lg"
+                                             src="/assets/img/new.png" itemProp="thumbnail"
+                                             alt="Image description">
+                                    </figure>
+                                </div>
                             </div>
-                        </div>
-
-                </div>
-            </div>
-            <div class="col-12 mt-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="font-weight-bolder">Product Information</h5>
-                        <div class="row">
-                            <div class="col-12">
-                                <label>Name</label>
-                                <input class="form-control" type="text" th:value="${product.product_name}" placeholder="Name"
-                                       onfocusout="defocused(this)" name="product_name" id="product_name">
-                            </div>
-                            <div class="col-12">
-                                <label class="mt-4">Price</label>
-                                <input class="form-control" type="text" placeholder="Price" th:value="${product.product_price}"
-                                       onfocusout="defocused(this)" name="product_price" id="product_price">
-                            </div>
-                            <div class="col-12">
-                                <label>Stock</label>
-                                <input class="form-control" type="number" placeholder="Stock" th:value="${product.product_stock}"
-                                       onfocusout="defocused(this)" name="product_stock" min="1" id="product_stock">
-                            </div>
-                            <div class="col-12">
-                                <label>Category</label>
-                                <select class="form-control" id="category1_no" name="category1_no">
-                                    <th:block th:each=" category : ${category.category1VOList}">
-                                        <th:block th:if="${product.category1_no} == ${category.category1_no}">
-                                            <option th:text="${category.category1_type}" th:value="${category.category1_no}" selected></option>
-                                        </th:block>
-                                        <th:block th:unless="${product.category1_no} == ${category.category1_no}">
-                                            <option th:text="${category.category1_type}" th:value="${category.category1_no}"></option>
-                                        </th:block>
-                                    </th:block>
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <label>Content</label>
-                                <textarea class="form-control" placeholder="Content" rows="2" style="resize: none;" th:text="${product.product_content}"
-                                          name="product_content" id="product_content"></textarea>
-                            </div>
-                            <input type="hidden" th:value="${session.session_id}" name="user_id" id="user_id">
-                            <input type="hidden" th:value="${product.product_no}" name="product_no" id="product_no">
-                        </div>
+                        </label>
                         <div class="col-12 mt-4">
                             <div class="d-flex">
-                                <button class="btn btn-pink btn-sm mb-0 me-2" type="submit" id="submitBtn">Edit</button>
-                                <button class="btn btn-outline-pink btn-sm mb-0" type="reset" onclick="removeAll()">
-                                    Remove
-                                </button>
+                                <!--                                                      <label for="uploadBtn">-->
+                                <!--                                            <div class="btn btn-pink btn-sm mb-0 me-2 uploadBtn" id="uploadBtn">Add-->
+                                <!--                                            </div>-->
+                                <!--                                                      </label>-->
+                                <input type="file" accept="image/*" name="files" id="formFile"
+                                       style="display: none;"
+                                       multiple>
                             </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12 mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="font-weight-bolder">Product Information</h5>
+                    <div class="row">
+                        <div class="col-12">
+                            <label>Name</label>
+                            <input class="form-control" type="text" th:value="${product.product_name}"
+                                   placeholder="Name"
+                                   onfocusout="defocused(this)" name="product_name" id="product_name">
+                        </div>
+                        <div class="col-12">
+                            <label class="mt-4">Price</label>
+                            <input class="form-control" type="text" placeholder="Price"
+                                   th:value="${product.product_price}"
+                                   onfocusout="defocused(this)" name="product_price" id="product_price">
+                        </div>
+                        <div class="col-12">
+                            <label>Stock</label>
+                            <input class="form-control" type="number" placeholder="Stock"
+                                   th:value="${product.product_stock}"
+                                   onfocusout="defocused(this)" name="product_stock" min="1" id="product_stock">
+                        </div>
+                        <div class="col-12">
+                            <label>Category</label>
+                            <select class="form-control" id="category1_no" name="category1_no">
+                                <th:block th:each=" category : ${category.category1VOList}">
+                                    <th:block th:if="${product.category1_no} == ${category.category1_no}">
+                                        <option th:text="${category.category1_type}" th:value="${category.category1_no}"
+                                                selected></option>
+                                    </th:block>
+                                    <th:block th:unless="${product.category1_no} == ${category.category1_no}">
+                                        <option th:text="${category.category1_type}"
+                                                th:value="${category.category1_no}"></option>
+                                    </th:block>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label>Content</label>
+                            <textarea class="form-control" placeholder="Content" rows="2" style="resize: none;"
+                                      th:text="${product.product_content}"
+                                      name="product_content" id="product_content"></textarea>
+                        </div>
+                        <input type="hidden" th:value="${session.session_id}" name="user_id" id="user_id">
+                        <input type="hidden" th:value="${product.product_no}" name="product_no" id="product_no">
+                    </div>
+                    <div class="col-12 mt-4">
+                        <div class="d-flex">
+                            <button class="btn btn-pink btn-sm mb-0 me-2" type="submit" id="submitBtn">Edit</button>
+                            <button class="btn btn-outline-pink btn-sm mb-0" type="reset" onclick="removeAll()">
+                                Remove
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-<!--        </form>-->
+        </div>
+        <!--        </form>-->
     </div>
     <!-- 파일 첨부용 JS start-->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -109,7 +115,9 @@
         let input_UUID;
         let input_Filename;
         const fileArray = [];
-        document.addEventListener('DOMContentLoaded', function() {
+
+        // 기존 저장 파일 불러오기 Start ---------------------------------------------------
+        document.addEventListener('DOMContentLoaded', function () {
             const mediaVOList = [[${product.mediaVOList}]];
             mediaVOList.forEach(mediaVO => {
                 const link = mediaVO.media_path;
@@ -117,20 +125,22 @@
                 const fileName = link.substring(37, 100);
 
 
-                console.log("uuid"+uuid)
-                console.log("name"+fileName)
-                console.log("link"+link)
+                console.log("uuid" + uuid)
+                console.log("name" + fileName)
+                console.log("link" + link)
 
                 showUploadFile({uuid, fileName, link});
             })
         });
+        // 기존 저장 파일 불러오기 End ---------------------------------------------------
 
+        // 파일 업로드 Start -----------------------------------------------------------
         document.querySelector("#formFile").addEventListener('change', function (e) {
 
             const formObj = new FormData();
             const fileInput = document.querySelector("input[name='files']")
             const files = fileInput.files
-
+            // 사진 개수 설정
             if (fileArray.length + files.length > 4) {
                 alert('사진개수초과');
                 if (fileArray.length == 0) {
@@ -142,7 +152,7 @@
             for (let i = 0; i < files.length; i++) {
                 formObj.append("files", files[i]);
             }
-
+            // 폴더에 파일 저장
             uploadToServer(formObj).then(result => {
                 for (const uploadResult of result) {
                     showUploadFile(uploadResult)
@@ -151,9 +161,11 @@
                 removeAll()
             })
         }, false);
+        // 파일 업로드 End -----------------------------------------------------------
 
         const uploadResult = document.querySelector(".uploadResult")
 
+        // 파일 업로드시 미리보기 Start -------------------------------------------------
         function showUploadFile({uuid, fileName, link}) {
 
             input_UUID = uuid;
@@ -168,7 +180,8 @@
                                 </span>
                                 </a>
                                 <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
-                                     src="/testimg/${link}" data-src="/testimg/${uuid + "_" + fileName}" itemprop="thumbnail" alt="Image description">
+                                     src="/testimg/${link}" data-src="/testimg/${uuid + "_" + fileName}" itemprop="thumbnail" alt="Image description"
+                                     onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
                             </a>
                         </figure>`
             if (fileArray.length == 0) {
@@ -179,27 +192,37 @@
             console.log("gkgkgkgkgkgkgkgk")
         }
 
+        // 파일 업로드시 미리보기 End -------------------------------------------------
+
+        // 파일 업로드시 배열에 저장 Start ---------------------------------------------
         function fileArrayAdd() {
             fileArray.push(input_UUID + "_" + input_Filename);
-            console.log("gkgkgk"+fileArray);
+            console.log("gkgkgk" + fileArray);
         }
 
+        // 파일 업로드시 배열에 저장 End ---------------------------------------------
+
+        // 파일 삭제 Start --------------------------------------------------------
         function removeFile(uuid, fileName, obj) {
+            // 파일 삭제시 폴더에서 삭제 , 미리보기 삭제
             const targetDiv = obj.closest(".figureRemove")
             removeFileToServer(uuid, fileName).then(data => {
                 targetDiv.remove()
             })
-
+            // 파일 삭제시 배열에서 삭제
             const index = fileArray.indexOf(uuid + "_" + fileName);
             if (index > -1) {
                 fileArray.splice(index, 1);
             }
-
+            // 남은 파일 없으면 미리보기 초기화
             if (fileArray.length == 0) {
                 fileReset();
             }
         }
 
+        // 파일 삭제 End --------------------------------------------------------
+
+        // 미리보기 초기화 Start --------------------------------------------------
         function fileReset() {
             const str = `<figure class="col-12" itemProp="associatedMedia" itemScope=""
                                   itemType="http://schema.org/ImageObject">
@@ -209,15 +232,23 @@
             document.querySelector(".uploadResult").innerHTML = str
         }
 
+        // 미리보기 초기화 End --------------------------------------------------
+
+        // 파일 전체 초기화 Start ------------------------------------------------------------
         function removeAll() {
+            // 폴더에서 삭제
             for (let i = 0; i < fileArray.length; i++) {
                 const uuid = fileArray[i].substring(0, 36);
-                const fileName = fileArray[i].substring(37, 100);
+                const fileName = fileArray[i].substring(37, fileArray[i].length);
                 removeFileToServer(uuid, fileName);
             }
+            // 배열 초기화
             fileArray.length = 0;
+            // 미리보기 초기화
             fileReset();
         }
+
+        // 파일 전체 초기화 End ------------------------------------------------------------
 
 
         document.querySelector('#submitBtn').addEventListener("click", () => {
