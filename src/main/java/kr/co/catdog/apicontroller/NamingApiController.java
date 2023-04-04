@@ -14,7 +14,6 @@ import java.util.Map;
 
 @RestController
 @Slf4j
-@RequestMapping("catdogforest.shop")
 public class NamingApiController {
 
     private ChatGptService chatGptService;
@@ -22,7 +21,10 @@ public class NamingApiController {
 
     @PostMapping("/api/user/naming/mypetName")
     public ChatGptResponseDto sendQuestion(@RequestBody String param) {
-        return chatGptService.askQuestion(chatGptService.makePrompt(param));
+        log.info("check naming request");
+        ChatGptResponseDto responseDto= chatGptService.askQuestion(chatGptService.makePrompt(param));
+        log.info(responseDto.getChoices().get(0).getText().toString());
+        return responseDto;
     }
 
     @PutMapping("/api/user/naming/updatePetname/{id}")

@@ -135,7 +135,7 @@
             //name = petName.split('(')[0];
             const data = { user_id : user_id, petName : petName}
 
-            fetch("/catdogforest.shop/api/user/naming/updatePetname/"+user_id, {
+            fetch("/api/user/naming/updatePetname/"+user_id, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json;charset=UTF-8",
@@ -189,7 +189,7 @@
 
             loadingBar.style.visibility = "visible";
             createNameBtn.style.visibility = "hidden";
-            fetch('/catdogforest.shop/api/user/naming/mypetName', questionData)
+            fetch('/api/user/naming/mypetName', questionData)
                 .then(response => response.json())
                 .then(data => {
                     loadingBar.style.visibility = "hidden";
