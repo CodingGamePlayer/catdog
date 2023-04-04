@@ -37,15 +37,9 @@ public class CommunityController {
 	@GetMapping("list")
 	ModelAndView list(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		HttpSession session = request.getSession();
-		String user_id = (String) session.getAttribute("session_id");
-		log.info("로그인 아이디 : "+ user_id);
-		CommunityVO communityVO = CommunityVO.builder()
-											.user_id(user_id)
-											.build();
+		log.info("커뮤니티 btn 클릭함: ");
 		mav.addObject("registerMsg", "community");
-		mav.addObject("communityVOs", communityservice.selectAll(communityVO));
-		mav.addObject("user_id", user_id);
+		mav.addObject("communityMsg", "communityBtn");
 		mav.setViewName("/user/community/list-community");
 		return mav;
 	}
@@ -136,13 +130,8 @@ public class CommunityController {
 	@GetMapping("mycommunity")
 	ModelAndView myCommunity(@RequestParam("user_id") String user_id) {
 		ModelAndView mav = new ModelAndView();
-		CommunityDTO communityDTO = CommunityDTO.builder()
-												.user_id(user_id)
-												.build();
-		List<CommunityVO> communityVO = communityservice.myCommunity(communityDTO);
-		log.info("db다녀오 리스트 : "+communityVO);
-		mav.addObject("communityVOs", communityservice.myCommunity(communityDTO));
-		mav.addObject("user_id", user_id);
+		log.info("내가쓴글 Btn 클릭 됨 ");
+		mav.addObject("communityMsg", "mycommunityBtn");
 		mav.setViewName("/user/community/list-community");
 		return mav;
 	}
@@ -150,12 +139,8 @@ public class CommunityController {
 	@GetMapping("popularposts")
 	ModelAndView popularPosts(CommunityDTO communityDTO, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		HttpSession session = request.getSession();
-		String user_id = (String) session.getAttribute("session_id");
-		log.info("인기글 가는 유저 아이디"+user_id);
-		communityDTO.setUser_id(user_id);
-		mav.addObject("communityVOs", communityservice.popularPosts(communityDTO));
-		mav.addObject("user_id", user_id);
+		log.info("인기글 Btn 클릭 됨");
+		mav.addObject("communityMsg", "popularpostsBtn");
 		mav.setViewName("/user/community/list-community");
 		return mav;
 	}
