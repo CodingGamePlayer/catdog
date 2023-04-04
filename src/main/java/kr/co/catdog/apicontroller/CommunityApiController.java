@@ -52,14 +52,10 @@ public class CommunityApiController {
 	}
 
 	@GetMapping("/api/user/community/list")
-	public List<CommunityDTO> getList(@RequestParam("user_id") String user_id, @RequestParam("loadcount") int loadCount){
-		log.info("list에서 넘어온 user_id : "+user_id);
-		log.info("list에서 넘어온 loadCount : "+loadCount);
-		log.info("데이터야 넘어오렴");
-		CommunityDTO communityDTO = CommunityDTO.builder()
-				.user_id(user_id)
-				.loadCount(loadCount)
-				.build();
+	public List<CommunityDTO> getList(CommunityDTO communityDTO){
+		log.info("list에서 넘어온 user_id : "+communityDTO.getUser_id());
+		log.info("list에서 넘어온 loadCount : "+communityDTO.getLoadCount());
+		log.info("list에서 넘어온 communityMsg : "+communityDTO.getCommunity_msg());
 		return communityService.selectSize(communityDTO);
 	}
 

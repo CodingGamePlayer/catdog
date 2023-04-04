@@ -96,11 +96,28 @@
         SELECT community.*, media.media_type, media_path,
         (SELECT COUNT(*) FROM reply WHERE reply.community_no = community.community_no) AS reply_count,
         (SELECT COUNT(*) from heart WHERE community.community_no = heart.community_no AND heart.heart_boolean = true ) AS heart_count,
-        (SELECT heart.heart_boolean FROM heart WHERE community.community_no = catdog.heart.community_no AND	heart.user_id = #{user_id}) AS heart_boolean
+        (SELECT heart.heart_boolean FROM heart WHERE community.community_no = heart.community_no AND heart.user_id = #{user_id}) AS heart_boolean
         FROM community LEFT JOIN media ON community.community_no = media.community_no
-        ORDER BY community.community_no DESC
+        <include refid="com_msg"></include>
         LIMIT #{startIndex}, #{size}
 	</select>
+
+    <sql id="com_msg">
+        <where>
+
+            <if test="community_msg == 'mycommunityBtn'">
+                AND community.user_id = #{user_id}
+                ORDER BY community.community_no DESC
+            </if>
+        </where>
+        <if test="community_msg == 'communityBtn'">
+            ORDER BY community.community_no DESC
+        </if>
+
+        <if test="community_msg == 'popularpostsBtn'">
+            ORDER BY heart_count DESC, community.community_regdate DESC
+        </if>
+    </sql>
 
 
 
