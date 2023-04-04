@@ -135,7 +135,7 @@
             //name = petName.split('(')[0];
             const data = { user_id : user_id, petName : petName}
 
-            fetch("/api/user/naming/updatePetname/"+user_id, {
+            fetch("catdogforest.shop/api/user/naming/updatePetname/"+user_id, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json;charset=UTF-8",
