@@ -28,6 +28,7 @@ public class ChatGptServiceImpl implements ChatGptService {
     public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
+        log.info("chatgpt api key check : "+apiKey);
         headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + apiKey);
         return new HttpEntity<>(requestDto, headers);
     }
