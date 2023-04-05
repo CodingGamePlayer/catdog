@@ -2,16 +2,20 @@ package kr.co.catdog.apicontroller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
 
 import kr.co.catdog.dto.CommunityDTO;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,28 +31,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CommunityApiController {
 
-	@Value("${kr.co.catdog.upload.path}")
-	private String upPath;
-
 	@Autowired
 	private CommunityService communityService;
 
-	@GetMapping("/testimg/{fileName}")
-	public ResponseEntity<Resource> viewFileGet(@PathVariable String fileName){
-		Resource resource = new FileSystemResource(upPath + File.separator+ fileName);
-		log.info("파일 이름 : "+fileName);
-		String resourceName = resource.getFilename();
+	@GetMapping("/media/{fileName}")
+	public ResponseEntity<Resource> viewFileGet(@PathVariable String fileName) throws IOException {
+		Resource resource = communityService.getMedia(fileName);
+		byte[] imageBytes = IOUtils.toByteArray(resource.getInputStream());
 		HttpHeaders headers = new HttpHeaders();
-
-
-		try {
-			headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
-		} catch (IOException e) {
-
-			return ResponseEntity.internalServerError().build();
-		}
-		return ResponseEntity.ok().headers(headers).body(resource);
-
+		headers.setContentType(MediaType.IMAGE_JPEG);
+		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
 	@GetMapping("/api/user/community/list")

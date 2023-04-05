@@ -38,6 +38,8 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
 
     implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.1'    /* thumbnailator */
+
+    implementation 'commons-io:commons-io:2.11.0'
     
 }
 
