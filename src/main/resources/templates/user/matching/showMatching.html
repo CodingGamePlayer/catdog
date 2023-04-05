@@ -17,11 +17,11 @@
                         <div class="row">
                             <div class="col-12 text-center" th:if="${myPet.category1_no == 1}">
                                 <img class="" alt="Image placeholder" width="100" height="100"
-                                     th:src="|/testimg/${session.session_img}|" onerror="this.onerror=null; this.src='/assets/img/siba.jpg'">
+                                     th:src="|/media/${session.session_img}|" onerror="this.onerror=null; this.src='/assets/img/siba.jpg'">
                             </div>
                             <div class="col-12 text-center" th:if="${myPet.category1_no == 2}">
                                 <img class="" alt="Image placeholder" width="100" height="100"
-                                     th:src="|/testimg/${session.session_img}|" onerror="this.onerror=null; this.src='/assets/img/goyang.jpg'">
+                                     th:src="|/media/${session.session_img}|" onerror="this.onerror=null; this.src='/assets/img/goyang.jpg'">
                             </div>
                             <div class="col-12">
                                 <label for="myPetName">이름</label>
