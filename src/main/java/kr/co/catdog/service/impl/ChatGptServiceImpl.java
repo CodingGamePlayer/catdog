@@ -36,7 +36,6 @@ public class ChatGptServiceImpl implements ChatGptService {
         Environment env = context.getEnvironment();
         String apiKey = env.getProperty("CHATGPT_API_KEY");
         log.info("chatgpt api key check : "+apiKey);
-        log.info("check yamlApikey : " + yamlApiKey);
         headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + apiKey);
         return new HttpEntity<>(requestDto, headers);
     }
