@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 
+
 import org.springframework.core.env.Environment;
+
 import org.springframework.http.*;
 
 import org.springframework.http.client.ClientHttpResponse;
@@ -25,8 +27,6 @@ import java.io.IOException;
 @Slf4j
 public class ChatGptServiceImpl implements ChatGptService {
 
-
-
     private ApplicationContext context;
 
     public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto) {
@@ -36,6 +36,7 @@ public class ChatGptServiceImpl implements ChatGptService {
         Environment env = context.getEnvironment();
         String apiKey = env.getProperty("CHATGPT_API_KEY");
         log.info("chatgpt api key check : "+apiKey);
+        log.info("check yamlApikey : " + yamlApiKey);
         headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + apiKey);
         return new HttpEntity<>(requestDto, headers);
     }
