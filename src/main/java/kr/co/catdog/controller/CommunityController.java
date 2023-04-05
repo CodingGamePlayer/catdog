@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-@RequestMapping("/user/community")
+@RequestMapping("user/community")
 public class CommunityController {
 
 
@@ -38,7 +38,7 @@ public class CommunityController {
         log.info("커뮤니티 btn 클릭함: ");
         mav.addObject("registerMsg", "community");
         mav.addObject("communityMsg", "communityBtn");
-        mav.setViewName("/user/community/list-community");
+        mav.setViewName("user/community/list-community");
         return mav;
     }
 
@@ -46,7 +46,7 @@ public class CommunityController {
     @GetMapping("detail")
     ModelAndView detail() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/user/community/detail");
+        mav.setViewName("user/community/detail");
         return mav;
     }
 
@@ -54,7 +54,7 @@ public class CommunityController {
     @GetMapping("register")
     ModelAndView register() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/user/community/register");
+        mav.setViewName("user/community/register");
         return mav;
     }
 
@@ -82,7 +82,7 @@ public class CommunityController {
         String referer = request.getHeader("Referer");
         mav.addObject("referer", referer);
         mav.addObject("communityDTO", communityservice.findByCommunity(communityDTO));
-        mav.setViewName("/user/community/updateForm");
+        mav.setViewName("user/community/updateForm");
 
         return mav;
     }
@@ -115,7 +115,7 @@ public class CommunityController {
         ModelAndView mav = new ModelAndView();
         log.info("내가쓴글 Btn 클릭 됨 ");
         mav.addObject("communityMsg", "mycommunityBtn");
-        mav.setViewName("/user/community/list-community");
+        mav.setViewName("user/community/list-community");
         return mav;
     }
 
@@ -124,7 +124,7 @@ public class CommunityController {
         ModelAndView mav = new ModelAndView();
         log.info("인기글 Btn 클릭 됨");
         mav.addObject("communityMsg", "popularpostsBtn");
-        mav.setViewName("/user/community/list-community");
+        mav.setViewName("user/community/list-community");
         return mav;
     }
 
