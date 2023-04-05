@@ -3,15 +3,18 @@ package kr.co.catdog.service.impl;
 import kr.co.catdog.config.ChatGptConfig;
 import kr.co.catdog.dto.ChatGptRequestDto;
 import kr.co.catdog.dto.ChatGptResponseDto;
-import kr.co.catdog.dto.QuestionRequestDto;
+
 import kr.co.catdog.service.ChatGptService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
+
+
 import org.springframework.core.env.Environment;
+
 import org.springframework.http.*;
-import org.springframework.http.client.ClientHttpRequest;
+
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -24,18 +27,16 @@ import java.io.IOException;
 @Slf4j
 public class ChatGptServiceImpl implements ChatGptService {
 
-
-
-
     private ApplicationContext context;
 
     public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto) {
-        Environment env = context.getEnvironment();
-        String apiKey = env.getProperty("spring.chatgpt.api.key");
-        log.info("env value : "+ apiKey);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
+
+        Environment env = context.getEnvironment();
+        String apiKey = env.getProperty("CHATGPT_API_KEY");
         log.info("chatgpt api key check : "+apiKey);
+        // check push
         headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + apiKey);
         return new HttpEntity<>(requestDto, headers);
     }
