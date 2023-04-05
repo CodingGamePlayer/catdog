@@ -10,6 +10,7 @@
     <div class="col-12">
         <form action="/user/shop/list" method="get">
             <select class="form-control" id="category1" name="category1_no">
+                <option th:text="전체보기" th:value="0"></option>
                 <th:block th:each=" category : ${category.category1VOList}">
                     <option th:text="${category.category1_type}" th:value="${category.category1_no}"></option>
                 </th:block>
@@ -22,7 +23,7 @@
                 <option th:text="리뷰많은순" th:value="리뷰많은순"></option>
                 <option th:text="리뷰평점순" th:value="리뷰평점순"></option>
             </select>
-            <button type="submit" class="">검색</button>
+            <button type="submit" id="submitBtn" class="" hidden="hidden">검색</button>
         </form>
     </div>
     <script>
@@ -86,7 +87,7 @@
                                     </th:block>
                                     <th:block th:unless="${productScoreList.mediaVO != null}">
                                         <!--                                    <th:block th:unless="${productScoreList.mediaVO.media_path != '/assets/img/df.png'}">-->
-                                        <img src="/assets/img/df.png" class="d-block w-100 border-radius-xl" alt="..."
+                                        <img src="/assets/img/No-image-found.jpg" class="d-block w-100 border-radius-xl" alt="..."
                                              width="378" height="233">
                                     </th:block>
                                 </a>
@@ -147,8 +148,11 @@
         </div>
     </div>
     <script>
-        // carousel Start ---------------------------------------------------------------------
+        const select1 = document.getElementById('category1');
+        const select2 = document.getElementById('category_sort');
+
         document.addEventListener('DOMContentLoaded', function () {
+        // carousel Start ---------------------------------------------------------------------
             const firstCarouselItem = document.querySelector(".carousel-item:first-child");
             firstCarouselItem.classList.add("active");
 
@@ -158,8 +162,28 @@
                 pause: 'hover',
                 wrap: true
             });
-        })
         // carousel End ---------------------------------------------------------------------
+
+        })
+        // search Start ----------------------------------------------------------------------
+        const urlParams = new URLSearchParams(window.location.search);
+        const category1_no = urlParams.get('category1_no');
+        const category_sort = urlParams.get('category_sort');
+        if (category1_no) {
+            select1.value = category1_no;
+            select2.value = category_sort;
+        }
+
+        select1.addEventListener('change', function () {
+            document.getElementById('submitBtn').click();
+        })
+
+        select2.addEventListener('change', function () {
+            document.getElementById('submitBtn').click();
+        })
+        // search End ------------------------------------------------------------------------
+
+
 
     </script>
 </div>
