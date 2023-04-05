@@ -29,7 +29,9 @@ public class ChatGptServiceImpl implements ChatGptService {
     public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto) {
         Environment env = context.getEnvironment();
         String apiKey = env.getProperty("spring.chatgpt.api.key");
+        String checkApiKey = env.getProperty("CHATGPT_API_KEY");
         log.info("env value : "+ apiKey);
+        log.info("secret env key : "+checkApiKey);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
         log.info("chatgpt api key check : "+apiKey);
