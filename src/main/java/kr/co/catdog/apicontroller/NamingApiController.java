@@ -6,6 +6,7 @@ import kr.co.catdog.service.ChatGptService;
 import kr.co.catdog.service.PetService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import java.util.Map;
 @RestController
 @Slf4j
 public class NamingApiController {
+
 
     private ChatGptService chatGptService;
     private PetService petService;
