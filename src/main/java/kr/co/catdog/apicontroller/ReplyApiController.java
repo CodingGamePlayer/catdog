@@ -24,7 +24,7 @@ public class ReplyApiController {
 	@Autowired
 	private ReplyService replyService;
 	
-	@PostMapping("/api/user/community/reply")
+	@PostMapping("api/user/community/reply")
 	public ResponseEntity<ReplyVO> registerReply(@RequestBody ReplyDTO replyDTO){
 		log.info("replyDTO : "+replyDTO);
 			int result = replyService.registerReply(replyDTO);
@@ -35,7 +35,7 @@ public class ReplyApiController {
 
 	}
 	
-	@GetMapping("/api/user/community/reply")
+	@GetMapping("api/user/community/reply")
 	public List<ReplyVO> getReply(@RequestParam("community_no") int community_no, ReplyDTO replyDTO){
 		
 		replyDTO.setCommunity_no(community_no);
@@ -44,19 +44,19 @@ public class ReplyApiController {
 		return replyService.getReply(replyDTO);
 	}
 	
-	@GetMapping("/api/user/community/reply_count")
+	@GetMapping("api/user/community/reply_count")
 	public int replyCount(@RequestParam("community_no") int community_no) {
 		
 		return replyService.replyCount(community_no);
 	}
 	
-	@DeleteMapping("/api/user/community/delete")
+	@DeleteMapping("api/user/community/delete")
 	public int replyDelete(@RequestParam("reply_no") int reply_no) {
 		log.info("넘어온 replyNo : "+reply_no);
 		return replyService.replyDelete(reply_no);
 	}
 	
-	@GetMapping("/api/user/community/myreply")
+	@GetMapping("api/user/community/myreply")
 	public List<ReplyVO> myReply(@RequestParam("user_id") String user_id){
 		log.info("reply list에서 넘어온 replyNo : "+user_id);
 		return replyService.myReply(user_id);
