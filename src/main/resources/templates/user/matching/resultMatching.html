@@ -61,14 +61,14 @@
                             <div class="col-12 text-center" th:if="${matchingDTO.data.category1_no == 1}">
                                 <a th:href="|/user/community/mycommunity?user_id=${matchingDTO.data.user_id}|">
                                     <img class="" alt="Image placeholder" width="100" height="100"
-                                         th:src="|/testimg/${session.session_img}|"
+                                         th:src="|/media/${session.session_img}|"
                                          onerror="this.onerror=null; this.src='/assets/img/siba.jpg'">
                                 </a>
                             </div>
                             <div class="col-12 text-center" th:if="${matchingDTO.data.category1_no == 2}">
                                 <a th:href="|/user/community/mycommunity?user_id=${matchingDTO.data.user_id}|">
                                     <img class="" alt="Image placeholder" width="100" height="100"
-                                         th:src="|/testimg/${session.session_img}|"
+                                         th:src="|/media/${session.session_img}|"
                                          onerror="this.onerror=null; this.src='/assets/img/goyang.jpg'">
                                 </a>
                             </div>

@@ -10,7 +10,7 @@
     <div class="container py-4">
       <div class="row">
         <div class="col-sm-10 mx-auto d-flex justify-content-center flex-column">
-          <img alt="Image placeholder" th:src="|/testimg/${communityDTO.media_path}|"
+          <img alt="Image placeholder" th:src="|/media/${communityDTO.media_path}|"
             class="img-fluid border-radius-lg shadow-lg" id="originImg" style="">
           <img class="img-fluid border-radius-lg shadow-lg" id="previewImage" src="" alt="Preview Image" style="display : none;">
           <form role="form" id="contact-form" method="post" autocomplete="off" action="/user/community/update"
