@@ -19,7 +19,7 @@ public class ReplyController {
 	@Autowired
 	private ReplyService replyService;
 	
-	@GetMapping("/user/community/myreply")
+	@GetMapping("user/community/myreply")
 	public ModelAndView myReply(HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
@@ -29,11 +29,11 @@ public class ReplyController {
 									.user_id(user_id)
 									.build();
 		if(user_id == null) {
-			mav.setViewName("/sign-in");
+			mav.setViewName("sign-in");
 		}
 		mav.addObject("user_id", user_id);
 		mav.addObject("replyVOs", replyService.myReply(user_id));
-		mav.setViewName("/user/community/list-reply");
+		mav.setViewName("user/community/list-reply");
 		return mav;
 	}
 

@@ -34,7 +34,7 @@ public class CommunityApiController {
 	@Autowired
 	private CommunityService communityService;
 
-	@GetMapping("/media/{fileName}")
+	@GetMapping("media/{fileName}")
 	public ResponseEntity<Resource> viewFileGet(@PathVariable String fileName) throws IOException {
 		Resource resource = communityService.getMedia(fileName);
 		byte[] imageBytes = IOUtils.toByteArray(resource.getInputStream());
@@ -43,7 +43,7 @@ public class CommunityApiController {
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
-	@GetMapping("/api/user/community/list")
+	@GetMapping("api/user/community/list")
 	public List<CommunityDTO> getList(CommunityDTO communityDTO){
 		log.info("list에서 넘어온 user_id : "+communityDTO.getUser_id());
 		log.info("list에서 넘어온 loadCount : "+communityDTO.getLoadCount());
