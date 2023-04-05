@@ -24,9 +24,6 @@ import java.io.IOException;
 @Slf4j
 public class ChatGptServiceImpl implements ChatGptService {
 
-
-
-
     private ApplicationContext context;
 
     public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto) {
