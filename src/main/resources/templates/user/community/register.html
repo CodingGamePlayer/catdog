@@ -16,9 +16,8 @@
 		        <form role="form" id="contact-form" method="post" autocomplete="off" action="/user/community/register" enctype="multipart/form-data">
 		          <div class="card-body">
 		            <div class="mb-4">
-		              <label>Id</label>
 		              <div class="input-group">
-		                <input type="email" class="form-control" th:value="${session.session_id}" placeholder="" name="user_id" readonly>
+		                <input type="hidden" class="form-control" th:value="${session.session_id}" placeholder="" name="user_id" readonly>
 		              </div>
 		            </div>
 		            <div class="form-group">
@@ -47,8 +46,12 @@
 					  </div>
 					</div>
 		            <div class="path mb-4"  style="display:none;">
-					  <label for="media_path" class="form-label">영상경로</label>
-					  <input class="form-control mb-4" type="text" id="media_path" name="media_path">
+					  <label for="media_pathEx" class="form-label">영상경로</label>
+					  <input class="form-control mb-4" type="text" id="media_pathEx" >
+					  <input type="hidden" id="media_path" name="media_path">
+						<div class="d-flex justify-content-sm-center">
+							<iframe id="iframeYou" src="" alt="iframeYou" style="display : none;"></iframe>
+						</div>
 		            </div>
 		            <div class="form-group mb-4">
 		              <label>Your message</label>
@@ -73,7 +76,7 @@ function typeSelect(value){
 	if(value == 1){
 		path.setAttribute('style', 'display:none;');
 		upload.setAttribute('style', 'display:inline;' );
-		
+
 	}
 	if(value == 2){
 		upload.setAttribute('style', 'display:none;' );
@@ -86,6 +89,7 @@ function typeSelect(value){
 <script>
 const fileInput = document.getElementById('fileInput');
 const previewImage = document.getElementById('previewImage');
+const media_pathEx = document.getElementById('media_pathEx')
 
 fileInput.addEventListener('change', function() {
   const file = this.files[0];
@@ -100,6 +104,31 @@ fileInput.addEventListener('change', function() {
     reader.readAsDataURL(file);
   }
 });
+
+media_pathEx.addEventListener('change', function (){
+	const inputUrl = media_pathEx.value;
+	const embedUrl = convertToEmbedUrl(inputUrl);
+
+	if (embedUrl) {
+		document.getElementById('iframeYou').setAttribute('src',embedUrl);
+	} else {
+		alert("잘못된 YouTube URL입니다.");
+
+	}
+	document.getElementById('iframeYou').setAttribute('style', 'display:inline;');
+	document.getElementById('media_path').setAttribute('value',embedUrl);
+})
+
+function convertToEmbedUrl(url) {
+	const urlRegex = /^https:\/\/(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+	const match = url.match(urlRegex);
+	if (match && match[1].length === 11) {
+		const videoId = match[1];
+		return 'https://www.youtube.com/embed/' + videoId;
+	}
+	return null;
+}
+
 
 
 </script>
