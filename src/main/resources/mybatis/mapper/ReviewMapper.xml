@@ -17,6 +17,7 @@
         FROM review
         WHERE product_no = #{product_no}
         ORDER BY review_no DESC
+        LIMIT #{startIndex},#{size}
     </select>
 
     <insert id="insert">

@@ -13,9 +13,9 @@ import java.util.List;
 @Builder
 public class PageDTO {
     private List<Object> dtoList;
-
+    private int product_no;
     private int startIndex;
-    private int size;
+    private int size = 10;
 
 
 }

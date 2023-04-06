@@ -1,6 +1,7 @@
 package kr.co.catdog.apicontroller;
 
 import kr.co.catdog.dto.CartDTO;
+import kr.co.catdog.dto.PageDTO;
 import kr.co.catdog.dto.ProductDTO;
 import kr.co.catdog.dto.ReviewDTO;
 import kr.co.catdog.service.CartService;
@@ -59,10 +60,12 @@ public class ShopApiController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @GetMapping("/api/user/shop/detail")
-    public List<ReviewDTO> reviewList(@RequestBody ReviewDTO reviewDTO) {
-        log.info("ddddddddddd"+String.valueOf(reviewDTO));
-        List<ReviewDTO> reviewDTOList = reviewService.selectAll(reviewDTO.getProduct_no());
-
+    public List<ReviewDTO> reviewList(PageDTO pageDTO) {
+//        log.info(String.valueOf(product_no));
+        log.info("ddddddddddd"+String.valueOf(pageDTO));
+        List<ReviewDTO> reviewDTOList = reviewService.selectAll(pageDTO);
+        log.info(String.valueOf(reviewDTOList));
         return reviewDTOList;
+//        return null;
     }
 }
