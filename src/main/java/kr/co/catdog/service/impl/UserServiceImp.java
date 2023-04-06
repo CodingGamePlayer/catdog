@@ -66,21 +66,21 @@ public class UserServiceImp implements UserService {
 
     @Override
     public int update(UserDTO userDTO) {
-        String fileName = UUID.randomUUID().toString() + "_" + userDTO.getFile().getOriginalFilename();
-        String filePath = upPath + "\\" + fileName;
-        File dest = new File(filePath);
-
-        try {
-            userDTO.getFile().transferTo(dest);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        userDTO.setUser_image(fileName);
+//        String fileName = UUID.randomUUID().toString() + "_" + userDTO.getFile().getOriginalFilename();
+//        String filePath = upPath + "\\" + fileName;
+//        File dest = new File(filePath);
+//
+//        try {
+//            userDTO.getFile().transferTo(dest);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        userDTO.setUser_image(fileName);
 //        matchinguse가 null값이면 0 으로 set
         if(userDTO.getUser_matchinguse() == null){
             userDTO.setUser_matchinguse(false);
         }
-
+        log.info("여기여기여기"+String.valueOf(userDTO));
         int result = userMapper.update(userDTO);
 
         return !(result > 0) ? 0 : 1;
