@@ -106,7 +106,7 @@
         <where>
 
             <if test="community_msg == 'mycommunityBtn'">
-                AND community.user_id = #{user_id}
+                AND community.user_id = #{target_id}
                 ORDER BY community.community_no DESC
             </if>
         </where>

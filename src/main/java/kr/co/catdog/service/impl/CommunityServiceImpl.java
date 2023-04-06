@@ -51,23 +51,20 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     public int register(CommunityDTO communityDTO)  {
-        try {
-            createPath(communityDTO);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if(communityDTO.getMedia_type()== 1) {
+            try {
+                createPath(communityDTO);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         int result = communityMapper.register(communityDTO);
         log.info("db다녀온 communityDTO : " + communityDTO);
-        int comNo = communityDTO.getCommunity_no();
         if (!(result > 0)) {
             return 0;
-        } else {
-            if (comNo == 0) {
-                return 0;
-            } else {
-                return communityMapper.registerMedia(communityDTO);
-            }
         }
+
+        return communityMapper.registerMedia(communityDTO);
     }
 
     private void createPath(CommunityDTO communityDTO) throws IOException {
