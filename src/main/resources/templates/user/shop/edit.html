@@ -122,7 +122,7 @@
             mediaVOList.forEach(mediaVO => {
                 const link = mediaVO.media_path;
                 const uuid = link.substring(0, 36);
-                const fileName = link.substring(37, 100);
+                const fileName = link.substring(37, link.length);
 
 
                 console.log("uuid" + uuid)

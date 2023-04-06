@@ -13,6 +13,7 @@
         <result property="product_content" column="product_content"/>
         <result property="product_price" column="product_price"/>
         <result property="product_regdate" column="product_regdate"/>
+        <result property="product_soldQuantity" column="product_soldQuantity"/>
     </resultMap>
 
     <!--    <select id="selectAll" resultMap="productMap">-->
@@ -89,7 +90,7 @@
             ORDER BY product_regdate DESC
         </if>
         <if test="category_sort != null and category_sort == '판매량순'">
-            ORDER BY product_ DESC
+            ORDER BY product_soldQuantity DESC
         </if>
         <if test="category_sort != null and category_sort == '리뷰많은순'">
             ORDER BY b.count DESC

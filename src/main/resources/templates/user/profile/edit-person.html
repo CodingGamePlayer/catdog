@@ -5,125 +5,332 @@
       layout:decorate="~{layout/default_layout.html}">
 
 
-
 <!-- Content -->
 <div layout:fragment="content">
-  <div class="col-12 p-4 py-3">
-    <div class="card card-plain">
-      <div class="card-header pb-0 text-left">
-        <h3 class="font-weight-bolder jh-pink-title text-gradient mb-0">회원 정보 관리</h3>
-        <p class="mb-0 text-sm">Personal info and options to manage it.</p>
-      </div>
-      <div class="card-body">
-        <form class="needs-validation" role="form text-left" action="/user/profile/edit-person" method="post" enctype="multipart/form-data" novalidate>
-          <label>Name</label>
-          <div class="input-group mb-2">
-            <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name-addon" th:value="${user.user_name}" name="user_name" maxlength="40" required>
-          </div>
-          <label>Id</label>
-          <div class="input-group mb-2">
-            <input type="email" class="form-control" placeholder="Email" aria-label="Id"
-                   aria-describedby="Id-addon" th:value="${user.user_id}" name="user_id" readonly>
-          </div>
-          <label>Password</label>
-          <div class="input-group mb-2">
-            <input type="password" class="form-control" placeholder="Password" aria-label="Password"
-                   aria-describedby="password-addon" th:value="${user.user_pw}" name="user_pw" maxlength="90" required>
-          </div>
-          <label>Phone</label>
-          <div class="input-group mb-2">
-            <input type="tel" class="form-control" placeholder="Phone" aria-label="Phone" aria-describedby="phone-addon" pattern="^\d{3}-?\d{4}-?\d{4}$" th:value="${user.user_phoneNumber}" name="user_phoneNumber">
-          </div>
-          <label>Photo</label>
-          <div class="mb-3">
-            <input type="file" class="input-group form-control" placeholder="Add a photo" aria-label="Photo"
-                   aria-describedby="photo-addon" name="file" id="fileInput">
-            <div class="d-flex justify-content-center">
-              <img id="preview" src="" alt="" class="pt-1" style="display : none;">
-              <img id="previewSaved" th:src="|/testimg/${user.user_image}|" alt="" class="pt-1" style="display:inline; width: 280px; height: 240px;">
+    <div class="col-12 p-4 py-3">
+        <div class="card card-plain">
+            <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder jh-pink-title text-gradient mb-0">회원 정보 관리</h3>
+                <p class="mb-0 text-sm">Personal info and options to manage it.</p>
             </div>
-          </div>
-          <div class="form-check form-switch text-left">
-            <th:block th:if="${user.user_matchinguse} != true">
-              <input class="form-check-input" type="checkbox" role="switch" id="matching1" th:checked="false" name="user_matchinguse">
-              <label class="form-check-label" for="matching1">매칭등록여부</label>
-            </th:block>
-            <th:block th:unless="${user.user_matchinguse} != true">
-              <input class="form-check-input" type="checkbox" role="switch" id="matching2" th:checked="true" name="user_matchinguse">
-              <label class="form-check-label" for="matching2">매칭등록여부</label>
-            </th:block>
-          </div>
-          <div class="text-center">
-            <button type="submit" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0">수정하기</button>
-          </div>
-        </form>
-        <div class="d-flex justify-content-end align-items-center text-xs pt-4">
-          <a href="#" class="" onclick="deleteAccount()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                              class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-                  d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
-            <path fill-rule="evenodd"
-                  d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
-          </svg><span class="px-1">회원탈퇴</span>
-          </a>
+            <div class="card-body">
+                <form class="needs-validation" role="form text-left" action="/user/profile/edit-person" method="post"
+                      enctype="multipart/form-data" novalidate>
+                    <label>Name</label>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" placeholder="Name" aria-label="Name"
+                               aria-describedby="name-addon" th:value="${user.user_name}" name="user_name"
+                               maxlength="40" required>
+                    </div>
+                    <label>Id</label>
+                    <div class="input-group mb-2">
+                        <input type="email" class="form-control" placeholder="Email" aria-label="Id"
+                               aria-describedby="Id-addon" th:value="${user.user_id}" name="user_id" readonly>
+                    </div>
+                    <label>Password</label>
+                    <div class="input-group mb-2">
+                        <input type="password" class="form-control" placeholder="Password" aria-label="Password"
+                               aria-describedby="password-addon" th:value="${user.user_pw}" name="user_pw"
+                               maxlength="90" required>
+                    </div>
+                    <label>Phone</label>
+                    <div class="input-group mb-2">
+                        <input type="tel" class="form-control" placeholder="Phone" aria-label="Phone"
+                               aria-describedby="phone-addon" pattern="^\d{3}-?\d{4}-?\d{4}$"
+                               th:value="${user.user_phoneNumber}" name="user_phoneNumber">
+                    </div>
+                    <label>Photo</label>
+                    <div class="mb-3">
+                        <input type="file" class="input-group form-control" placeholder="Add a photo" aria-label="Photo"
+                               aria-describedby="photo-addon" name="files" id="formFile">
+                        <input type="text" name="user_image" id="user_image" hidden="hidden" value="">
+                        <div class="d-flex justify-content-center uploadResult position-relative">
+                        </div>
+                    </div>
+                    <div class="form-check form-switch text-left">
+                        <th:block th:if="${user.user_matchinguse} != true">
+                            <input class="form-check-input" type="checkbox" role="switch" id="matching1"
+                                   th:checked="false" name="user_matchinguse">
+                            <label class="form-check-label" for="matching1">매칭등록여부</label>
+                        </th:block>
+                        <th:block th:unless="${user.user_matchinguse} != true">
+                            <input class="form-check-input" type="checkbox" role="switch" id="matching2"
+                                   th:checked="true" name="user_matchinguse">
+                            <label class="form-check-label" for="matching2">매칭등록여부</label>
+                        </th:block>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn jh-bg-pink text-white btn-lg btn-rounded w-100 mt-4 mb-0">
+                            수정하기
+                        </button>
+                    </div>
+                </form>
+                <div class="d-flex justify-content-end align-items-center text-xs pt-4">
+                    <a href="#" class="" onclick="deleteAccount()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                            <path fill-rule="evenodd"
+                                  d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                        </svg>
+                        <span class="px-1">회원탈퇴</span>
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <script>
-    const fileInput = document.getElementById('fileInput');
-    const preview = document.getElementById('preview');
 
-    fileInput.addEventListener('change',function (){
-      const file = this.files[0];
-      const reader = new FileReader();
+    <!-- 파일 첨부용 JS start-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/assets/js/upload.js"></script>
+    <!-- 파일 첨부용 JS end-->
 
-      reader.addEventListener('load',function () {
-        preview.src = reader.result;
-      });
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let input_UUID;
+        let input_Filename;
+        // const fileArray = [];
 
-      if (file) {
-        document.getElementById('previewSaved').setAttribute('style','display : none;')
+        // 기존 저장 파일 불러오기 Start ---------------------------------------------------
+        document.addEventListener('DOMContentLoaded', function () {
+            // const mediaVOList =
+            // mediaVOList.forEach(mediaVO => {
+            const user_image = [[${user.user_image}]];
+            if (user_image == '') {
+                return;
+            }
+            const link = user_image;
+            const uuid = link.substring(0, 36);
+            const fileName = link.substring(37, link.length);
 
-        document.getElementById('preview').setAttribute('style','display:inline; width: 280px; height: 240px;');
-        reader.readAsDataURL(file);
-      }
 
-    });
+            console.log("uuid" + uuid)
+            console.log("name" + fileName)
+            console.log("link" + link)
 
-    // validation logic
+            showUploadFile({uuid, fileName, link});
+            // })
+        });
+        // 기존 저장 파일 불러오기 End ---------------------------------------------------
 
-    (function () {
-      'use strict'
+        // 파일 업로드 Start -----------------------------------------------------------
+        document.querySelector("#formFile").addEventListener('change', function (e) {
+            console.log("gkgkgkhhhhh")
+            const formObj = new FormData();
+            const fileInput = document.querySelector("input[name='files']")
+            const files = fileInput.files
+            // 사진 개수 설정
+            // if (fileArray.length + files.length > 4) {
+            //   alert('사진개수초과');
+            //   if (fileArray.length == 0) {
+            //     fileReset();
+            //   }
+            //   return;
+            // }
 
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      const forms = document.querySelectorAll('.needs-validation')
+            for (let i = 0; i < files.length; i++) {
+                formObj.append("files", files[i]);
+            }
+            // 폴더에 파일 저장
+            uploadToServer(formObj).then(result => {
+                for (const uploadResult of result) {
+                    showUploadFile(uploadResult)
+                }
+            }).catch(e => {
+                removeAll()
+            })
+        }, false);
+        // 파일 업로드 End -----------------------------------------------------------
 
-      // Loop over them and prevent submission
-      Array.prototype.slice.call(forms)
-              .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                  if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                  }
+        const uploadResult = document.querySelector(".uploadResult")
 
-                  form.classList.add('was-validated')
-                }, false)
-              })
-    })()
+        // 파일 업로드시 미리보기 Start -------------------------------------------------
+        function showUploadFile({uuid, fileName, link}) {
+            console.log(link)
 
-    function deleteAccount() {
-      const logoutToast = document.getElementById('deleteAccountToast')
-      logoutToast.classList.add("show");
-    }
+            input_UUID = uuid;
+            input_Filename = fileName;
+            const str = `<a href="#" onclick="javascript:removeFile('${uuid}', '${fileName}', this)">
+                            <span class="position-absolute top-10 start-100 translate-middle rounded-circle bg-light">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-x text-dark" viewBox="0 0 16 16">
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                            </span>
+                        </a>
+                        <img id="" src="/testimg/${link}" alt="" class="pt-2" style="width: 280px; height: 240px;"
+                        onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">`
 
-  </script>
+            //
+            // if (fileArray.length == 0) {
+            //   uploadResult.innerHTML = '';
+            // }
+            uploadResult.innerHTML = str;
+            // fileArrayAdd()
+            document.getElementById('user_image').value = link;
+            console.log("gkgkgk")
+
+        }
+
+        // 파일 업로드시 미리보기 End -------------------------------------------------
+
+        // 파일 업로드시 배열에 저장 Start ---------------------------------------------
+        // function fileArrayAdd() {
+        //   fileArray.push(input_UUID + "_" + input_Filename);
+        //   console.log("gkgkgk" + fileArray);
+        // }
+
+        // 파일 업로드시 배열에 저장 End ---------------------------------------------
+
+        // 파일 삭제 Start --------------------------------------------------------
+        function removeFile(uuid, fileName, obj) {
+            // 파일 삭제시 폴더에서 삭제 , 미리보기 삭제
+            // const targetDiv = obj.closest(".figureRemove")
+            removeFileToServer(uuid, fileName).then(data => {
+                uploadResult.innerHTML = ''
+                document.querySelector("#formFile").value = ''
+                document.getElementById('user_image').value = ''
+            })
+
+
+            // 파일 삭제시 배열에서 삭제
+            // const index = fileArray.indexOf(uuid + "_" + fileName);
+            // if (index > -1) {
+            //   fileArray.splice(index, 1);
+            // }
+            // 남은 파일 없으면 미리보기 초기화
+            // if (fileArray.length == 0) {
+            //   fileReset();
+            // }
+        }
+
+        // 파일 삭제 End --------------------------------------------------------
+
+        // 미리보기 초기화 Start --------------------------------------------------
+        // function fileReset() {
+        //   // const str = `<figure class="col-12" itemProp="associatedMedia" itemScope=""
+        //   //                             itemType="http://schema.org/ImageObject">
+        //   //                       <img class="w-75 min-height-100 max-height-100 border-radius-lg"
+        //   //                            src="/assets/img/new.png" itemProp="thumbnail" alt="Image description">
+        //   //                    </figure>`
+        //   uploadResult.innerHTML = ''
+        // }
+
+        // 미리보기 초기화 End --------------------------------------------------
+
+        // 파일 전체 초기화 Start ------------------------------------------------------------
+        // function removeAll() {
+        //   // 폴더에서 삭제
+        //   for (let i = 0; i < fileArray.length; i++) {
+        //     const uuid = fileArray[i].substring(0, 36);
+        //     const fileName = fileArray[i].substring(37, fileArray[i].length);
+        //     removeFileToServer(uuid, fileName);
+        //   }
+        //   // 배열 초기화
+        //   // fileArray.length = 0;
+        //   // 미리보기 초기화
+        //   fileReset();
+        // }
+
+        // 파일 전체 초기화 End ------------------------------------------------------------
+
+
+        // document.querySelector('#submitBtn').addEventListener("click", () => {
+        //
+        //
+        //   const input_product_name = document.querySelector('#product_name').value;
+        //   const input_product_price = document.querySelector('#product_price').value;
+        //   const input_product_stock = document.querySelector('#product_stock').value;
+        //   const input_category1_no = document.querySelector('#category1_no').value;
+        //   const input_product_content = document.querySelector('#product_content').value;
+        //   const input_user_id = document.querySelector('#user_id').value;
+        //   const input_product_no = document.querySelector('#product_no').value;
+        //   const product = {
+        //     product_name: input_product_name,
+        //     product_price: input_product_price,
+        //     product_stock: input_product_stock,
+        //     category1_no: input_category1_no,
+        //     product_content: input_product_content,
+        //     user_id: input_user_id,
+        //     product_no: input_product_no,
+        //     media_path: fileArray
+        //   };
+        //
+        //   console.log(product);
+        //
+        //   const url = "/api/user/shop";
+        //
+        //   fetch(url, {
+        //     method: "PUT",
+        //     body: JSON.stringify(product),
+        //     headers: {
+        //       "Content-Type": "application/json"
+        //     }
+        //   }).then(response => {
+        //     if (response.ok) {
+        //       alert('수정이 완료되었습니다.');
+        //       window.location.reload();
+        //     } else {
+        //       alert('수정을 실패하였습니다.');
+        //     }
+        //   });
+        //
+        //
+        // });
+
+    </script>
+    <script>
+        // const fileInput = document.getElementById('fileInput');
+        // const preview = document.getElementById('preview');
+        //
+        // fileInput.addEventListener('change',function (){
+        //   const file = this.files[0];
+        //   const reader = new FileReader();
+        //
+        //   reader.addEventListener('load',function () {
+        //     preview.src = reader.result;
+        //   });
+        //
+        //   if (file) {
+        //     document.getElementById('previewSaved').setAttribute('style','display : none;')
+        //
+        //     document.getElementById('preview').setAttribute('style','display:inline; width: 280px; height: 240px;');
+        //     reader.readAsDataURL(file);
+        //   }
+        //
+        // });
+
+        // validation logic
+
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        function deleteAccount() {
+            const logoutToast = document.getElementById('deleteAccountToast')
+            logoutToast.classList.add("show");
+        }
+
+    </script>
 
 </div>
 <!-- End Content -->
-
-
 
 
 </html>
