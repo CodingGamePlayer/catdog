@@ -35,6 +35,7 @@ public class CommunityDTO {
 	private int heart_count;
 	private boolean heart_boolean;
 	private String community_msg;
+	private String target_id;
 
 
 }

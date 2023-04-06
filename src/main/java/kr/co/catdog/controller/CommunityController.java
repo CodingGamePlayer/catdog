@@ -58,7 +58,7 @@ public class CommunityController {
         return mav;
     }
 
-    //	글 등록 파일 업로드
+    //	글 등록
     @PostMapping("register")
     ModelAndView register(CommunityDTO communityDTO) throws IOException {
         ModelAndView mav = new ModelAndView();
@@ -115,6 +115,7 @@ public class CommunityController {
         ModelAndView mav = new ModelAndView();
         log.info("내가쓴글 Btn 클릭 됨 ");
         mav.addObject("communityMsg", "mycommunityBtn");
+        mav.addObject("target_id", user_id);
         mav.setViewName("user/community/list-community");
         return mav;
     }
