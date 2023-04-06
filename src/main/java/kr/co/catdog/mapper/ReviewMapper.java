@@ -1,6 +1,7 @@
 package kr.co.catdog.mapper;
 
 import kr.co.catdog.domain.ReviewVO;
+import kr.co.catdog.dto.PageDTO;
 import kr.co.catdog.dto.ReviewDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface ReviewMapper {
-    List<ReviewVO> selectAll(int product_no);
+    List<ReviewVO> selectAll(PageDTO pageDTO);
 
     int insert(ReviewDTO reviewDTO);
 

@@ -1,8 +1,11 @@
 package kr.co.catdog.apicontroller;
 
 import kr.co.catdog.dto.CartDTO;
+import kr.co.catdog.dto.PageDTO;
 import kr.co.catdog.dto.ProductDTO;
+import kr.co.catdog.dto.ReviewDTO;
 import kr.co.catdog.service.CartService;
+import kr.co.catdog.service.ReviewService;
 import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShopApiController {
     private final ShopService shopService;
+    private final ReviewService reviewService;
     @PostMapping("/api/user/shop")
     public ResponseEntity<ProductDTO> register(@RequestBody ProductDTO productDTO){
 
@@ -55,5 +59,13 @@ public class ShopApiController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
+    @GetMapping("/api/user/shop/detail")
+    public List<ReviewDTO> reviewList(PageDTO pageDTO) {
+//        log.info(String.valueOf(product_no));
+        log.info("ddddddddddd"+String.valueOf(pageDTO));
+        List<ReviewDTO> reviewDTOList = reviewService.selectAll(pageDTO);
+        log.info(String.valueOf(reviewDTOList));
+        return reviewDTOList;
+//        return null;
+    }
 }
