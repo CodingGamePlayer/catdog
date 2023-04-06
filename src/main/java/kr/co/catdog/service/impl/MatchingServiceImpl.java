@@ -89,10 +89,17 @@ public class MatchingServiceImpl implements MatchingService {
                 .map(matchingVO -> modelMapper.map(matchingVO, MatchingDTO.class))
                 .collect(Collectors.toList());
         for(int i = 0 ; i < matchingDTOs.size() ; i++){
+            log.info("for문 : "+i);
             matchingDTOs.get(i).setData(petMapper.findById(matchingDTOs.get(i).getMatching_user_id()));
-            matchingDTOs.get(i).setPetDTO(modelMapper.map(petMapper.findById(matchingDTOs.get(i).getUser_id()), PetDTO.class));
-        }
+            if(matchingDTOs.get(i).getData() == null || effectiveness(matchingDTOs.get(i).getMatching_user_id())==0){
+                matchingDTOs.remove(i);
+                i--;
+                continue;
+            }
+                matchingDTOs.get(i).setPetDTO(modelMapper.map(petMapper.findById(matchingDTOs.get(i).getUser_id()), PetDTO.class));
+                log.info("매칭 리스트 dataPet name : "+matchingDTOs.get(i).getData());
 
+        }
 
         return matchingDTOs;
     }
