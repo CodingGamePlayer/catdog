@@ -17,8 +17,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                  class="bi bi-pencil-square me-3" viewBox="0 0 16 16">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                <path fill-rule="evenodd"
-                                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                             </svg>
                         </a>
                         <a th:href="@{|/user/shop/delete/${product.product_no}|}">
@@ -43,7 +42,7 @@
                             <figure class="col-3" itemprop="associatedMedia" itemscope=""
                                     itemtype="http://schema.org/ImageObject">
                                 <!--                      <th:block th:if="${img != null}">-->
-                                <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow imgView-s"
+                                <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow-lg imgView-s"
                                      th:src="@{|/testimg/${img.media_path}|}" alt="Image description"
                                      onclick="imgView(this.src)"
                                      onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
@@ -97,72 +96,18 @@
                     </form>
                 </div>
             </div>
-
             <h5 class="my-4 px-1 mt-6">Review</h5>
-
             <div class="row mt-3 mx-1">
-                <th:block th:each="review : ${review}">
-                    <div class="d-flex mt-3 col-12">
-                        <div class="flex-shrink-0 col-2">
-                            <th:block th:if="${review.user_image == null || review.user_image == ''}">
-                                <img alt="Image placeholder" class="avatar rounded-circle" src="/assets/img/df.png">
-                            </th:block>
-                            <th:block th:unless="${review.user_image == null || review.user_image == ''}">
-                                <img alt="Image placeholder" class="avatar rounded-circle"
-                                     th:src="|/testimg/${review.user_image}|"
-                                     onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
-                            </th:block>
-                        </div>
-                        <div class="flex-grow-1 ms-3 me-1 col-10">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-<!--                                <h6 class="h6 my-0" th:text="${review.user_id}"></h6>-->
-                                <div >
-                                <th:block th:if="${review.review_score == 5}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-star-fill jh-pink text-gradient" viewBox="0 0 16 16">
-                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-star-fill jh-pink text-gradient" viewBox="0 0 16 16">
-                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-star-fill jh-pink text-gradient" viewBox="0 0 16 16">
-                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-star-fill jh-pink text-gradient" viewBox="0 0 16 16">
-                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-star-fill jh-pink text-gradient" viewBox="0 0 16 16">
-                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                    </svg>
-<!--                                    -->
-<!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
-<!--                                         class="bi bi-star jh-pink text-gradient" viewBox="0 0 16 16">-->
-<!--                                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />-->
-<!--                                    </svg>-->
-                                </th:block>
-                                </div>
-                                <th:block th:if="${review.user_id == session.session_id}">
-                                    <a th:href="@{|/user/shop/detail/${review.product_no}/delete/${review.review_no}|}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
-                                             class="bi bi-trash3 me-2" viewBox="0 0 16 16">
-                                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                                        </svg>
-                                    </a>
-                                </th:block>
-                            </div>
-                            <div class="text-sm me-3" th:text="${review.review_content}">
-
-                            </div>
-                        </div>
-                    </div>
-                </th:block>
                 <div class="d-flex mt-4">
                     <div class="flex-shrink-0">
-                        <img alt="Image placeholder" class="avatar rounded-circle me-3" src="/assets/img/team-4.jpg">
+                        <th:block th:if="${session.session_img == null || session.session_img == ''}">
+                            <img alt="Image placeholder" class="avatar rounded-circle me-3 shadow" src="/assets/img/df.png">
+                        </th:block>
+                        <th:block th:unless="${session.session_img == null || session.session_img == ''}">
+                            <img alt="Image placeholder" class="avatar rounded-circle me-3 shadow"
+                                 th:src="|/testimg/${session.session_img}|"
+                                 onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
+                        </th:block>
                     </div>
                     <div class="flex-grow-1 my-auto">
                         <form action="/user/shop/detail/register" method="post">
@@ -183,19 +128,125 @@
                         </form>
                     </div>
                 </div>
+                <div id="reviewArea"></div>
+                <div id="addReviewArea"></div>
+<!--                <th:block th:each="review : ${review}" id="reviewList">-->
+<!--                    -->
+<!--                </th:block>-->
             </div>
-
         </div>
     </div>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
-        //
-        // document.getElementsByName('review_score').addEventListener("",function (){
-        //     if([[${review.review_score}]]==5){
-        //         console.log("하하영기")
-        //     }
-        // })
+
+        let startIndex = 0;
+        let product_no = [[${product.product_no}]];
+        const reviewArea = document.getElementById('reviewArea');
+        const addReviewArea = document.getElementById('addReviewArea');
+        console.log(startIndex)
+        console.log(product_no)
+        console.log(reviewArea)
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    getReviewList();
+                }
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            getReviewList();
+        })
+
+        function isEmpty(obj) {
+            // 객체가 아니거나 null일 경우 false 반환
+            if (!obj || typeof obj !== 'object') {
+                return false;
+            }
+            // 배열이나 객체의 length가 0인 경우 true 반환
+            return Object.keys(obj).length === 0;
+        }
+
+
+        function getReviewList() {
+            const url = '/api/user/shop/detail?product_no=' + product_no + '&startIndex=' + startIndex;
+            console.log(url);
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+                    return response.json();
+                }).then(list => {
+                if (isEmpty(list)) {
+                    observer.disconnect();
+                    console.log("연결끊어")
+                } else {
+                    console.log(list);
+                    load(list);
+                    // list.forEach(review => {
+                    //     console.log(review)
+                    //     const div = document.createElement('div');
+                    //     div.innerHTML = `gkgkkg`;
+                    // reviewList.appendChild(div);
+                    // });
+                    observer.observe(addReviewArea);
+                }
+            }).catch(error => {
+                console.error(error);
+                alert("글 불러오기 실패");
+            });
+        }
+
+
+        function load(list) {
+            console.log('list')
+            list.forEach(review => {
+                console.log('hhhhhh' + review)
+                loadReview(review)
+            })
+        }
+
+        function loadReview(review) {
+            console.log('loadreview')
+            console.log(review)
+
+            const str = `<div class="d-flex mt-3 col-12">
+                            <div class="flex-shrink-0 col-2">
+                                ${review.user_image == null || review.user_image == '' ?
+                                `<img alt="Image placeholder" class="avatar rounded-circle shadow" src="/assets/img/df.png">` :
+                                `<img alt="Image placeholder" class="avatar rounded-circle shadow"
+                                src="/testimg/${review.user_image}"
+                                onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">`}
+                            </div>
+                            <div class="flex-grow-1 ms-3 me-1 col-10">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        ${Array.from({length: review.review_score}, (_, i) =>
+                                        `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                             class="bi bi-star-fill jh-pink text-gradient" viewBox="0 0 16 16">
+                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                        </svg>`).join('')}
+                                    </div>
+                                    ${review.user_id == [[${session.session_id}]] ?
+                                        `<a href="/user/shop/detail/${review.product_no}/delete/${review.review_no}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                                 class="bi bi-trash3 me-2" viewBox="0 0 16 16">
+                                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                            </svg>
+                                        </a>` : ``}
+                                </div>
+                                <div class="text-sm me-3">${review.review_content}</div>
+                            </div>
+                        </div>`;
+
+            reviewArea.innerHTML += str;
+            startIndex++;
+            console.log("startindex" + startIndex)
+
+        }
+
 
         // 첫번째 사진 자동 클릭 Start ---------------------------------------------------
         setTimeout(

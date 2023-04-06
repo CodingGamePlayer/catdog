@@ -39,7 +39,7 @@ public class ShopController {
     @GetMapping("/detail/{product_no}")
     String detail(@PathVariable int product_no, @ModelAttribute("cartToastMsg") String cartToastMsg, Model model) {
         model.addAttribute("product", shopService.findById(product_no));
-        model.addAttribute("review", reviewService.selectAll(product_no));
+//        model.addAttribute("review", reviewService.selectAll(product_no));
         return "user/shop/detail";
     }
 

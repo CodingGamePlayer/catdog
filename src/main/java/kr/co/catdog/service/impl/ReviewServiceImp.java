@@ -1,6 +1,7 @@
 package kr.co.catdog.service.impl;
 
 import kr.co.catdog.domain.ReviewVO;
+import kr.co.catdog.dto.PageDTO;
 import kr.co.catdog.dto.ReviewDTO;
 import kr.co.catdog.mapper.ReviewMapper;
 import kr.co.catdog.mapper.UserMapper;
@@ -21,19 +22,31 @@ public class ReviewServiceImp implements ReviewService {
     private final ModelMapper modelMapper;
     private final UserMapper userMapper;
 
+//    @Override
+//    public List<ReviewDTO> selectAll(int product_no) {
+//        List<ReviewVO> reviewVOList = reviewMapper.selectAll(product_no);
+//        if (!reviewVOList.isEmpty()) {
+//            List<ReviewDTO> reviewDTOList = reviewVOList.stream()
+//                    .map(reviewVO -> modelMapper.map(reviewVO, ReviewDTO.class))
+//                    .collect(Collectors.toList());
+//            reviewDTOList.forEach(reviewDTO -> {
+//                reviewDTO.setUser_image(userMapper.imgFindById(reviewDTO.getUser_id()).getUser_image());
+//            });
+//            return reviewDTOList;
+//        }
+//        return null;
+//    }
     @Override
-    public List<ReviewDTO> selectAll(int product_no) {
-        List<ReviewVO> reviewVOList = reviewMapper.selectAll(product_no);
-        if (!reviewVOList.isEmpty()) {
-            List<ReviewDTO> reviewDTOList = reviewVOList.stream()
-                    .map(reviewVO -> modelMapper.map(reviewVO, ReviewDTO.class))
-                    .collect(Collectors.toList());
-            reviewDTOList.forEach(reviewDTO -> {
-                reviewDTO.setUser_image(userMapper.imgFindById(reviewDTO.getUser_id()).getUser_image());
-            });
-            return reviewDTOList;
-        }
-        return null;
+    public List<ReviewDTO> selectAll(PageDTO pageDTO) {
+        List<ReviewVO> reviewVOList = reviewMapper.selectAll(pageDTO);
+        List<ReviewDTO> reviewDTOList = reviewVOList.stream()
+                .map(reviewVO -> modelMapper.map(reviewVO, ReviewDTO.class))
+                .collect(Collectors.toList());
+        reviewDTOList.forEach(reviewDTO -> {
+            reviewDTO.setUser_image(userMapper.imgFindById(reviewDTO.getUser_id()).getUser_image());
+        });
+        return reviewDTOList;
+
     }
 
     @Override
