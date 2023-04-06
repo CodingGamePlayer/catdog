@@ -74,6 +74,7 @@ public class MatchingController {
                     .build();
             mav.addObject("user_id", user_id);
             mav.addObject("matchingDTOs", matchingService.list(matchingDTO));
+            log.info("list 보냈음");
             mav.setViewName("user/matching/list");
         }else{
             mav.addObject("matchingUseFailToastMsg", "회원정보에서 매칭등록 비활성화 되어있습니다.");
