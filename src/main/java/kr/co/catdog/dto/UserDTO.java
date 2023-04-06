@@ -20,6 +20,5 @@ public class UserDTO {
     private LocalDate user_regdate;
     private String user_image;
     private Boolean user_matchinguse;
-    private MultipartFile file;
 
 }
