@@ -21,7 +21,7 @@ public class HospitalController {
     @GetMapping("/search")
     public String HospitalMap(Model model) {
         Environment env = context.getEnvironment();
-        String apiKey = env.getProperty("kakao.map.api.frontkey");
+        String apiKey = env.getProperty("KAKAO_MAP_API_KEY");
         model.addAttribute("appKey", apiKey);
         return "user/hospital/map";
     }
