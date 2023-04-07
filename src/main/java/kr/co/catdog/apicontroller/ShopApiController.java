@@ -47,6 +47,7 @@ public class ShopApiController {
 
     @GetMapping("/api/user/shop")
     public List<ProductDTO> list(PageDTO pageDTO) {
+        log.info(String.valueOf(pageDTO));
         List<ProductDTO> productDTOList = shopService.selectAll(pageDTO);
 
         return productDTOList;

@@ -9,23 +9,127 @@
 <div layout:fragment="content">
     <div class="col-12">
         <form action="/user/shop/list" method="get">
-            <select class="form-control" id="category1" name="category1_no">
-                <option th:text="전체보기" th:value="0"></option>
-                <th:block th:each=" category : ${category.category1VOList}">
-                    <option th:text="${category.category1_type}" th:value="${category.category1_no}"></option>
-                </th:block>
-            </select>
-            <select class="form-control" id="category_sort" name="category_sort">
-                <option th:text="등록일순" th:value="등록일순"></option>
-                <option th:text="판매량순" th:value="판매량순"></option>
-                <option th:text="낮은가격순" th:value="낮은가격순"></option>
-                <option th:text="높은가격순" th:value="높은가격순"></option>
-                <option th:text="리뷰많은순" th:value="리뷰많은순"></option>
-                <option th:text="리뷰평점순" th:value="리뷰평점순"></option>
-            </select>
-            <button type="submit" id="submitBtn" class="" hidden="hidden">검색</button>
+        <!-- Search -->
+        <div class="col-12 position-relative py-4 px-5">
+
+                <div></div>
+                <input class="form-control" placeholder="검색어를 입력하세요" type="text" name="keyword" id="search">
+                <a class="position-absolute top-50 end-0 translate-middle px-4 mx-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                         class="bi bi-search jh-pink-title" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </a>
+
+        </div>
+        <!-- End Search -->
+
+        <!-- Filter -->
+        <div class="container jh-bg-pink2 pt-3">
+            <div class="row d-flex justify-content-between align-content-center mx-1">
+                <div class="col-9 d-flex align-items-center p-0 overflow-x-scroll" id="badgeArea" style="">
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>-->
+<!--                        <label class="form-check-label mb-0" for="flexRadioDefault1">-->
+<!--                            <span>최신순</span>-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check mx-3">-->
+<!--                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">-->
+<!--                        <label class="form-check-label mb-0" for="flexRadioDefault2">-->
+<!--                            <span>인기순</span>-->
+<!--                        </label>-->
+<!--                    </div>-->
+                </div>
+                <div class="col-3 d-flex justify-content-end p-0">
+                    <button class="btn btn-pink py-1 px-2 d-flex align-items-center" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#searchfilters">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-sliders mx-1" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z" />
+                        </svg>
+                        <span class="text-sm px-1"> 필터</span>
+                    </button>
+                </div>
+            </div>
+            <div class="collapse" id="searchfilters">
+                <!--            <select class="form-control" id="category1" name="category1_no">-->
+                <!--                <option th:text="전체보기" th:value="0"></option>-->
+                <!--                <th:block th:each=" category : ${category.category1VOList}">-->
+                <!--                    <option th:text="${category.category1_type}" th:value="${category.category1_no}"></option>-->
+                <!--                </th:block>-->
+                <!--            </select>-->
+                <!--            <select class="form-control" id="category_sort" name="category_sort">-->
+                <!--                <option th:text="등록일순" th:value="등록일순"></option>-->
+                <!--                <option th:text="판매량순" th:value="판매량순"></option>-->
+                <!--                <option th:text="낮은가격순" th:value="낮은가격순"></option>-->
+                <!--                <option th:text="높은가격순" th:value="높은가격순"></option>-->
+                <!--                <option th:text="리뷰많은순" th:value="리뷰많은순"></option>-->
+                <!--                <option th:text="리뷰평점순" th:value="리뷰평점순"></option>-->
+                <!--            </select>-->
+<!--                <button type="submit" id="submitBtn" class="" hidden="hidden">검색</button>-->
+
+                <div class="my-3">
+                    <hr class="bg-dark my-0 py-0">
+                </div>
+                <div class="d-flex justify-content-center my-1">
+                    <select class="form-select m-2" id="category1" name="category1_no">
+                        <option th:text="전체보기" th:value="0"></option>
+                        <th:block th:each=" category : ${category.category1VOList}">
+                            <option th:text="${category.category1_type}" th:value="${category.category1_no}"></option>
+                        </th:block>
+                    </select>
+                    <select class="form-select m-2" id="category_sort" name="category_sort">
+                        <option th:text="최신순" th:value="최신순"></option>
+                        <option th:text="판매량순" th:value="판매량순"></option>
+                        <option th:text="낮은가격순" th:value="낮은가격순"></option>
+                        <option th:text="높은가격순" th:value="높은가격순"></option>
+                        <option th:text="리뷰많은순" th:value="리뷰많은순"></option>
+                        <option th:text="리뷰평점순" th:value="리뷰평점순"></option>
+                    </select>
+<!--                    <select class="form-select m-2">-->
+<!--                        <option selected>품종</option>-->
+<!--                        <option value="1">One</option>-->
+<!--                        <option value="2">Two</option>-->
+<!--                        <option value="3">Three</option>-->
+<!--                    </select>-->
+<!--                    <select class="form-select m-2">-->
+<!--                        <option selected>성별</option>-->
+<!--                        <option value="1">One</option>-->
+<!--                        <option value="2">Two</option>-->
+<!--                        <option value="3">Three</option>-->
+<!--                    </select>-->
+                </div>
+<!--                <div class="d-flex justify-content-center my-1">-->
+<!--                    <select class="form-select mx-2">-->
+<!--                        <option selected>나이</option>-->
+<!--                        <option value="1">One</option>-->
+<!--                        <option value="2">Two</option>-->
+<!--                        <option value="3">Three</option>-->
+<!--                    </select>-->
+<!--                    <select class="form-select mx-2">-->
+<!--                        <option selected>몸무게</option>-->
+<!--                        <option value="1">One</option>-->
+<!--                        <option value="2">Two</option>-->
+<!--                        <option value="3">Three</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+                <div class="d-flex justify-content-center mt-4">
+                    <button class="btn btn-pink py-2" type="submit" id="submitBtn" hidden="hidden">적용하기</button>
+                </div>
+
+            </div>
+        </div>
+        <!-- End Filter -->
         </form>
     </div>
+
+
+
+
+
+
     <div class="col-12">
         <div class="card m-4">
             <div class="card-body p-0">
@@ -71,6 +175,13 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
 
+        const categoryArray = [];
+        const category = [[${category.category1VOList}]];
+        categoryArray.push("전체보기");
+        category.forEach(category => {
+            categoryArray.push(category.category1_type);
+        })
+
         document.addEventListener('DOMContentLoaded', function () {
             // carousel Start ---------------------------------------------------------------------
             const firstCarouselItem = document.querySelector(".carousel-item:first-child");
@@ -84,8 +195,16 @@
             });
             // carousel End ---------------------------------------------------------------------
 
-            // product list 불러오기  -------------------------
+            // product list 불러오기  ------------------------------------------------------------
             getProductList();
+
+            // filter badge Start ---------------------------------------------------------------
+
+            const badgeText = `<span class="badge rounded-pill border border-2 border-white jh-bg-pink mb-3 me-1">` + categoryArray[category1_no] + `</span>
+                                <span class="badge rounded-pill border border-2 border-white jh-bg-pink mb-3 me-1">` + category_sort + `</span>
+                                <span class="badge rounded-pill border border-2 border-white jh-bg-pink mb-3 me-1">` + keyword + `</span>`;
+
+            document.getElementById('badgeArea').innerHTML = badgeText;
         })
 
 
@@ -112,7 +231,7 @@
 
 
         function getProductList() {
-            const url = '/api/user/shop?category1_no=' + category1_no + '&category_sort=' + category_sort + '&startIndex=' + startIndex;
+            const url = '/api/user/shop?category1_no=' + category1_no + '&category_sort=' + category_sort + '&keyword=' + keyword + '&startIndex=' + startIndex;
 
             fetch(url)
                 .then(response => {
@@ -132,7 +251,7 @@
                 alert("글 불러오기 실패");
             });
         }
-// asdf
+
         function load(list) {
             list.forEach(product => {
                 loadProduct(product)
@@ -173,18 +292,22 @@
         // search Start ----------------------------------------------------------------------
         const select1 = document.getElementById('category1');
         const select2 = document.getElementById('category_sort');
+        const search = document.getElementById('search');
         const urlParams = new URLSearchParams(window.location.search);
         let category1_no = urlParams.get('category1_no');
         let category_sort = urlParams.get('category_sort');
+        let keyword = urlParams.get('keyword');
 
         if (category1_no) {
             select1.value = category1_no;
             select2.value = category_sort;
+            search.value = keyword;
         }
-
+        // 첫 화면 Mapper 검색용
         if (category1_no == null) {
             category1_no = 0;
-            category_sort = "등록일순";
+            category_sort = "최신순";
+            keyword = "";
         }
 
         select1.addEventListener('change', function () {
