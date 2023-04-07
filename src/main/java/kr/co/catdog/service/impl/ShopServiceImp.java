@@ -2,6 +2,7 @@ package kr.co.catdog.service.impl;
 
 import kr.co.catdog.domain.MediaVO;
 import kr.co.catdog.domain.ProductVO;
+import kr.co.catdog.dto.PageDTO;
 import kr.co.catdog.dto.ProductDTO;
 import kr.co.catdog.mapper.MediaMapper;
 import kr.co.catdog.mapper.ProductMapper;
@@ -25,36 +26,35 @@ public class ShopServiceImp implements ShopService {
     private final ModelMapper modelMapper;
     private final ProductMapper productMapper;
     private final MediaMapper mediaMapper;
-    @Value("${kr.co.catdog.upload.path}")
-    private String upPath;
+//    @Value("${kr.co.catdog.upload.path}")
+//    private String upPath;
 
     @Override
-    public List<ProductDTO> selectAll(ProductDTO productDTO) {
-        List<ProductVO> productVOList = productMapper.selectAll(productDTO);
+    public List<ProductDTO> selectAll(PageDTO pageDTO) {
+        List<ProductVO> productVOList = productMapper.selectAll(pageDTO);
         List<ProductDTO> productDTOList = new ArrayList<>();
         productVOList.forEach(productVO -> {
             ProductDTO DTO = modelMapper.map(productVO,ProductDTO.class);
-            log.info("디티오확인"+mediaMapper.thumbnail(DTO.getProduct_no()));
             DTO.setMediaVO(mediaMapper.thumbnail(DTO.getProduct_no()));
             productDTOList.add(DTO);
         });
-        log.info("gkgkgkk"+String.valueOf(productDTOList));
-        return productDTOList;
-    }
-
-    @Override
-    public List<ProductDTO> orderByReviewCount() {
-        List<ProductVO> productVOList = productMapper.orderByReviewCount();
-        List<ProductDTO> productDTOList = new ArrayList<>();
-        productVOList.forEach(productVO -> {
-            ProductDTO productDTO = modelMapper.map(productVO,ProductDTO.class);
-
-            productDTO.setMediaVO(mediaMapper.thumbnail(productDTO.getProduct_no()));
-            productDTOList.add(productDTO);
-        });
 
         return productDTOList;
     }
+
+//    @Override
+//    public List<ProductDTO> orderByReviewCount() {
+//        List<ProductVO> productVOList = productMapper.orderByReviewCount();
+//        List<ProductDTO> productDTOList = new ArrayList<>();
+//        productVOList.forEach(productVO -> {
+//            ProductDTO productDTO = modelMapper.map(productVO,ProductDTO.class);
+//
+//            productDTO.setMediaVO(mediaMapper.thumbnail(productDTO.getProduct_no()));
+//            productDTOList.add(productDTO);
+//        });
+//
+//        return productDTOList;
+//    }
 
     @Override
     public List<ProductDTO> orderByReviewScore() {
@@ -85,16 +85,10 @@ public class ShopServiceImp implements ShopService {
 //                .media_path("/assets/img/df.png").build();
 //
 //    }
-//gkgkgkgk
     @Override
     public ProductDTO findById(int product_no) {
-
         ProductVO productVO = productMapper.findById(product_no);
         ProductDTO productDTO = modelMapper.map(productVO, ProductDTO.class);
-
-//        List<MediaVO> mediaVOList = .stream()
-//                .map(mediaVO -> isValidImagePath(mediaVO))
-//                .collect(Collectors.toList());
 
         productDTO.setMediaVOList(mediaMapper.findById(product_no));
         productDTO.setMediaVO(mediaMapper.thumbnail(product_no));
@@ -114,7 +108,6 @@ public class ShopServiceImp implements ShopService {
                     .media_path(fileArray[i])
                     .build();
             mediaMapper.insert(mediaVO);
-
         }
         return !(result > 0) ? 0 : 1;
     }
