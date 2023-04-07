@@ -63,7 +63,7 @@
     </update>
 
     <update id="updateMedia" parameterType="MediaVO">
-    	UPDATE media SET media_path = #{media_path}
+    	UPDATE media SET media_path = #{media_path}, media_type = #{media_type}
     	WHERE media_no = #{media_no}
     </update>
 
