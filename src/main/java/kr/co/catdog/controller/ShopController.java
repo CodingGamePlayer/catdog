@@ -25,7 +25,7 @@ public class ShopController {
 
 
         model.addAttribute("registerMsg", "shop");
-        model.addAttribute("productList",shopService.selectAll(productDTO));
+//        model.addAttribute("productList",shopService.selectAll(productDTO));
         model.addAttribute("productScoreList",shopService.orderByReviewScore());
         model.addAttribute("category", categoryService.selectAll());
 

@@ -16,10 +16,6 @@
         <result property="product_soldQuantity" column="product_soldQuantity"/>
     </resultMap>
 
-    <!--    <select id="selectAll" resultMap="productMap">-->
-    <!--        SELECT * FROM product ORDER BY product_no DESC-->
-    <!--    </select>-->
-
     <select id="findById" resultMap="productMap">
         SELECT *
         FROM product
@@ -47,13 +43,13 @@
         WHERE product_no = #{product_no}
     </delete>
 
-    <select id="orderByReviewCount" resultMap="productMap">
-        SELECT a.*
-        FROM catdog.product AS a
-                 LEFT JOIN (SELECT product_no, count(review_no) AS count FROM catdog.review GROUP BY product_no) AS b
-                           ON a.product_no = b.product_no
-        ORDER BY b.count DESC, a.product_no DESC;
-    </select>
+<!--    <select id="orderByReviewCount" resultMap="productMap">-->
+<!--        SELECT a.*-->
+<!--        FROM catdog.product AS a-->
+<!--                 LEFT JOIN (SELECT product_no, count(review_no) AS count FROM catdog.review GROUP BY product_no) AS b-->
+<!--                           ON a.product_no = b.product_no-->
+<!--        ORDER BY b.count DESC, a.product_no DESC;-->
+<!--    </select>-->
 
     <select id="orderByReviewScore" resultMap="productMap">
         SELECT a.*
@@ -69,6 +65,7 @@
         <include refid="review"></include>
         <include refid="category"></include>
         <include refid="sort"></include>
+        LIMIT #{startIndex},#{size}
     </select>
 
     <sql id="category">
