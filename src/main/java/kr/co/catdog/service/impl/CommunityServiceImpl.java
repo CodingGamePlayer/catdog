@@ -102,16 +102,24 @@ public class CommunityServiceImpl implements CommunityService {
         if (!(result > 0)) {
             return 0;
         }
-
-        if (!communityDTO.getFile().isEmpty()) {
+        if (communityDTO.getMedia_type()==1 && !communityDTO.getFile().isEmpty()) {
             createPath(communityDTO);
             MediaVO media = MediaVO.builder()
                     .media_no(communityDTO.getMedia_no())
+                    .media_type(communityDTO.getMedia_type())
                     .media_path(communityDTO.getMedia_path())
                     .build();
             int mResult = communityMapper.updateMedia(media);
-            log.info("updateMedia 다녀온 mResult : " + mResult);
+            log.info("이미지updateMedia 다녀온 mResult : " + mResult);
 
+        } else if (communityDTO.getMedia_type()==2 && communityDTO.getMedia_path() != null) {
+            MediaVO media = MediaVO.builder()
+                    .media_no(communityDTO.getMedia_no())
+                    .media_type(communityDTO.getMedia_type())
+                    .media_path(communityDTO.getMedia_path())
+                    .build();
+            int mResult = communityMapper.updateMedia(media);
+            log.info("영상updateMedia 다녀온 mResult : " + mResult);
         }
         return 1;
 
