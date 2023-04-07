@@ -1,13 +1,13 @@
 package kr.co.catdog.apicontroller;
 
-import kr.co.catdog.dto.CartDTO;
+import kr.co.catdog.dto.PageDTO;
 import kr.co.catdog.dto.ProductDTO;
-import kr.co.catdog.service.CartService;
+import kr.co.catdog.dto.ReviewDTO;
+import kr.co.catdog.service.ReviewService;
 import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShopApiController {
     private final ShopService shopService;
+    private final ReviewService reviewService;
     @PostMapping("/api/user/shop")
     public ResponseEntity<ProductDTO> register(@RequestBody ProductDTO productDTO){
 
@@ -45,15 +46,16 @@ public class ShopApiController {
     }
 
     @GetMapping("/api/user/shop")
-    public ResponseEntity<List<ProductDTO>> list(@RequestBody ProductDTO productDTO) {
-        log.info("ddddddddddd"+String.valueOf(productDTO));
-        List<ProductDTO> productDTOList = shopService.selectAll(productDTO);
+    public List<ProductDTO> list(PageDTO pageDTO) {
+        log.info(String.valueOf(pageDTO));
+        List<ProductDTO> productDTOList = shopService.selectAll(pageDTO);
 
-        if( productDTOList == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return productDTOList;
     }
+    @GetMapping("/api/user/shop/detail")
+    public List<ReviewDTO> reviewList(PageDTO pageDTO) {
+        List<ReviewDTO> reviewDTOList = reviewService.selectAll(pageDTO);
 
+        return reviewDTOList;
+    }
 }

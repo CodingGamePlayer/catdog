@@ -3,12 +3,18 @@ package kr.co.catdog.service.impl;
 import kr.co.catdog.config.ChatGptConfig;
 import kr.co.catdog.dto.ChatGptRequestDto;
 import kr.co.catdog.dto.ChatGptResponseDto;
-import kr.co.catdog.dto.QuestionRequestDto;
+
 import kr.co.catdog.service.ChatGptService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+
+
+import org.springframework.core.env.Environment;
+
 import org.springframework.http.*;
-import org.springframework.http.client.ClientHttpRequest;
+
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -21,14 +27,16 @@ import java.io.IOException;
 @Slf4j
 public class ChatGptServiceImpl implements ChatGptService {
 
-    @Value("${chatgpt.api.key}")
-    private String apiKey;
-    //private static RestTemplate restTemplate = new RestTemplate();
+    private ApplicationContext context;
 
     public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
+
+        Environment env = context.getEnvironment();
+        String apiKey = env.getProperty("CHATGPT_API_KEY");
         log.info("chatgpt api key check : "+apiKey);
+        // check push
         headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + apiKey);
         return new HttpEntity<>(requestDto, headers);
     }
@@ -77,5 +85,10 @@ public class ChatGptServiceImpl implements ChatGptService {
         sb.append("작명이유의 어미는 반드시 '에서 영감을 받아 지었습니다.'로 끝나게 작성하시오.");
         sb.append("첫번째 이름이 나오기 전에 '.'을 사용하지 마시오.");
         return sb.toString();
+    }
+
+    @Autowired
+    public ChatGptServiceImpl(ApplicationContext context) {
+        this.context = context;
     }
 }

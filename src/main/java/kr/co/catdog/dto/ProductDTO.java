@@ -23,6 +23,7 @@ public class ProductDTO {
     private String product_content;
     private int product_price;
     private LocalDate product_regdate;
+    private int product_soldQuantity;
 
     private String[] media_path;
     private List<MediaVO> mediaVOList;

@@ -63,7 +63,7 @@
     </update>
 
     <update id="updateMedia" parameterType="MediaVO">
-    	UPDATE media SET media_path = #{media_path}
+    	UPDATE media SET media_path = #{media_path}, media_type = #{media_type}
     	WHERE media_no = #{media_no}
     </update>
 
@@ -106,7 +106,7 @@
         <where>
 
             <if test="community_msg == 'mycommunityBtn'">
-                AND community.user_id = #{user_id}
+                AND community.user_id = #{target_id}
                 ORDER BY community.community_no DESC
             </if>
         </where>

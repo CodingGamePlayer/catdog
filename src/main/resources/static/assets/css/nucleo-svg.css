@@ -154,4 +154,16 @@ Stroke effects - Nucleo outline icons
   content: "\f004"; /* 체크된 상태의 Font Awesome 아이콘 */
 }
 
+/*비디오 스타일*/
+.iframe-container {
+  max-width: 640px; /* 원하는 최대 너비를 설정 */
+  max-height: 480px;
+  margin: 0 auto; /* 비디오를 중앙에 정렬 */
+}
+
+iframe {
+  width: 100%; /* 비디오를 부모 요소의 너비에 맞춤 */
+  height: 100%; /* 높이를 자동으로 조정하여 비율 유지 */
+}
+
 

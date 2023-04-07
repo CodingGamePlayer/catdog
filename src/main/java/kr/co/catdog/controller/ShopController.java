@@ -25,7 +25,7 @@ public class ShopController {
 
 
         model.addAttribute("registerMsg", "shop");
-        model.addAttribute("productList",shopService.selectAll(productDTO));
+//        model.addAttribute("productList",shopService.selectAll(productDTO));
         model.addAttribute("productScoreList",shopService.orderByReviewScore());
         model.addAttribute("category", categoryService.selectAll());
 
@@ -39,7 +39,7 @@ public class ShopController {
     @GetMapping("/detail/{product_no}")
     String detail(@PathVariable int product_no, @ModelAttribute("cartToastMsg") String cartToastMsg, Model model) {
         model.addAttribute("product", shopService.findById(product_no));
-        model.addAttribute("review", reviewService.selectAll(product_no));
+//        model.addAttribute("review", reviewService.selectAll(product_no));
         return "user/shop/detail";
     }
 

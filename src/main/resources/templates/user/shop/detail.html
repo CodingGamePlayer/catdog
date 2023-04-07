@@ -42,19 +42,10 @@
                         <th:block th:each="img : ${product.mediaVOList}">
                             <figure class="col-3" itemprop="associatedMedia" itemscope=""
                                     itemtype="http://schema.org/ImageObject">
-                                <!--                      <th:block th:if="${img != null}">-->
-                                <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow imgView-s"
+                                <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow-lg imgView-s"
                                      th:src="@{|/testimg/${img.media_path}|}" alt="Image description"
                                      onclick="imgView(this.src)"
                                      onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
-                                <!--                      </th:block>-->
-                                <!--                      <th:block th:unless="${img != null}">-->
-                                <!--                        <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow imgView-s"-->
-                                <!--                             src="/assets/img/df.png" alt="Image description" onclick="imgView(this.src)">-->
-                                <!--                      </th:block>-->
-
-                                <!--                      <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow imgView-s"-->
-                                <!--                           th:src="@{|/testimg/${img.media_path}|}" alt="Image description" onclick="imgView(this.src)">-->
                             </figure>
                         </th:block>
                     </div>
@@ -74,8 +65,8 @@
                         </li>
                         <label>Quantity</label>
                         <li class="nav-link dropdown pb-2 px-3">
-                            <input class="form-control form-control-sm" type="number" onfocus="focused(this)"
-                                   onfocusout="defocused(this)" value="1" name="cart_quantity" min="0">
+                            <input class="form-control form-control-sm" type="number" value="1" name="cart_quantity"
+                                   min="0">
                         </li>
                         <input type="hidden" th:value="${session.session_id}" name="user_id">
                         <input type="hidden" th:value="${product.product_no}" name="product_no">
@@ -97,42 +88,19 @@
                     </form>
                 </div>
             </div>
-
             <h5 class="my-4 px-1 mt-6">Review</h5>
-            <div class="row mt-3 px-3">
-                <th:block th:each="review : ${review}">
-                    <div class="d-flex mt-3">
-                        <div class="flex-shrink-0">
-                            <th:block th:if="${review.user_image == null || review.user_image == ''}">
-                                <img alt="Image placeholder" class="avatar rounded-circle" src="/assets/img/df.png">
-                            </th:block>
-                            <th:block th:unless="${review.user_image == null || review.user_image == ''}">
-                                <img alt="Image placeholder" class="avatar rounded-circle"
-                                     th:src="|/testimg/${review.user_image}|"
-                                     onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
-                            </th:block>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h6 class="h6 my-0" th:text="${review.user_id}"></h6>
-                                <th:block th:if="${review.user_id == session.session_id}">
-                                    <a th:href="@{|/user/shop/detail/${review.product_no}/delete/${review.review_no}|}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
-                                             class="bi bi-trash3 me-2" viewBox="0 0 16 16">
-                                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                                        </svg>
-                                    </a>
-                                </th:block>
-                            </div>
-                            <div class="text-sm" th:text="${review.review_content}">
-
-                            </div>
-                        </div>
-                    </div>
-                </th:block>
+            <div class="row mt-3 mx-1">
                 <div class="d-flex mt-4">
                     <div class="flex-shrink-0">
-                        <img alt="Image placeholder" class="avatar rounded-circle me-3" src="/assets/img/team-4.jpg">
+                        <th:block th:if="${session.session_img == null || session.session_img == ''}">
+                            <img alt="Image placeholder" class="avatar rounded-circle me-3 shadow"
+                                 src="/assets/img/df.png">
+                        </th:block>
+                        <th:block th:unless="${session.session_img == null || session.session_img == ''}">
+                            <img alt="Image placeholder" class="avatar rounded-circle me-3 shadow"
+                                 th:src="|/testimg/${session.session_img}|"
+                                 onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
+                        </th:block>
                     </div>
                     <div class="flex-grow-1 my-auto">
                         <form action="/user/shop/detail/register" method="post">
@@ -153,12 +121,106 @@
                         </form>
                     </div>
                 </div>
+                <div id="reviewArea"></div>
+                <div id="addReviewArea"></div>
             </div>
         </div>
     </div>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
+
+        let startIndex = 0;
+        let product_no = [[${product.product_no}]];
+        const reviewArea = document.getElementById('reviewArea');
+        const addReviewArea = document.getElementById('addReviewArea');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    getReviewList();
+                }
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            getReviewList();
+        })
+
+        function isEmpty(obj) {
+            // 객체가 아니거나 null일 경우 false 반환
+            if (!obj || typeof obj !== 'object') {
+                return false;
+            }
+            // 배열이나 객체의 length가 0인 경우 true 반환
+            return Object.keys(obj).length === 0;
+        }
+
+
+        function getReviewList() {
+            const url = '/api/user/shop/detail?product_no=' + product_no + '&startIndex=' + startIndex;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+                    return response.json();
+                }).then(list => {
+                if (isEmpty(list)) {
+                    observer.disconnect();
+                } else {
+                    load(list);
+                    observer.observe(addReviewArea);
+                }
+            }).catch(error => {
+                console.error(error);
+                alert("글 불러오기 실패");
+            });
+        }
+
+
+        function load(list) {
+            list.forEach(review => {
+                loadReview(review)
+            })
+        }
+
+        function loadReview(review) {
+
+            const str = `<div class="d-flex mt-3 col-12">
+                            <div class="flex-shrink-0 col-2">
+                                ${review.user_image == null || review.user_image == '' ?
+                                `<img alt="Image placeholder" class="avatar rounded-circle shadow" src="/assets/img/df.png">` :
+                                `<img alt="Image placeholder" class="avatar rounded-circle shadow"
+                                src="/testimg/${review.user_image}"
+                                onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">`}
+                            </div>
+                            <div class="flex-grow-1 ms-3 me-1 col-10">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        ${Array.from({length: review.review_score}, (_, i) =>
+                                        `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                             class="bi bi-star-fill jh-pink text-gradient" viewBox="0 0 16 16">
+                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                        </svg>`).join('')}
+                                    </div>
+                                    ${review.user_id == [[${session.session_id}]] ?
+                                        `<a href="/user/shop/detail/${review.product_no}/delete/${review.review_no}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                                 class="bi bi-trash3 me-2" viewBox="0 0 16 16">
+                                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                            </svg>
+                                        </a>` : ``}
+                                </div>
+                                <div class="text-sm me-3">${review.review_content}</div>
+                            </div>
+                        </div>`;
+
+            reviewArea.innerHTML += str;
+            startIndex++;
+        }
+
 
         // 첫번째 사진 자동 클릭 Start ---------------------------------------------------
         setTimeout(
@@ -171,14 +233,12 @@
 
         // 사진 확대 보기 Start -------------------------------------------------------------------
         function imgView(url) {
-            console.log(url);
             const str = `<a href="${url}" itemprop="contentUrl" data-size="500x600" target="_blank">
                           <img class="w-100 border-radius-lg shadow-lg mx-auto"
                                src="${url}" width="378" height="233">
                         </a>`
 
             document.querySelector('.imgView').innerHTML = str;
-
         }
 
         // 사진 확대 보기 End -------------------------------------------------------------------
