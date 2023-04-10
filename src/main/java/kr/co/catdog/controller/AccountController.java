@@ -61,10 +61,6 @@ public class AccountController {
         return "sign-up";
     }
 
-    @GetMapping("/g")
-    String g(){
-        return "toasts";
-    }
 
 
 }

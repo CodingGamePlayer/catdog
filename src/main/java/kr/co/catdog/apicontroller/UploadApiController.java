@@ -44,7 +44,6 @@ public class UploadApiController {
                 }
                 list.add(UploadResultDTO.builder().uuid(uuid).fileName(originalName).build());
             }); // end forEach
-            log.info("gkgkgkgk");
             return list;
         } // end if
         return null;
