@@ -26742,4 +26742,27 @@ pre[class*="language-"] {
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: RGBA(244, 237, 237, var(--bs-bg-opacity, 1)) !important;
 }
+/* Filter 스크롤바 */
+#badgeArea{
+  overflow-x: auto; /* 가로 스크롤이 필요한 경우에만 스크롤을 보여줌 */
+  -webkit-overflow-scrolling: touch; /* iOS에서 부드러운 스크롤 효과 적용 */
+  scrollbar-width: none; /* 스크롤바 숨김 */
+  -ms-overflow-style: none; /* IE 및 Microsoft Edge에서 스크롤바 숨김 */
+
+}
+#badgeArea::-webkit-scrollbar {
+  height: 0.25rem; /* 가로 스크롤바의 높이 */
+  background-color: rgb(251, 231, 235); /* 스크롤바의 배경색 */
+}
+
+#badgeArea::-webkit-scrollbar-thumb {
+  background-color: rgba(220, 20, 60, .1); /* 스크롤바의 색상 */
+  border-radius: 0.5rem; /* 스크롤바의 둥근 모서리 */
+}
+
+.form-check-input[type="radio"]:checked {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /*# sourceMappingURL=kit-free.css.map */
