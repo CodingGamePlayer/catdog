@@ -26,8 +26,6 @@ public class ShopServiceImp implements ShopService {
     private final ModelMapper modelMapper;
     private final ProductMapper productMapper;
     private final MediaMapper mediaMapper;
-//    @Value("${kr.co.catdog.upload.path}")
-//    private String upPath;
 
     @Override
     public List<ProductDTO> selectAll(PageDTO pageDTO) {
@@ -42,19 +40,6 @@ public class ShopServiceImp implements ShopService {
         return productDTOList;
     }
 
-//    @Override
-//    public List<ProductDTO> orderByReviewCount() {
-//        List<ProductVO> productVOList = productMapper.orderByReviewCount();
-//        List<ProductDTO> productDTOList = new ArrayList<>();
-//        productVOList.forEach(productVO -> {
-//            ProductDTO productDTO = modelMapper.map(productVO,ProductDTO.class);
-//
-//            productDTO.setMediaVO(mediaMapper.thumbnail(productDTO.getProduct_no()));
-//            productDTOList.add(productDTO);
-//        });
-//
-//        return productDTOList;
-//    }
 
     @Override
     public List<ProductDTO> orderByReviewScore() {
