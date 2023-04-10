@@ -64,4 +64,11 @@ public class CartServiceImp implements CartService {
 
         return !(result > 0) ? 0 : 1;
     }
+
+    @Override
+    public int deleteAll(String user_id) {
+        int result = cartMapper.deleteAll(user_id);
+
+        return !(result > 0) ? 0 : 1;
+    }
 }

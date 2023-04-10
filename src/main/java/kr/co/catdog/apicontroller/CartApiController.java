@@ -22,4 +22,15 @@ public class CartApiController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @DeleteMapping("api/user/shop/cart/delete")
+    public ResponseEntity<CartDTO> deleteAll(@RequestParam("user_id") String user_id){
+        log.info("카트 delete user_id : "+user_id);
+        int result = cartService.deleteAll(user_id);
+        if(result == 0){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }
