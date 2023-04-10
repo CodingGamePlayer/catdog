@@ -30,6 +30,10 @@
         DELETE FROM cart WHERE cart_no = #{cart_no}
     </delete>
 
+    <delete id="deleteAll">
+        DELETE FROM cart WHERE user_id = #{user_id}
+    </delete>
+
 
 
 </mapper>
