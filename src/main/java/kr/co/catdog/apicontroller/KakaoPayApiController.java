@@ -1,7 +1,5 @@
 package kr.co.catdog.apicontroller;
 
-import kr.co.catdog.config.BusinessLogicException;
-import kr.co.catdog.config.ExceptionCode;
 import kr.co.catdog.dto.KakaoPayApproveResponseDTO;
 import kr.co.catdog.dto.KakaoPayResponseDTO;
 import kr.co.catdog.dto.OrderDTO;
@@ -37,6 +35,7 @@ public class KakaoPayApiController {
     @GetMapping("api/kakao/success")
     public ResponseEntity afterPayRequest(@RequestParam("pg_token") String pg_token, HttpServletRequest request){
         HttpSession session = request.getSession();
+        log.info("pg_token : " + pg_token);
         String user_id = (String) session.getAttribute("session_id");
         OrderDTO orderDTO = OrderDTO.builder()
                 .user_id(user_id)
@@ -53,20 +52,20 @@ public class KakaoPayApiController {
     }
 
     @GetMapping("api/kakao/cancel")
-    public void cancel() throws BusinessLogicException {
+    public ResponseEntity cancel() {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.TEXT_HTML);
         String responseBody = "<script>window.close();</script>";
 
-        throw new BusinessLogicException(responseBody,responseHeaders,ExceptionCode.PAY_CANCEL);
+        return new ResponseEntity<>(responseBody,responseHeaders,HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("api/kakao/fail")
-    public void fail() throws BusinessLogicException {
+    public ResponseEntity fail() {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.TEXT_HTML);
         String responseBody = "<script>window.close();</script>";
 
-        throw new BusinessLogicException(responseBody, responseHeaders, ExceptionCode.PAY_FAILED);
+        return new ResponseEntity<>(responseBody,responseHeaders,HttpStatus.BAD_REQUEST);
     }
 }
