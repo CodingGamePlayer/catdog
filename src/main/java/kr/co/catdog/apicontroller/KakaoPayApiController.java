@@ -35,8 +35,8 @@ public class KakaoPayApiController {
     @GetMapping("api/kakao/success")
     public ResponseEntity afterPayRequest(@RequestParam("pg_token") String pg_token, HttpServletRequest request){
         HttpSession session = request.getSession();
-        log.info("pg_token : " + pg_token);
         String user_id = (String) session.getAttribute("session_id");
+        log.info("pg_token : " + pg_token);
         OrderDTO orderDTO = OrderDTO.builder()
                 .user_id(user_id)
                 .pg_token(pg_token)
