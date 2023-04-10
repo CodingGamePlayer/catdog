@@ -26760,4 +26760,9 @@ pre[class*="language-"] {
   border-radius: 0.5rem; /* 스크롤바의 둥근 모서리 */
 }
 
+.form-check-input[type="radio"]:checked {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /*# sourceMappingURL=kit-free.css.map */

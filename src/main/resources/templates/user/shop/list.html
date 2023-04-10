@@ -7,7 +7,9 @@
 
 <!-- Content -->
 <div layout:fragment="content">
-
+    <div class="col-12 d-flex justify-content-center align-content-center jh-pink-title text-gradient">
+        <span class="h1">SHOP</span>
+    </div>
     <div class="col-12">
         <form action="/user/shop/list" method="get">
             <!-- Search -->
@@ -72,7 +74,7 @@
         <div class="card m-4">
             <div class="card-body p-0">
                 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
+                    <div class="carousel-inner position-relative">
                         <th:block th:each="productScoreList : ${productScoreList}">
                             <div class="carousel-item" id="carousel-item">
                                 <a th:href="@{|/user/shop/detail/${productScoreList.product_no}|}">
@@ -89,6 +91,12 @@
                                 </a>
                             </div>
                         </th:block>
+                    </div>
+                    <div class="position-absolute translate-middle top-10 start-10">
+                        <div class="rounded-circle m-2 mt-5 p-1 d-flex justify-content-center align-content-center shadow jh-bg-beige"
+                             style="width: 63px; height: 63px;">
+                            <span class="font-weight-bolder jh-pink-title mt-3">BEST</span>
+                        </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
                             data-bs-slide="prev">

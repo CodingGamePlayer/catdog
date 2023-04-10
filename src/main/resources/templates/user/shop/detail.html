@@ -91,7 +91,7 @@
             <h5 class="my-4 px-1 mt-6">Review</h5>
             <div class="row mt-3 mx-1">
                 <div class="d-flex mt-4">
-                    <div class="flex-shrink-0">
+                    <div class="flex-shrink-0 col-2">
                         <th:block th:if="${session.session_img == null || session.session_img == ''}">
                             <img alt="Image placeholder" class="avatar rounded-circle me-3 shadow"
                                  src="/assets/img/df.png">
@@ -102,24 +102,77 @@
                                  onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
                         </th:block>
                     </div>
-                    <div class="flex-grow-1 my-auto">
-                        <form action="/user/shop/detail/register" method="post">
-                            <div class="input-group mb-2">
-                                <select class="form-control form-select-sm" name="review_score">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5" selected>5</option>
-                                </select>
+                    <div class="accordion-item mb-3 ms-2 col-10">
+                        <h5 class="accordion-header" id="headingOne">
+                            <button class="accordion-button border-bottom font-weight-bold ms-2" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                    aria-controls="collapseOne">Write a review
+                                <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
+                                   aria-hidden="true"></i>
+                                <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
+                                   aria-hidden="true"></i>
+                            </button>
+                        </h5>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                             data-bs-parent="#accordionRental" style="">
+                            <div class="accordion-body text-sm">
+                                <div class="flex-grow-1 my-auto ms-2">
+                                    <form action="/user/shop/detail/register" method="post">
+                                        <div class="my-2 d-flex align-content-center">
+                                            <span class="text-dark font-weight-bold me-2 pt-1">Score</span>
+                                            <div class="d-flex pt-1">
+                                                <div class="form-check mx-1">
+                                                    <input class="form-check-input" type="radio" name="review_score"
+                                                           id="flexRadioDefault1" value="1">
+                                                    <label class="form-check-label mb-0" for="flexRadioDefault1">
+                                                        <span th:text="1"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mx-1">
+                                                    <input class="form-check-input" type="radio" name="review_score"
+                                                           id="flexRadioDefault2" value="2">
+                                                    <label class="form-check-label mb-0" for="flexRadioDefault2">
+                                                        <span th:text="2"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mx-1">
+                                                    <input class="form-check-input" type="radio" name="review_score"
+                                                           id="flexRadioDefault3" value="3">
+                                                    <label class="form-check-label mb-0" for="flexRadioDefault3">
+                                                        <span th:text="3"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mx-1">
+                                                    <input class="form-check-input" type="radio" name="review_score"
+                                                           id="flexRadioDefault4" value="4">
+                                                    <label class="form-check-label mb-0" for="flexRadioDefault4">
+                                                        <span th:text="4"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mx-1">
+                                                    <input class="form-check-input" type="radio" name="review_score"
+                                                           id="flexRadioDefault5" value="5" checked>
+                                                    <label class="form-check-label mb-0" for="flexRadioDefault5">
+                                                        <span th:text="5"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <textarea class="form-control" placeholder="Write your comment" rows="2"
+                                                  style="resize: none;" name="review_content"></textarea>
+                                        <input type="hidden" name="product_no" th:value="${product.product_no}">
+                                        <input type="hidden" name="user_id" th:value="${session.session_id}">
+                                        <div class="d-flex justify-content-end my-2">
+                                            <button type="submit" class="btn btn-outline-pink btn-sm p-2 px-3">ADD
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                            <textarea class="form-control" placeholder="Write your comment" rows="2"
-                                      style="resize: none;" name="review_content"></textarea>
-                            <input type="hidden" name="product_no" th:value="${product.product_no}">
-                            <input type="hidden" name="user_id" th:value="${session.session_id}">
-                            <button type="submit" class="btn btn-outline-pink btn-sm">등록</button>
-                        </form>
+                        </div>
                     </div>
+
+
                 </div>
                 <div id="reviewArea"></div>
                 <div id="addReviewArea"></div>

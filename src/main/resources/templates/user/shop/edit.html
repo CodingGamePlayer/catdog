@@ -248,6 +248,14 @@
             const input_product_content = document.querySelector('#product_content').value;
             const input_user_id = document.querySelector('#user_id').value;
             const input_product_no = document.querySelector('#product_no').value;
+
+            if (input_product_name == '' || input_product_price == '' ||
+                input_product_stock == '' || input_category1_no == '' ||
+                input_product_price % 100 != 0 || input_product_stock < 0 ||
+                input_product_price == 0) {
+                return;
+            }
+
             const product = {
                 product_name: input_product_name,
                 product_price: input_product_price,
