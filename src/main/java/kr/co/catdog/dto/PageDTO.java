@@ -19,6 +19,7 @@ public class PageDTO {
     // product list
     private int category1_no;
     private String category_sort;
+    private String keyword;
 
 
 }

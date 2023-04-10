@@ -63,17 +63,24 @@
         SELECT a.*
         FROM catdog.product AS a
         <include refid="review"></include>
-        <include refid="category"></include>
+        <include refid="search"></include>
         <include refid="sort"></include>
         LIMIT #{startIndex},#{size}
     </select>
 
-    <sql id="category">
+    <sql id="search">
         <where>
-            <if test="category1_no != 0 and category1_no == category1_no">
-                category1_no = #{category1_no}
+            <if test="keyword != null">
+                (product_name LIKE CONCAT('%', #{keyword}, '%') OR product_content LIKE CONCAT('%', #{keyword}, '%'))
+                <include refid="category"></include>
             </if>
         </where>
+    </sql>
+
+    <sql id="category">
+        <if test="category1_no != 0">
+            AND category1_no = #{category1_no}
+        </if>
     </sql>
 
     <sql id="sort">
@@ -83,7 +90,7 @@
         <if test="category_sort != null and category_sort == '높은가격순'">
             ORDER BY product_price DESC
         </if>
-        <if test="category_sort != null and category_sort == '등록일순'">
+        <if test="category_sort != null and category_sort == '최신순'">
             ORDER BY product_regdate DESC
         </if>
         <if test="category_sort != null and category_sort == '판매량순'">

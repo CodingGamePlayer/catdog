@@ -45,7 +45,7 @@
                             <input class="form-control" type="text" placeholder="Name" name="product_name" id="product_name">
                         </div>
                         <div class="col-12">
-                            <label class="mt-4">Price</label>
+                            <label>Price</label>
                             <input class="form-control" type="text" placeholder="Price" name="product_price" id="product_price">
                         </div>
                         <div class="col-12">
@@ -129,7 +129,7 @@
             const str = `<figure class="col-3 position-relative figureRemove" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
                             <a href="/testimg/${link}" itemprop="contentUrl" data-size="500x600" target="_blank">
                                 <a href="#" onclick="javascript:removeFile('${uuid}', '${fileName}', this)">
-                                <span class="position-absolute top-10 start-100 translate-middle rounded-circle bg-light">
+                                <span class="position-absolute top-5 end-0 translate-middle rounded-circle bg-light">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-x text-dark" viewBox="0 0 16 16">
                                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                                     </svg>
@@ -211,6 +211,13 @@
             const input_category1_no = document.querySelector('#category1_no').value;
             const input_product_content = document.querySelector('#product_content').value;
             const input_user_id = document.querySelector('#user_id').value;
+
+            if (input_product_name == '' || input_product_price == '' ||
+                input_product_stock == '' || input_category1_no == '' ||
+                input_product_price % 100 != 0 || input_product_stock <= 0 ||
+                input_product_price == 0) {
+                return;
+            }
 
             const product = {
                 product_name: input_product_name,
