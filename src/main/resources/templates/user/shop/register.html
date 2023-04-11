@@ -215,7 +215,8 @@
             if (input_product_name == '' || input_product_price == '' ||
                 input_product_stock == '' || input_category1_no == '' ||
                 input_product_price % 100 != 0 || input_product_stock <= 0 ||
-                input_product_price == 0) {
+                input_product_price == 0 || input_product_content.length > 450) {
+                alert("dkseho")
                 return;
             }
 
