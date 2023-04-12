@@ -283,7 +283,7 @@
             <!-- Button -->
             <div class="d-flex justify-content-center my-5">
                 <div class="col-sm-3 mx-2">
-                    <button type="button"
+                    <a type="button" href="/user/shop/list?keyword=&category1_no=0&category_sort=판매량순"
                             class="btn btn-outline-primary w-100 shadow-md px-3 d-flex justify-content-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-box2-heart mx-1" viewBox="0 0 16 16">
@@ -292,7 +292,7 @@
                                     d="M3.75 0a1 1 0 0 0-.8.4L.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4h-8.5Zm0 1H7.5v3h-6l2.25-3ZM8.5 4V1h3.75l2.25 3h-6ZM15 5v10H1V5h14Z"/>
                         </svg>
                         Best상품
-                    </button>
+                    </a>
                     <a type="button" href="/user/community/popularposts"
                        class="btn btn-outline-primary w-100 shadow-md px-3 d-flex justify-content-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -336,7 +336,7 @@
                         </svg>
                         인기스타
                     </button>
-                    <button type="button"
+                    <a type="button" href="https://www.animal.go.kr/front/awtis/record/recordConfirmList.do?menuNo=2000000011" target="_blank"
                             class="btn btn-outline-primary w-100 shadow-md px-3 d-flex justify-content-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-clipboard-check mx-1" viewBox="0 0 16 16">
@@ -348,7 +348,7 @@
                                     d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
                         </svg>
                         펫국가등록
-                    </button>
+                    </a>
                 </div>
             </div>
             <!-- End Button -->
@@ -490,8 +490,10 @@
                                     </li>
                                     <li class="nav-item px-4">
                                         <span class="nav-link text-lg font-weight-bold">Shopping</span>
-                                        <a th:href="|/user/order?user_id=${session.session_id}|"><span class="nav-link py-1">주문 내역 조회</span></a>
-                                        <a href="#"><span class="nav-link py-1">내가 쓴 리뷰</span></a>
+                                        <a th:href="|/user/order?user_id=${session.session_id}|">
+                                            <span class="nav-link py-1">주문 내역 조회</span></a>
+                                        <a th:href="@{|/user/shop/review/myreview?user_id=${session.session_id}|}">
+                                            <span class="nav-link py-1">내가 쓴 리뷰</span></a>
                                     </li>
                                     <li class="nav-item px-4">
                                       <span class="nav-link">

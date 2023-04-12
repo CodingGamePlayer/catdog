@@ -6,11 +6,13 @@ import kr.co.catdog.dto.ReviewDTO;
 import kr.co.catdog.mapper.ReviewMapper;
 import kr.co.catdog.mapper.UserMapper;
 import kr.co.catdog.service.ReviewService;
+import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,7 @@ public class ReviewServiceImp implements ReviewService {
     private final ReviewMapper reviewMapper;
     private final ModelMapper modelMapper;
     private final UserMapper userMapper;
+    private final ShopService shopService;
 
     @Override
     public List<ReviewDTO> selectAll(PageDTO pageDTO) {
@@ -33,6 +36,18 @@ public class ReviewServiceImp implements ReviewService {
         });
         return reviewDTOList;
 
+    }
+
+    @Override
+    public List<ReviewDTO> findByUserid(String user_id){
+        List<ReviewVO> reviewVOList = reviewMapper.findByUserid(user_id);
+        List<ReviewDTO> reviewDTOList = new ArrayList<>();
+        reviewVOList.forEach(reviewVO -> {
+            ReviewDTO dto = modelMapper.map(reviewVO, ReviewDTO.class);
+            dto.setProductDTO(shopService.findById(dto.getProduct_no()));
+            reviewDTOList.add(dto);
+        });
+        return reviewDTOList;
     }
 
     @Override
