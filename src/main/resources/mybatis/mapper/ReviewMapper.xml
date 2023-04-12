@@ -20,6 +20,13 @@
         LIMIT #{startIndex},#{size}
     </select>
 
+    <select id="findByUserid" resultMap="reviewMap">
+        SELECT *
+        FROM review
+        WHERE user_id = #{user_id}
+        ORDER BY review_no DESC
+    </select>
+
     <insert id="insert">
         INSERT INTO review (user_id, product_no, review_score, review_content)
         VALUES (#{user_id}, #{product_no}, #{review_score}, #{review_content})

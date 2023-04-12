@@ -18,4 +18,6 @@ public class ReviewDTO {
     private int review_score;
     private String review_content;
     private String user_image;
+
+    private ProductDTO productDTO;
 }

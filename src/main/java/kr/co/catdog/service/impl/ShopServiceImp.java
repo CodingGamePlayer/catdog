@@ -10,13 +10,9 @@ import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
