@@ -19,7 +19,7 @@
                         <a th:href="@{|/user/shop/detail/${review.productDTO.product_no}|}">
                             <th:block th:if="${review.productDTO.mediaVO != null}">
                                 <img class="img border-radius-lg max-width-100 w-100"
-                                     th:src="@{|/testimg/${review.productDTO.mediaVO.media_path}|}" width="80" height="80"
+                                     th:src="@{|/image/${review.productDTO.mediaVO.media_path}|}" width="80" height="80"
                                      onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
                             </th:block>
                             <th:block th:unless="${review.productDTO.mediaVO != null}">
