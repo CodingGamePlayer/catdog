@@ -13,7 +13,7 @@
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                             data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false"
                             aria-controls="panelsStayOpen-collapseOne">
-                        당신의 응답 대기중
+                        <a th:text="${myPetDTO.pet_name}+'의 응답 대기중'">당신의 응답 대기중</a>
                     </button>
                 </h2>
                 <th:block th:each="matchingDTO : ${matchingDTOs}">
@@ -49,13 +49,6 @@
                                                                th:text="${matchingDTO.data.pet_gender == 1 ? 'Male' : 'Female'}"
                                                                th:value="${matchingDTO.data.pet_gender}"></small>
                                                     </div>
-                                                    <div class="col-6">
-                                                        <label>동물국가등록번호</label>
-                                                        <small class="d-block text-muted ms-3"
-                                                               th:text="${matchingDTO.data.pet_animalnum}"></small>
-                                                        <input type="hidden" name="matching_category1_no"
-                                                               th:value="${matchingDTO.data.category1_no}">
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -84,11 +77,6 @@
                                                                th:text="${matchingDTO.petDTO.pet_gender == 1 ? 'Male' : 'Female'}"
                                                                th:value="${matchingDTO.petDTO.pet_gender}"></small>
                                                     </div>
-                                                    <div class="col-6">
-                                                        <label>국가등록번호</label>
-                                                        <small class="d-block text-muted ms-3"
-                                                               th:text="${matchingDTO.petDTO.pet_animalnum}"></small>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -104,7 +92,7 @@
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
                             aria-controls="panelsStayOpen-collapseTwo">
-                        상대방 응답 대기중
+                        상대 응답 대기중
                     </button>
                 </h2>
                 <th:block th:each="matchingDTO : ${matchingDTOs}">
@@ -139,11 +127,6 @@
                                                                name="matching_pet_gender"
                                                                th:text="${matchingDTO.data.pet_gender == 1 ? 'Male' : 'Female'}"
                                                                th:value="${matchingDTO.data.pet_gender}"></small>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <label>국가등록번호</label>
-                                                        <small class="d-block text-muted ms-3"
-                                                               th:text="${matchingDTO.data.pet_animalnum}"></small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -195,11 +178,6 @@
                                                                th:text="${matchingDTO.data.pet_gender == 1 ? 'Male' : 'Female'}"
                                                                th:value="${matchingDTO.data.pet_gender}"></small>
                                                     </div>
-                                                    <div class="col-6">
-                                                        <label>국가등록번호</label>
-                                                        <small class="d-block text-muted ms-3"
-                                                               th:text="${matchingDTO.data.pet_animalnum}"></small>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -227,11 +205,6 @@
                                                                name="matching_pet_gender"
                                                                th:text="${matchingDTO.petDTO.pet_gender == 1 ? 'Male' : 'Female'}"
                                                                th:value="${matchingDTO.petDTO.pet_gender}"></small>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <label>국가등록번호</label>
-                                                        <small class="d-block text-muted ms-3"
-                                                               th:text="${matchingDTO.petDTO.pet_animalnum}"></small>
                                                     </div>
                                                 </div>
                                             </div>

@@ -38,12 +38,6 @@
                                        th:text="${matchingDTO.petDTO.pet_gender == 1 ? 'Male' : 'Female'}"
                                        th:value="${matchingDTO.petDTO.pet_gender}"></small>
                             </div>
-                            <div class="col-12">
-                                <label for="myPetAnimalnum">동물국가등록번호</label>
-                                <small class="d-block text-muted ms-3" id="myPetAnimalnum"
-                                       th:text="${matchingDTO.petDTO.pet_animalnum}"></small>
-                                <input type="hidden" name="category1_no" th:value="${matchingDTO.petDTO.category1_no}">
-                            </div>
                             <div class="col-12" th:if="${matchingDTO.matching_request == 2}">
                                 <label for="matchingPetAge">폰 번호</label>
                                 <small class="d-block text-muted ms-3" id="phoneNo"
