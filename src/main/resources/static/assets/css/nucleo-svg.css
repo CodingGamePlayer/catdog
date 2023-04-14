@@ -178,4 +178,20 @@ iframe {
   height: 100%; /* 높이를 자동으로 조정하여 비율 유지 */
 }
 
+.custom-card {
+  /* 카드 스타일 */
+  background-color: #fff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  color: #333;
+  transition: all 0.2s ease-in-out;
+}
+
+.custom-card:hover {
+  /* 호버시 나타날 스타일 */
+  background-color: #f8f9fa;
+  box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.2);
+  color: #666;
+  transform: scale(1.05);
+}
+
 
