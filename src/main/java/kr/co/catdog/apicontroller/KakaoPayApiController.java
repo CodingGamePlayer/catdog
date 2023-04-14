@@ -52,7 +52,8 @@ public class KakaoPayApiController {
     }
 
     @GetMapping("api/kakao/cancel")
-    public ResponseEntity cancel() {
+    public
+    ResponseEntity cancel() {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.TEXT_HTML);
         String responseBody = "<script>window.close();</script>";
