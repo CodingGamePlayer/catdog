@@ -12,14 +12,7 @@
         </div>
         <div class="accordion" id="accordionPanelsStayOpenExample">
             <div class="accordion-item mx-5">
-<!--                <h2 class="accordion-header" id="panelsStayOpen-headingOne">-->
-<!--                    <button class="accordion-button" type="button" data-bs-toggle="collapse"-->
-<!--                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false"-->
-<!--                            aria-controls="panelsStayOpen-collapseOne">-->
-<!--                        <a th:text="${myPetDTO.pet_name}+'의 응답 대기중'">당신의 응답 대기중</a>-->
-<!--                    </button>-->
-<!--                </h2>-->
-                <h3 class="accordion-heade" id="panelsStayOpen-headingOne">
+                <h3 class="accordion-header" id="panelsStayOpen-headingOne">
                     <button class="accordion-button border-bottom font-weight-bold px-3 jh-pink2-title" type="button"
                             data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
                             aria-controls="panelsStayOpen-collapseOne">
@@ -38,7 +31,7 @@
                          class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                         <div class="accordion-body px-0">
                             <div class="col-12 my-1">
-                                <div class="card shadow-none">
+                                <div class="card custom-card shadow-none">
                                     <div class="card card-body">
                                         <div class="d-flex" th:if="${user_id == matchingDTO.user_id}"
                                              th:onclick="cardClick([[${matchingDTO.user_id}]], [[${matchingDTO.matching_user_id}]], [[${matchingDTO.matching_no}]])">
@@ -105,20 +98,26 @@
                 </th:block>
             </div>
             <div class="accordion-item mx-5">
-                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                <h3 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button border-bottom font-weight-bold px-3 jh-pink2-title" type="button" data-bs-toggle="collapse"
                             data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
                             aria-controls="panelsStayOpen-collapseTwo">
-                        상대 응답 대기중
+                        <a>상대 응답 대기중</a>
+                        <th:block th:if="${!matchingDTOs.isEmpty()}">
+                            <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3 jh-pink2-title"
+                               aria-hidden="true"></i>
+                            <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
+                               aria-hidden="true"></i>
+                        </th:block>
                     </button>
-                </h2>
+                </h3>
                 <th:block th:each="matchingDTO : ${matchingDTOs}">
                     <div id="panelsStayOpen-collapseTwo"
                          th:if="${user_id == matchingDTO.user_id and matchingDTO.matching_request == 1}"
                          class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                        <div class="accordion-body">
-                            <div class="col-12 px-3 my-1">
-                                <div class="card shadow-none">
+                        <div class="accordion-body px-0">
+                            <div class="col-12 my-1">
+                                <div class="card custom-card shadow-none">
                                     <div class="card card-body">
                                         <div class="d-flex"
                                              th:onclick="cardClick([[${matchingDTO.user_id}]], [[${matchingDTO.matching_user_id}]], [[${matchingDTO.matching_no}]])">
@@ -156,21 +155,27 @@
                 </th:block>
             </div>
             <div class="accordion-item mx-5">
-                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                <h3 class="accordion-header" id="panelsStayOpen-headingThree">
+                    <button class="accordion-button border-bottom font-weight-bold px-3 jh-pink2-title" type="button" data-bs-toggle="collapse"
                             data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
                             aria-controls="panelsStayOpen-collapseThree">
-                        매칭 성공
+                        <a>매칭 성공</a>
+                        <th:block th:if="${!matchingDTOs.isEmpty()}">
+                            <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3 jh-pink2-title"
+                               aria-hidden="true"></i>
+                            <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
+                               aria-hidden="true"></i>
+                        </th:block>
                     </button>
-                </h2>
+                </h3>
                 <th:block th:each="matchingDTO : ${matchingDTOs}">
                     <div id="panelsStayOpen-collapseThree" th:if="${matchingDTO.matching_request == 2}"
                          class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                        <div class="accordion-body">
-                            <div class="col-12 px-3 my-1">
-                                <div class="card shadow-none">
+                        <div class="accordion-body px-0">
+                            <div class="col-12 my-1">
+                                <div class="card custom-card shadow-none" th:if="${session.session_id == matchingDTO.user_id}">
                                     <div class="card card-body">
-                                        <div class="d-flex" th:if="${session.session_id == matchingDTO.user_id}"
+                                        <div class="d-flex"
                                              th:onclick="cardClick([[${matchingDTO.user_id}]], [[${matchingDTO.matching_user_id}]], [[${matchingDTO.matching_no}]])">
                                             <div class="flex-shrink-0">
                                                 <a th:href="|/user/community/mycommunity?user_id=${matchingDTO.matching_user_id}|">
@@ -198,7 +203,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="d-flex" th:if="${session.session_id == matchingDTO.matching_user_id}"
+                                    </div>
+                                </div>
+                                <div class="card custom-card shadow-none" th:if="${session.session_id == matchingDTO.matching_user_id}">
+                                    <div class="card card-body">
+                                        <div class="d-flex"
                                              th:onclick="cardClick([[${matchingDTO.user_id}]], [[${matchingDTO.matching_user_id}]], [[${matchingDTO.matching_no}]])">
                                             <div class="flex-shrink-0">
                                                 <a th:href="|/user/community/mycommunity?user_id=${matchingDTO.user_id}|">
