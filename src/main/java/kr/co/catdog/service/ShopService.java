@@ -2,6 +2,7 @@ package kr.co.catdog.service;
 
 import kr.co.catdog.dto.PageDTO;
 import kr.co.catdog.dto.ProductDTO;
+import org.springframework.core.io.Resource;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ public interface ShopService {
     int insert(ProductDTO productDTO);
     int update(ProductDTO productDTO);
     int delete(int product_no);
-
+    Resource getMedia(String filename);
 }

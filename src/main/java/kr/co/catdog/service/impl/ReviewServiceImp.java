@@ -39,14 +39,16 @@ public class ReviewServiceImp implements ReviewService {
     }
 
     @Override
-    public List<ReviewDTO> findByUserid(String user_id){
+    public List<ReviewDTO> findByUserid(String user_id) {
         List<ReviewVO> reviewVOList = reviewMapper.findByUserid(user_id);
         List<ReviewDTO> reviewDTOList = new ArrayList<>();
-        reviewVOList.forEach(reviewVO -> {
-            ReviewDTO dto = modelMapper.map(reviewVO, ReviewDTO.class);
-            dto.setProductDTO(shopService.findById(dto.getProduct_no()));
-            reviewDTOList.add(dto);
-        });
+        if (reviewVOList != null) {
+            reviewVOList.forEach(reviewVO -> {
+                ReviewDTO dto = modelMapper.map(reviewVO, ReviewDTO.class);
+                dto.setProductDTO(shopService.findById(dto.getProduct_no()));
+                reviewDTOList.add(dto);
+            });
+        }
         return reviewDTOList;
     }
 

@@ -22,7 +22,7 @@
                                 <a th:href="@{|/user/shop/detail/${cart.productDTO.product_no}|}">
                                     <th:block th:if="${cart.productDTO.mediaVO != null}">
                                         <img class="img border-radius-lg max-width-100 w-100"
-                                             th:src="@{|/testimg/${cart.productDTO.mediaVO.media_path}|}" width="100"
+                                             th:src="@{|/image/${cart.productDTO.mediaVO.media_path}|}" width="100"
                                              height="100"
                                              onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
                                     </th:block>
@@ -79,7 +79,7 @@
                             <div class="col-4">
                                 <th:block th:if="${cart.productDTO.mediaVO != null}">
                                     <img class="img border-radius-lg max-width-100 w-100"
-                                         th:src="@{|/testimg/${cart.productDTO.mediaVO.media_path}|}" width="100"
+                                         th:src="@{|/image/${cart.productDTO.mediaVO.media_path}|}" width="100"
                                          height="100"
                                          onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
                                 </th:block>
