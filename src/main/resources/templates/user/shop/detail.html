@@ -43,7 +43,7 @@
                             <figure class="col-3" itemprop="associatedMedia" itemscope=""
                                     itemtype="http://schema.org/ImageObject">
                                 <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow-lg imgView-s"
-                                     th:src="@{|/testimg/${img.media_path}|}" alt="Image description"
+                                     th:src="@{|/image/${img.media_path}|}" alt="Image description"
                                      onclick="imgView(this.src)"
                                      onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
                             </figure>
@@ -98,7 +98,7 @@
                         </th:block>
                         <th:block th:unless="${session.session_img == null || session.session_img == ''}">
                             <img alt="Image placeholder" class="avatar rounded-circle me-3 shadow"
-                                 th:src="|/testimg/${session.session_img}|"
+                                 th:src="|/image/${session.session_img}|"
                                  onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
                         </th:block>
                     </div>
@@ -246,7 +246,7 @@
                                 ${review.user_image == null || review.user_image == '' ?
                                 `<img alt="Image placeholder" class="avatar rounded-circle shadow" src="/assets/img/df.png">` :
                                 `<img alt="Image placeholder" class="avatar rounded-circle shadow"
-                                src="/testimg/${review.user_image}"
+                                src="/image/${review.user_image}"
                                 onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">`}
                             </div>
                             <div class="flex-grow-1 ms-3 me-1 col-10">

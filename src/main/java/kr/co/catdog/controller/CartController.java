@@ -25,30 +25,32 @@ public class CartController {
     @GetMapping("/{user_id}")
     String list(@PathVariable String user_id, Model model) {
 
-        model.addAttribute("cartList",cartService.findById(user_id));
+        model.addAttribute("cartList", cartService.findById(user_id));
 
         return "user/shop/cart";
     }
+
     @PostMapping("/register")
-    String register(CartDTO cartDTO, HttpServletRequest request, RedirectAttributes redirectAttributes){
+    String register(CartDTO cartDTO, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         cartService.insert(cartDTO);
 
         HttpSession session = request.getSession();
         int cart = cartService.findById(cartDTO.getUser_id()).size();
-        session.setAttribute("session_cart",cart);
+        session.setAttribute("session_cart", cart);
 
         redirectAttributes.addFlashAttribute("cartToastMsg", "toast");
 
-        return "redirect:/user/shop/detail/"+cartDTO.getProduct_no();
+        return "redirect:/user/shop/detail/" + cartDTO.getProduct_no();
     }
+
     @GetMapping("/delete/{cart_no}")
-    String delete(@PathVariable int cart_no, HttpServletRequest request){
+    String delete(@PathVariable int cart_no, HttpServletRequest request) {
         cartService.delete(cart_no);
 
         HttpSession session = request.getSession();
-        int cart = cartService.findById((String)session.getAttribute("session_id")).size();
-        session.setAttribute("session_cart",cart);
+        int cart = cartService.findById((String) session.getAttribute("session_id")).size();
+        session.setAttribute("session_cart", cart);
 
-        return "redirect:/user/shop/cart/"+session.getAttribute("session_id");
+        return "redirect:/user/shop/cart/" + session.getAttribute("session_id");
     }
 }

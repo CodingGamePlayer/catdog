@@ -458,14 +458,14 @@
                             <div class="collapse navbar-collapse pt-3 pb-2 w-100" id="navigation">
                                 <ul class="navbar-nav navbar-nav-hover w-100">
                                     <li class="nav-link d-flex justify-content-center w-100">
-                                        <div class="avatar avatar-xxl rounded-circle shadow">
+                                        <div class="avatar avatar-xxl rounded-circle shadow-none">
                                             <th:block th:if="${session.session_img == null || session.session_img == ''}">
                                                 <img class="" alt="Image placeholder"
                                                      src="/assets/img/df.png" width="100" height="100">
                                             </th:block>
                                             <th:block th:unless="${session.session_img == null || session.session_img == ''}">
                                                 <img class="" alt="Image placeholder"
-                                                     th:src="|/testimg/${session.session_img}|" width="100" height="100"
+                                                     th:src="|/image/${session.session_img}|" width="100" height="100"
                                                      onerror="this.onerror=null; this.src='/assets/img/noimg.jpg';">
                                             </th:block>
                                         </div>

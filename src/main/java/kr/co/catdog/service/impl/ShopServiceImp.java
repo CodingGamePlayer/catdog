@@ -10,6 +10,8 @@ import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,6 +24,9 @@ public class ShopServiceImp implements ShopService {
     private final ModelMapper modelMapper;
     private final ProductMapper productMapper;
     private final MediaMapper mediaMapper;
+
+    private final ResourceLoader resourceLoader;
+    private final String upPath = "static/assets/img/shop";
 
     @Override
     public List<ProductDTO> selectAll(PageDTO pageDTO) {
@@ -47,6 +52,10 @@ public class ShopServiceImp implements ShopService {
             productDTOList.add(productDTO);
         });
         return productDTOList;
+    }
+    @Override
+    public Resource getMedia(String filename) {
+        return resourceLoader.getResource( "classpath:" + upPath + "/" + filename);
     }
 
 //    private MediaVO isValidImagePath(MediaVO mediaVO) { // 사진파일 유효한지 확인
