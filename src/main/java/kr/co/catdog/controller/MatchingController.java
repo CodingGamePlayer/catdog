@@ -4,6 +4,7 @@ package kr.co.catdog.controller;
 import kr.co.catdog.dto.MatchingDTO;
 import kr.co.catdog.dto.PetDTO;
 import kr.co.catdog.service.MatchingService;
+import kr.co.catdog.service.PetService;
 import kr.co.catdog.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,8 @@ public class MatchingController {
     private MatchingService matchingService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private PetService petService;
     @GetMapping("user/matching")
     public ModelAndView showMatching(HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
@@ -73,6 +76,7 @@ public class MatchingController {
                     .user_id(user_id)
                     .build();
             mav.addObject("user_id", user_id);
+            mav.addObject("myPetDTO", petService.findById(user_id));
             mav.addObject("matchingDTOs", matchingService.list(matchingDTO));
             log.info("list 보냈음");
             mav.setViewName("user/matching/list");
