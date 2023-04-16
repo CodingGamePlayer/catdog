@@ -95,6 +95,7 @@
         document.querySelector("#formFile").addEventListener('change', function (e) {
             const fileInput = document.querySelector("input[name='files']");
             const files = fileInput.files;
+            let loadCount = 0;
 
             // 사진 개수 설정
             if (previewArray.length + files.length > 4) {
@@ -115,13 +116,21 @@
                     previewArray.push(src);
                     // 파일 배열에 추가
                     fileArray.push(files[i]);
+
+                    loadCount++;
+                    if (loadCount === files.length) {
+                        // 모든 파일 로드가 완료된 경우에만 파일 입력 요소의 값을 초기화
+                        fileInput.value = "";
+                    }
                 });
+
                 if (files) {
                     reader.readAsDataURL(files[i]);
                 }
             }
         }, false);
         // 파일 업로드 End -----------------------------------------------------------
+
 
         // 이미지 미리보기 Start --------------------------------------------------------
         function showPreview(src) {
@@ -201,13 +210,11 @@
                     registerArray.push(serverResult.link);
                     console.log("배열담음"+registerArray)
                 }
+                // 등록
                 register(registerArray);
             }).catch(e => {
                 removeAll();
             })
-
-            // 등록
-
         });
         // 등록버튼 클릭 End --------------------------------------------------------
 
@@ -228,7 +235,6 @@
                 alert("다시 입력하세요.");
                 return;
             }
-            console.log("배열"+registerArray)
 
             const product = {
                 product_name: input_product_name,
