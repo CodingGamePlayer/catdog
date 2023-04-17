@@ -152,6 +152,7 @@
             }
             uploadResult.innerHTML += str;
         }
+
         // 이미지 미리보기 End --------------------------------------------------------
 
         // 이미지 미리보기 삭제 Start ---------------------------------------------------
@@ -172,6 +173,7 @@
                 resetPreview();
             }
         }
+
         // 이미지 미리보기 삭제 End ---------------------------------------------------
 
         // 미리보기 초기화 Start -------------------------------------------------------
@@ -183,6 +185,7 @@
                          </figure>`
             document.querySelector(".uploadResult").innerHTML = str
         }
+
         // 미리보기 초기화 End -------------------------------------------------------
 
         // 전체 초기화 Start ------------------------------------------------------------
@@ -194,6 +197,7 @@
             // 미리보기 초기화
             resetPreview();
         }
+
         // 전체 초기화 End ------------------------------------------------------------
 
         // 등록버튼 클릭 Start --------------------------------------------------------
@@ -208,7 +212,6 @@
             uploadToServer(formObj).then(result => {
                 for (const serverResult of result) {
                     registerArray.push(serverResult.link);
-                    console.log("배열담음"+registerArray)
                 }
                 // 등록
                 register(registerArray);
@@ -220,7 +223,6 @@
 
         // 등록 Start -----------------------------------------------------------------------
         function register(registerArray) {
-            console.log("배열"+registerArray)
             const input_product_name = document.querySelector('#product_name').value;
             const input_product_price = document.querySelector('#product_price').value;
             const input_product_stock = document.querySelector('#product_stock').value;
@@ -265,6 +267,7 @@
                 }
             });
         }
+
         // 등록 End -----------------------------------------------------------------------
 
     </script>

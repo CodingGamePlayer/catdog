@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class PageDTO {
-    private int size = 10;
+    private final int size = 10;
     private int startIndex;
 
     // product detail

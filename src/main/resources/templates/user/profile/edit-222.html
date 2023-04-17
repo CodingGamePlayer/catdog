@@ -85,23 +85,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/assets/js/upload.js"></script>
     <!-- 파일 첨부용 JS end-->
-    <script>
-        const uploadResult = document.querySelector(".uploadResult");
-        // 기존 저장 파일 불러오기 Start ---------------------------------------------------
-        document.addEventListener('DOMContentLoaded', function () {
-            const user_image = [[${user.user_image}]];
-            if (user_image == '') {
-                return;
-            }
-            console.log("link" + link)
-            mediaVOList.forEach(mediaVO => {
-                registerArray.push(mediaVO.media_path);
-                showPreview("/image/" + mediaVO.media_path, 0);
-                saveFileCount++;
-            })
-        });
-        // 기존 저장 파일 불러오기 End ---------------------------------------------------
-    </script>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
