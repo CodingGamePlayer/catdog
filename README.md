@@ -2,22 +2,22 @@
 ### 반려견 & 묘를 위한 커뮤니티 및 매칭 그리고 마켓제공 서비스
 <hr>
 
-    Project 설계 계획 및 개발 일정
-    - 3/6 ~ 3/7 : 와이어프레임설계 및 UseCase 예측
-    - 3/8 ~ 3/12 : DB설계 및 Front Latout 설계
-    - 3/13 ~ 3/24 : 프로토타입 개발
-    - 3/27 : 프로토타입 리뷰
-    - 3/27 ~ 4/2 : 프로젝트 마무리 개발 및 QA 작업 수행.
-    - 4/3 ~ 4/10 : 프로젝트 배포 및 QA
-    - 4/11 ~ 4/17 : 문서화 정리 및 프레젠테이션
+   ## Project 설계 계획 및 개발 일정
+   - 3/6 ~ 3/7 : 와이어프레임설계 및 UseCase 예측
+   - 3/8 ~ 3/12 : DB설계 및 Front Latout 설계
+   - 3/13 ~ 3/24 : 프로토타입 개발
+   - 3/27 : 프로토타입 리뷰
+   - 3/27 ~ 4/2 : 프로젝트 마무리 개발 및 QA 작업 수행.
+   - 4/3 ~ 4/10 : 프로젝트 배포 및 QA
+   - 4/11 ~ 4/17 : 문서화 정리 및 프레젠테이션
     
-    ##service Url
-    https://catdogforest.shop/
+   ## Service Url
+   ### https://catdogforest.shop/
     
-    ## Presentation Video of the UziDangMan Project
-    https://youtu.be/Hv6ikPqGT1U
+   ## Presentation Video of the CatDogForest Project
+   ### https://youtu.be/Hv6ikPqGT1U
     
-    ## Presentation of the CatdogForest Project
+   ## Presentation of the CatDogForest Project
 <hr>
 
 ![슬라이드1](https://user-images.githubusercontent.com/59526539/232393157-9860fb5e-01bc-4f1c-b9cb-11ec56001858.PNG)
