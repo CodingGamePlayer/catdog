@@ -86,62 +86,57 @@
     <!-- 파일 첨부용 JS end-->
 
     <script>
-        let input_UUID;
-        let input_Filename;
-        const previewArray = [];
-        const fileArray = [];
+        let previewArray = [];
+        let fileArray = [];
+        let registerArray = [];
+        const uploadResult = document.querySelector(".uploadResult");
 
         // 파일 업로드 Start -----------------------------------------------------------
         document.querySelector("#formFile").addEventListener('change', function (e) {
+            const fileInput = document.querySelector("input[name='files']");
+            const files = fileInput.files;
+            let loadCount = 0;
 
-            const formObj = new FormData();
-            const fileInput = document.querySelector("input[name='files']")
-            const files = fileInput.files
             // 사진 개수 설정
-            if (fileArray.length + files.length > 4) {
-                alert('사진개수초과');
-                if (fileArray.length == 0) {
-                    fileReset();
+            if (previewArray.length + files.length > 4) {
+                alert('사진개수를 초과하였습니다.');
+                if (previewArray.length == 0) {
+                    resetPreview();
                 }
                 return;
             }
-            uploadResult.innerHTML = '';
-            for (let i = 0; i < files.length; i++) {
 
+            for (let i = 0; i < files.length; i++) {
                 const reader = new FileReader();
-                reader.addEventListener('load', function() {
+                reader.addEventListener('load', function () {
                     const src = reader.result;
-                    showUpload(src);
+                    // 이미지 미리보기
+                    showPreview(src);
+                    // 미리보기 src 배열에 추가
                     previewArray.push(src);
-                    console.log("file"+src);
-                    console.log(previewArray);
+                    // 파일 배열에 추가
+                    fileArray.push(files[i]);
+
+                    loadCount++;
+                    if (loadCount === files.length) {
+                        // 모든 파일 로드가 완료된 경우에만 파일 입력 요소의 값을 초기화
+                        fileInput.value = "";
+                    }
                 });
 
                 if (files) {
-                    const url = reader.readAsDataURL(files[i]);
-                    // console.log("file"+url);
+                    reader.readAsDataURL(files[i]);
                 }
             }
-
-            // for (let i = 0; i < files.length; i++) {
-            //     formObj.append("files", files[i]);
-            // }
-            // 폴더에 파일 저장
-            // uploadToServer(formObj).then(result => {
-            //     for (const uploadResult of result) {
-            //         showUploadFile(uploadResult)
-            //     }
-            // }).catch(e => {
-            //     removeAll()
-            // })
         }, false);
         // 파일 업로드 End -----------------------------------------------------------
-        // 여기===========
-        function showUpload(e) {
 
+
+        // 이미지 미리보기 Start --------------------------------------------------------
+        function showPreview(src) {
             const str = `<figure class="col-3 position-relative figureRemove" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-                            <a href="${e}" itemprop="contentUrl" data-size="500x600" target="_blank">
-                                <a href="#" onclick="javascript:removeFile(e)">
+                            <a href="${src}" itemprop="contentUrl" data-size="500x600" target="_blank">
+                                <a href="#" onclick="javascript:removePreview('${src}',this)">
                                 <span class="position-absolute top-5 end-0 translate-middle rounded-circle bg-light">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-x text-dark" viewBox="0 0 16 16">
                                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -149,75 +144,40 @@
                                 </span>
                                 </a>
                                 <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
-                                     src="${e}" data-src="${e}" itemprop="thumbnail" alt="Image description">
+                                     src="${src}" data-src="${src}" itemprop="thumbnail" alt="Image description">
                             </a>
                         </figure>`
-            // if (fileArray.length == 0) {
-            //     uploadResult.innerHTML = '';
-            // }
-            uploadResult.innerHTML += str;
-        }
-
-
-        // 여기===========
-        const uploadResult = document.querySelector(".uploadResult")
-
-        // 파일 업로드시 미리보기 Start -------------------------------------------------
-        function showUploadFile({uuid, fileName, link}) {
-
-            input_UUID = uuid;
-            input_Filename = fileName;
-            const str = `<figure class="col-3 position-relative figureRemove" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-                            <a href="/image/${link}" itemprop="contentUrl" data-size="500x600" target="_blank">
-                                <a href="#" onclick="javascript:removeFile('${uuid}', '${fileName}', this)">
-                                <span class="position-absolute top-5 end-0 translate-middle rounded-circle bg-light">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-x text-dark" viewBox="0 0 16 16">
-                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                    </svg>
-                                </span>
-                                </a>
-                                <img class="w-75 min-height-100 max-height-100 border-radius-lg shadow"
-                                     src="/image/${link}" data-src="/image/${uuid + "_" + fileName}" itemprop="thumbnail" alt="Image description">
-                            </a>
-                        </figure>`
-            if (fileArray.length == 0) {
+            if (previewArray.length == 0) {
                 uploadResult.innerHTML = '';
             }
             uploadResult.innerHTML += str;
-            fileArrayAdd()
         }
 
-        // 파일 업로드시 미리보기 End -------------------------------------------------
+        // 이미지 미리보기 End --------------------------------------------------------
 
-        // 파일 업로드시 배열에 저장 Start ---------------------------------------------
-        function fileArrayAdd() {
-            fileArray.push(input_UUID + "_" + input_Filename);
-        }
+        // 이미지 미리보기 삭제 Start ---------------------------------------------------
+        function removePreview(src, obj) {
+            // 해당 코드 삭제
+            const targetDiv = obj.closest(".figureRemove");
+            targetDiv.remove();
 
-        // 파일 업로드시 배열에 저장 End ---------------------------------------------
-
-        // 파일 삭제 Start --------------------------------------------------------
-        function removeFile(uuid, fileName, obj) {
-            // 파일 삭제시 폴더에서 삭제 , 미리보기 삭제
-            const targetDiv = obj.closest(".figureRemove")
-            removeFileToServer(uuid, fileName).then(data => {
-                targetDiv.remove()
-            })
-            // 파일 삭제시 배열에서 삭제
-            const index = fileArray.indexOf(uuid + "_" + fileName);
+            // 배열에서 삭제
+            const index = previewArray.indexOf(src);
             if (index > -1) {
+                previewArray.splice(index, 1);
                 fileArray.splice(index, 1);
             }
+
             // 남은 파일 없으면 미리보기 초기화
-            if (fileArray.length == 0) {
-                fileReset();
+            if (previewArray.length == 0) {
+                resetPreview();
             }
         }
 
-        // 파일 삭제 End --------------------------------------------------------
+        // 이미지 미리보기 삭제 End ---------------------------------------------------
 
-        // 미리보기 초기화 Start --------------------------------------------------
-        function fileReset() {
+        // 미리보기 초기화 Start -------------------------------------------------------
+        function resetPreview() {
             const str = `<figure class="col-12" itemProp="associatedMedia" itemScope=""
                                   itemType="http://schema.org/ImageObject">
                             <img class="w-75 min-height-100 max-height-100 border-radius-lg"
@@ -226,26 +186,43 @@
             document.querySelector(".uploadResult").innerHTML = str
         }
 
-        // 미리보기 초기화 End --------------------------------------------------
+        // 미리보기 초기화 End -------------------------------------------------------
 
-        // 파일 전체 초기화 Start ------------------------------------------------------------
+        // 전체 초기화 Start ------------------------------------------------------------
         function removeAll() {
-            // 폴더에서 삭제
-            for (let i = 0; i < fileArray.length; i++) {
-                const uuid = fileArray[i].substring(0, 36);
-                const fileName = fileArray[i].substring(37, fileArray[i].length);
-                removeFileToServer(uuid, fileName);
-            }
             // 배열 초기화
+            registerArray.length = 0;
             fileArray.length = 0;
+            previewArray.length = 0;
             // 미리보기 초기화
-            fileReset();
+            resetPreview();
         }
 
-        // 파일 전체 초기화 End ------------------------------------------------------------
+        // 전체 초기화 End ------------------------------------------------------------
 
-
+        // 등록버튼 클릭 Start --------------------------------------------------------
         document.querySelector('#submitBtn').addEventListener("click", () => {
+            const formObj = new FormData();
+
+            for (let i = 0; i < fileArray.length; i++) {
+                formObj.append("files", fileArray[i]);
+            }
+
+            // 폴더에 파일 저장
+            uploadToServer(formObj).then(result => {
+                for (const serverResult of result) {
+                    registerArray.push(serverResult.link);
+                }
+                // 등록
+                register(registerArray);
+            }).catch(e => {
+                removeAll();
+            })
+        });
+        // 등록버튼 클릭 End --------------------------------------------------------
+
+        // 등록 Start -----------------------------------------------------------------------
+        function register(registerArray) {
             const input_product_name = document.querySelector('#product_name').value;
             const input_product_price = document.querySelector('#product_price').value;
             const input_product_stock = document.querySelector('#product_stock').value;
@@ -257,7 +234,7 @@
                 input_product_stock == '' || input_category1_no == '' ||
                 input_product_price % 100 != 0 || input_product_stock <= 0 ||
                 input_product_price == 0 || input_product_content.length > 450) {
-                alert("dkseho")
+                alert("다시 입력하세요.");
                 return;
             }
 
@@ -268,7 +245,7 @@
                 category1_no: input_category1_no,
                 product_content: input_product_content,
                 user_id: input_user_id,
-                media_path: fileArray
+                media_path: registerArray
             };
 
             console.log(product);
@@ -289,9 +266,9 @@
                     alert('등록을 실패하였습니다.');
                 }
             });
+        }
 
-
-        });
+        // 등록 End -----------------------------------------------------------------------
 
     </script>
 </div>

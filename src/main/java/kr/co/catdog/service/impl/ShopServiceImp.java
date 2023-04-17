@@ -126,6 +126,7 @@ public class ShopServiceImp implements ShopService {
     @Override
     public int delete(int product_no) {
         int result = productMapper.delete(product_no);
+        // 폴더에 있는 파일 삭제
         return !(result > 0) ? 0 : 1;
     }
 
