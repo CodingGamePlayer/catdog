@@ -492,7 +492,7 @@
                                         <span class="nav-link text-lg font-weight-bold">Shopping</span>
                                         <a th:href="|/user/order?user_id=${session.session_id}|">
                                             <span class="nav-link py-1">주문 내역 조회</span></a>
-                                        <a th:href="@{|/user/shop/review/myreview?user_id=${session.session_id}|}">
+                                        <a th:href="@{|/user/shop/review/myreview/${session.session_id}|}">
                                             <span class="nav-link py-1">내가 쓴 리뷰</span></a>
                                     </li>
                                     <li class="nav-item px-4">

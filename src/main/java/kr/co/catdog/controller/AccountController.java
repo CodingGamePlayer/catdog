@@ -18,10 +18,6 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class AccountController {
     private final UserService userService;
-    @GetMapping("/toast")
-    public String toast(){
-        return "toasts";
-    }
 
     @GetMapping("/login")
     String loginForm() {
@@ -31,17 +27,16 @@ public class AccountController {
     @PostMapping("/login")
     String login(UserDTO userDTO, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         int loginResult = userService.login(userDTO, request);
-        if(loginResult == 0){
+        if (loginResult == 0) {
             redirectAttributes.addFlashAttribute("warningToastMsg", "로그인에 실패했습니다.");
             return "redirect:/loginFail";
         }
         redirectAttributes.addFlashAttribute("successToastMsg", "로그인에 성공하였습니다.");
-//        id없거나 비밀번호다를때 알려줘
         return "redirect:/";
     }
 
     @GetMapping("/loginFail")
-    String loginFail(@ModelAttribute("warningToastMsg")String warningToastMsg) {
+    String loginFail(@ModelAttribute("warningToastMsg") String warningToastMsg) {
         return "sign-in";
     }
 
@@ -60,7 +55,6 @@ public class AccountController {
     String signupForm() {
         return "sign-up";
     }
-
 
 
 }

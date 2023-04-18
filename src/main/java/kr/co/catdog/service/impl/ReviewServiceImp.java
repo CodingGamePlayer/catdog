@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -28,33 +27,37 @@ public class ReviewServiceImp implements ReviewService {
     @Override
     public List<ReviewDTO> selectAll(PageDTO pageDTO) {
         List<ReviewVO> reviewVOList = reviewMapper.selectAll(pageDTO);
-        List<ReviewDTO> reviewDTOList = reviewVOList.stream()
-                .map(reviewVO -> modelMapper.map(reviewVO, ReviewDTO.class))
-                .collect(Collectors.toList());
-        reviewDTOList.forEach(reviewDTO -> {
-            reviewDTO.setUser_image(userMapper.imgFindById(reviewDTO.getUser_id()).getUser_image());
-        });
-        return reviewDTOList;
 
+        List<ReviewDTO> reviewDTOList = new ArrayList<>();
+        reviewVOList.forEach(reviewVO -> {
+            ReviewDTO reviewDTO = modelMapper.map(reviewVO, ReviewDTO.class);
+            reviewDTO.setUser_image(userMapper.imgFindById(reviewDTO.getUser_id()).getUser_image());
+            reviewDTOList.add(reviewDTO);
+        });
+
+        return reviewDTOList;
     }
 
     @Override
     public List<ReviewDTO> findByUserid(String user_id) {
         List<ReviewVO> reviewVOList = reviewMapper.findByUserid(user_id);
+
         List<ReviewDTO> reviewDTOList = new ArrayList<>();
         if (reviewVOList != null) {
             reviewVOList.forEach(reviewVO -> {
-                ReviewDTO dto = modelMapper.map(reviewVO, ReviewDTO.class);
-                dto.setProductDTO(shopService.findById(dto.getProduct_no()));
-                reviewDTOList.add(dto);
+                ReviewDTO reviewDTO = modelMapper.map(reviewVO, ReviewDTO.class);
+                reviewDTO.setProductDTO(shopService.findById(reviewDTO.getProduct_no()));
+                reviewDTOList.add(reviewDTO);
             });
         }
+
         return reviewDTOList;
     }
 
     @Override
     public int insert(ReviewDTO reviewDTO) {
         int result = reviewMapper.insert(reviewDTO);
+
         return !(result > 0) ? 0 : 1;
     }
 

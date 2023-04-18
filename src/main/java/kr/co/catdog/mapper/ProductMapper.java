@@ -10,13 +10,16 @@ import java.util.List;
 @Mapper
 public interface ProductMapper {
     List<ProductVO> selectAll(PageDTO pageDTO);
+
     ProductVO findById(int product_no);
+
     int insert(ProductDTO productDTO);
+
     int update(ProductDTO productDTO);
+
     int delete(int product_no);
 
     List<ProductVO> orderByReviewScore();
-
 
 
 }

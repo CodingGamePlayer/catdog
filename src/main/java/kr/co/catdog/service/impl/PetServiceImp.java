@@ -18,16 +18,13 @@ public class PetServiceImp implements PetService {
 
     @Override
     public PetDTO findById(String user_id) {
+        PetDTO petDTO = modelMapper.map(petMapper.findById(user_id), PetDTO.class);
 
-        PetVO petVO = petMapper.findById(user_id);
-        PetDTO petDTO = modelMapper.map(petVO, PetDTO.class);
-        
         return petDTO;
     }
 
     @Override
     public int update(PetDTO petDTO) {
-
         int result = petMapper.update(petDTO);
 
         return !(result > 0) ? 0 : 1;

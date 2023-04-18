@@ -5,9 +5,7 @@ import kr.co.catdog.dto.UploadResultDTO;
 import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.coobird.thumbnailator.Thumbnailator;
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +26,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UploadApiController {
 
-    private final String upPath="src/main/resources/static/assets/img/shop/";
+    private final String upPath = "src/main/resources/static/assets/img/shop/";
     private final ShopService shopService;
 
     @PostMapping(value = "/user/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -38,7 +36,6 @@ public class UploadApiController {
 
             uploadFileDTO.getFiles().forEach(multipartFile -> {
                 String originalName = multipartFile.getOriginalFilename();
-
                 String uuid = UUID.randomUUID().toString();
                 Path savePath = Paths.get(upPath, uuid + "_" + originalName);
 
@@ -64,6 +61,7 @@ public class UploadApiController {
         } catch (IOException e) {
             return ResponseEntity.internalServerError().build();
         }
+
         return ResponseEntity.ok().headers(headers).body(resource);
     }
 
@@ -84,26 +82,9 @@ public class UploadApiController {
             throw new RuntimeException(e);
         }
         resultMap.put("result", removed);
-        return resultMap;
 
+        return resultMap;
     }
-//    @GetMapping("/testimg/{fileName}")
-//    public ResponseEntity<Resource> viewFileGet(@PathVariable String fileName){
-//        Resource resource = new FileSystemResource(upPath + File.separator+ fileName);
-//        log.info("파일 이름 : "+fileName);
-//        String resourceName = resource.getFilename();
-//        HttpHeaders headers = new HttpHeaders();
-//
-//
-//        try {
-//            headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
-//        } catch (IOException e) {
-//
-//            return ResponseEntity.internalServerError().build();
-//        }
-//        return ResponseEntity.ok().headers(headers).body(resource);
-//
-//    }
 
     @GetMapping("/image/{fileName}")
     public ResponseEntity<Resource> viewFileGet(@PathVariable String fileName) throws IOException {
@@ -111,6 +92,7 @@ public class UploadApiController {
         byte[] imageBytes = IOUtils.toByteArray(resource.getInputStream());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
+
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
 }
