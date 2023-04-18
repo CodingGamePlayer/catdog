@@ -19,14 +19,12 @@ import java.util.List;
 public class ShopApiController {
     private final ShopService shopService;
     private final ReviewService reviewService;
+
     @PostMapping("/api/user/shop")
-    public ResponseEntity<ProductDTO> register(@RequestBody ProductDTO productDTO){
-
-        log.info(String.valueOf(productDTO));
+    public ResponseEntity<ProductDTO> register(@RequestBody ProductDTO productDTO) {
         int result = shopService.insert(productDTO);
-
-        if(result == 0){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        if (result == 0) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -35,11 +33,9 @@ public class ShopApiController {
 
     @PutMapping("/api/user/shop")
     public ResponseEntity<ProductDTO> edit(@RequestBody ProductDTO productDTO) {
-        log.info(String.valueOf(productDTO));
         int result = shopService.update(productDTO);
-
-        if(result == 0){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        if (result == 0) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -47,11 +43,11 @@ public class ShopApiController {
 
     @GetMapping("/api/user/shop")
     public List<ProductDTO> list(PageDTO pageDTO) {
-        log.info(String.valueOf(pageDTO));
         List<ProductDTO> productDTOList = shopService.selectAll(pageDTO);
 
         return productDTOList;
     }
+
     @GetMapping("/api/user/shop/detail")
     public List<ReviewDTO> reviewList(PageDTO pageDTO) {
         List<ReviewDTO> reviewDTOList = reviewService.selectAll(pageDTO);

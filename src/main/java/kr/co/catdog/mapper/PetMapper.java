@@ -11,8 +11,11 @@ import java.util.List;
 @Mapper
 public interface PetMapper {
     PetVO findById(String user_id);
+
     int insert(UserDTO userDTO);
+
     int update(PetDTO petDTO);
+
     List<PetVO> list(MatchingDTO matchingDTO);
 
 }

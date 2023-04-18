@@ -9,22 +9,16 @@ import kr.co.catdog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
 
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserServiceImp implements UserService {
-    @Value("${kr.co.catdog.upload.path}")
-    private String upPath;
     private final UserMapper userMapper;
     private final ModelMapper modelMapper;
     private final PetMapper petMapper;
@@ -35,7 +29,7 @@ public class UserServiceImp implements UserService {
     public int login(UserDTO userDTO, HttpServletRequest request) {
         UserVO uservo = userMapper.login(userDTO);
 
-        if(uservo == null) return 0;
+        if (uservo == null) return 0;
 
         HttpSession session = request.getSession();
         session.setAttribute("session_id", uservo.getUser_id());
@@ -43,17 +37,17 @@ public class UserServiceImp implements UserService {
         session.setAttribute("session_img", uservo.getUser_image());
         int cart = cartMapper.findById(uservo.getUser_id()).size();
         session.setAttribute("session_cart", cart);
+
         return 1;
     }
 
     @Override
     public UserDTO findById(String user_id) {
         UserVO uservo = userMapper.findById(user_id);
-        if(uservo == null) return null;
+        if (uservo == null) return null;
         UserDTO dto = modelMapper.map(uservo, UserDTO.class);
 
         return dto;
-
     }
 
     @Override
@@ -66,9 +60,8 @@ public class UserServiceImp implements UserService {
 
     @Override
     public int update(UserDTO userDTO) {
-
 //        matchinguse가 null값이면 0 으로 set
-        if(userDTO.getUser_matchinguse() == null){
+        if (userDTO.getUser_matchinguse() == null) {
             userDTO.setUser_matchinguse(false);
         }
         int result = userMapper.update(userDTO);

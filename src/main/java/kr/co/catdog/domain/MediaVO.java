@@ -1,7 +1,6 @@
 package kr.co.catdog.domain;
 
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @NoArgsConstructor
 @AllArgsConstructor

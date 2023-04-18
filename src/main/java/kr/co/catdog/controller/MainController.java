@@ -18,11 +18,12 @@ import java.util.List;
 public class MainController {
 
     private BoardService boardService;
+
     @GetMapping("/")
-    String main(@ModelAttribute("successToastMsg")String successToastMsg, Model model) {
+    String main(@ModelAttribute("successToastMsg") String successToastMsg, @ModelAttribute("warningToastMsg") String warningToastMsg, Model model) {
         List<BoardDTO> boardDTOList = boardService.getBoardList();
         log.info(boardDTOList.get(0).getContent());
-        model.addAttribute("boardDTOList",boardDTOList);
+        model.addAttribute("boardDTOList", boardDTOList);
         return "index";
     }
 

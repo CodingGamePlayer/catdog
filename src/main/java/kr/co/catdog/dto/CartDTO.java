@@ -1,6 +1,5 @@
 package kr.co.catdog.dto;
 
-import kr.co.catdog.domain.ProductVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

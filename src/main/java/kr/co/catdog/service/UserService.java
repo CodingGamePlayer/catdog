@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface UserService {
     int login(UserDTO userDTO, HttpServletRequest request);
+
     UserDTO findById(String user_id);
 
     int insert(UserDTO userDTO);

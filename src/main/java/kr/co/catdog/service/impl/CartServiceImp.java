@@ -3,35 +3,33 @@ package kr.co.catdog.service.impl;
 import kr.co.catdog.domain.CartVO;
 import kr.co.catdog.dto.CartDTO;
 import kr.co.catdog.mapper.CartMapper;
-import kr.co.catdog.mapper.ProductMapper;
 import kr.co.catdog.service.CartService;
 import kr.co.catdog.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CartServiceImp implements CartService {
     private final CartMapper cartMapper;
     private final ModelMapper modelMapper;
-    private final ProductMapper productMapper;
     private final ShopService shopService;
 
     @Override
     public List<CartDTO> findById(String user_id) {
-
         List<CartVO> cartVOList = cartMapper.findById(user_id);
-        List<CartDTO> cartDTOList = cartVOList.stream()
-                .map(cartVO -> modelMapper.map(cartVO, CartDTO.class))
-                .collect(Collectors.toList());
 
-        cartDTOList.forEach(cartDTO -> {
+        List<CartDTO> cartDTOList = new ArrayList<>();
+        cartVOList.forEach(cartVO -> {
+            CartDTO cartDTO = modelMapper.map(cartVO, CartDTO.class);
             cartDTO.setProductDTO(shopService.findById(cartDTO.getProduct_no()));
+            cartDTOList.add(cartDTO);
         });
+
         return cartDTOList;
     }
 
@@ -67,8 +65,15 @@ public class CartServiceImp implements CartService {
 
     @Override
     public int deleteAll(String user_id) {
-        int result = cartMapper.deleteAll(user_id);
+        List<CartVO> cartVOList = cartMapper.findById(user_id);
 
-        return !(result > 0) ? 0 : 1;
+        for (CartVO cartVO : cartVOList) {
+            int result = cartMapper.delete(cartVO.getCart_no());
+            if (result < 1) {
+                return 0;
+            }
+        }
+
+        return 1;
     }
 }

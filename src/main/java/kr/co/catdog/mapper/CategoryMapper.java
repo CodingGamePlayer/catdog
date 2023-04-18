@@ -9,5 +9,6 @@ import java.util.List;
 @Mapper
 public interface CategoryMapper {
     List<Category1VO> selectCategory1();
+
     List<Category2VO> selectCategory2();
 }

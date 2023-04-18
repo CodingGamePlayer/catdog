@@ -5,45 +5,44 @@
       layout:decorate="~{layout/default_layout.html}">
 
 
+<!-- Content -->
+<div layout:fragment="content">
 
-      <!-- Content -->
-      <div layout:fragment="content">
-
-        <div class="col-12 p-4 pt-7">
-          <div class="card card-plain">
+    <div class="col-12 p-4 pt-7">
+        <div class="card card-plain">
             <div class="card-header pb-0 text-left">
-              <h3 class="font-weight-bolder jh-pink-title text-gradient">Welcome back</h3>
-              <p class="mb-0">Enter your email and password to sign in</p>
+                <h3 class="font-weight-bolder jh-pink-title text-gradient">Welcome back</h3>
+                <p class="mb-0">Enter your email and password to sign in</p>
             </div>
             <div class="card-body">
-              <form role="form text-left" action="/login" method="post">
-                <label>Id</label>
-                <div class="input-group mb-3">
-                  <input type="email" class="form-control" placeholder="Email" aria-label="Id"
-                         aria-describedby="id-addon" name="user_id" required>
-                </div>
-                <label>Password</label>
-                <div class="input-group mb-3">
-                  <input type="password" class="form-control" placeholder="Password" aria-label="Password"
-                         aria-describedby="password-addon" name="user_pw" required>
-                </div>
-                <div class="text-center">
-                  <button type="submit" class="btn btn-round jh-bg-pink text-white btn-lg w-100 mt-4 mb-0">Sign in</button>
-                </div>
-              </form>
+                <form role="form text-left" action="/login" method="post">
+                    <label>Id</label>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email" aria-label="Id"
+                               aria-describedby="id-addon" name="user_id" required>
+                    </div>
+                    <label>Password</label>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Password" aria-label="Password"
+                               aria-describedby="password-addon" name="user_pw" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-round jh-bg-pink text-white btn-lg w-100 mt-4 mb-0">Sign
+                            in
+                        </button>
+                    </div>
+                </form>
             </div>
             <div class="card-footer text-center pt-0 px-lg-2 px-1">
-              <p class="mb-4 text-sm mx-auto">
-                Don't have an account?
-                <a href="/signup" class="jh-pink-title text-gradient font-weight-bold">Sign up</a>
-              </p>
+                <p class="mb-4 text-sm mx-auto">
+                    Don't have an account?
+                    <a href="/signup" class="jh-pink-title text-gradient font-weight-bold">Sign up</a>
+                </p>
             </div>
-          </div>
         </div>
-
-
-      </div>
-      <!-- End Content -->
+    </div>
+</div>
+<!-- End Content -->
 
 
 </html>
