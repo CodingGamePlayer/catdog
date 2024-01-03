@@ -22,7 +22,7 @@ public class MainController {
     @GetMapping("/")
     String main(@ModelAttribute("successToastMsg") String successToastMsg, @ModelAttribute("warningToastMsg") String warningToastMsg, Model model) {
         List<BoardDTO> boardDTOList = boardService.getBoardList();
-        log.info(boardDTOList.get(0).getContent());
+        // log.info(boardDTOList.get(0).getContent());
         model.addAttribute("boardDTOList", boardDTOList);
         return "index";
     }
